@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes.muralcomponentes
+package com.example.mobile_app.visaocliente.componentes.muralcomponentes
 
 import retrofit2.Response
 import retrofit2.http.Body

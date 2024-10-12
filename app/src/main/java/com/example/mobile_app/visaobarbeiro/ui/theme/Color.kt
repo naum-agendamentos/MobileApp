@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro.ui.theme
+package com.example.mobile_app.visaobarbeiro.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.pages
+package com.example.mobile_app.visaocliente.pages
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,13 +40,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
-import com.example.homepage.visaocliente.componentes.FundoTela
-import com.example.homepage.visaocliente.componentes.meuperfilcomponentes.EditPerfil
-import com.example.homepage.visaocliente.ui.theme.Blue
-import com.example.homepage.visaocliente.ui.theme.Gray
-import com.example.homepage.visaocliente.ui.theme.Green
-import com.example.homepage.visaocliente.ui.theme.Red
+import com.example.mobile_app.R
+import com.example.mobile_app.visaocliente.componentes.FundoTela
+import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.EditPerfil
+import com.example.mobile_app.visaocliente.ui.theme.Blue
+import com.example.mobile_app.visaocliente.ui.theme.Gray
+import com.example.mobile_app.visaocliente.ui.theme.Green
+import com.example.mobile_app.visaocliente.ui.theme.Red
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

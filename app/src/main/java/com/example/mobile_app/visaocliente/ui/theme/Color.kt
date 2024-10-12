@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.ui.theme
+package com.example.mobile_app.visaocliente.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

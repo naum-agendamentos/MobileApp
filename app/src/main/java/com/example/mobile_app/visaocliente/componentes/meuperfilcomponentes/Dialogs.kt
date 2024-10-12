@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes.meuperfilcomponentes
+package com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
+import com.example.mobile_app.R
 
 @Composable
 fun DadosAtualizadosSucesso(){

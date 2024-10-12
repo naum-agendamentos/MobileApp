@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="preto">#1AFFFFFF</color>
+    <color name="btn_cadastrar">#2DAB00</color>
+    <color name="btn_cancelar">#303030</color>
+    <color name="btn_editar">#303495</color>
+    <color name="btn_vermelho">#A02A2A</color>
+    <color name="cinza3d">#3d3d3d</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.homepage.telasguilherme.ui.theme.ui.theme
+package com.example.mobile_app.telasguilherme.ui.theme.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

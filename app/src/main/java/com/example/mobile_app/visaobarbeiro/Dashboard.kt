@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro
+package com.example.mobile_app.visaobarbeiro
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -27,15 +27,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
-import com.example.homepage.visaobarbeiro.ui.theme.HomepageTheme
+import com.example.mobile_app.R
+import com.example.mobile_app.visaobarbeiro.ui.theme.mobile_appTheme
 
 class Dashboard : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HomepageTheme {
+            mobile_appTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Dashboard(
                         name = "Android",
@@ -264,7 +264,7 @@ fun Dashboard(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview3() {
-    HomepageTheme {
+    mobile_appTheme {
         Dashboard("Android")
     }
 }

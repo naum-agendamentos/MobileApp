@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes.muralcomponentes
+package com.example.mobile_app.visaocliente.componentes.muralcomponentes
 
 data class Aviso (
     var titulo: String? = null,

@@ -1,9 +1,9 @@
-package com.example.homepage.visaocliente.componentes.muralcomponentes
+package com.example.mobile_app.visaocliente.componentes.muralcomponentes
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.example.homepage.RetrofitService
+import com.example.mobile_app.RetrofitService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,6 @@ class MuralViewModel : ViewModel() {
 //    }
     fun getAvisos() : List<Aviso> {
         GlobalScope.launch {
-
             try {
                 val resposta = apiMural.get()
                 Log.i("api", "Resposta da api ${resposta.body()}")
@@ -36,6 +35,6 @@ class MuralViewModel : ViewModel() {
                 Log.e("api", "Erro ao buscar items: ,${exception}")
             }
         }
-        return avisos.toList()
+        return avisos
     }
 }

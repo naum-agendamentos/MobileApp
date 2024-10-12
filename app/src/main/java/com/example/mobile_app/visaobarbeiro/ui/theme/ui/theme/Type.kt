@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro.ui.theme.ui.theme
+package com.example.mobile_app.visaobarbeiro.ui.theme.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes.meuperfilcomponentes
+package com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,8 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.visaocliente.ui.theme.Gray
-import com.example.homepage.visaocliente.ui.theme.Red
+import com.example.mobile_app.visaocliente.ui.theme.Gray
+import com.example.mobile_app.visaocliente.ui.theme.Red
 
 @Composable
 fun InputsTrocarSenha(){

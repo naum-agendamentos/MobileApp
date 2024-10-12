@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro
+package com.example.mobile_app.visaobarbeiro
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -47,8 +47,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
-import com.example.homepage.ui.theme.HomepageTheme
+import com.example.mobile_app.R
+import com.example.mobile_app.ui.theme.mobile_appTheme
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -206,7 +206,7 @@ fun gerarHorarios(inicio: String, fim: String): List<String> {
 @Preview(showBackground = true)
 @Composable
 fun BloqueioHoraPreview() {
-    HomepageTheme {
+    mobile_appTheme {
         telaBloqueioDeHora()
     }
 }

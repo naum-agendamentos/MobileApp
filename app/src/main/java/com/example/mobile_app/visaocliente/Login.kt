@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente
+package com.example.mobile_app.visaocliente
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
+import com.example.mobile_app.R
 
 @Preview
 @Composable

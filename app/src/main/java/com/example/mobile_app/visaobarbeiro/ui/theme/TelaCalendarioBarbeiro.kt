@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro.ui.theme
+package com.example.mobile_app.visaobarbeiro.ui.theme
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,14 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.homepage.visaobarbeiro.ui.theme.ui.theme.HomepageTheme
+import com.example.mobile_app.visaobarbeiro.ui.theme.ui.theme.mobile_appTheme
 
 class TelaCalendarioBarbeiro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HomepageTheme {
+            mobile_appTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting2(
                         name = "Android",
@@ -41,7 +41,7 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview2() {
-    HomepageTheme {
+    mobile_appTheme {
         Greeting2("Android")
     }
 }

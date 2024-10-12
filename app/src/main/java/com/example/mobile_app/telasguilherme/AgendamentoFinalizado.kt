@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.YearMonth
-import com.example.homepage.R
+import com.example.mobile_app.R
 
 @Composable
 fun ServicoEscolhas() {

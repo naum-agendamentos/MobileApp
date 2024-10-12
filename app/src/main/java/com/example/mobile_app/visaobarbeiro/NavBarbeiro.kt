@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro
+package com.example.mobile_app.visaobarbeiro
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.homepage.R
+import com.example.mobile_app.R
 
 @Composable
 fun navBarb() {

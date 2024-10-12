@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro
+package com.example.mobile_app.visaobarbeiro
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import com.example.homepage.R
+import com.example.mobile_app.R
 
 @Composable
 fun verAgendamentos() {

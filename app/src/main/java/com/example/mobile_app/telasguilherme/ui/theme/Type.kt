@@ -1,4 +1,4 @@
-package com.example.homepage.telasguilherme.ui.theme
+package com.example.mobile_app.telasguilherme.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

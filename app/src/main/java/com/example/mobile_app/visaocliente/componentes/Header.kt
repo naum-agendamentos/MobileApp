@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes
+package com.example.mobile_app.visaocliente.componentes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.homepage.R
+import com.example.mobile_app.R
 
 
 @Composable

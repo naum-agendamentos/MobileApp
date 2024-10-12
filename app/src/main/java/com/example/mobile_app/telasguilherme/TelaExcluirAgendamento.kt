@@ -1,4 +1,4 @@
-package com.example.homepage.telasguilherme
+package com.example.mobile_app.telasguilherme
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.homepage.visaocliente.componentes.FundoTela
-import com.example.homepage.visaocliente.componentes.meuperfilcomponentes.ExcluirContaDecisao2
-import com.example.homepage.visaocliente.componentes.muralcomponentes.Mural
+import com.example.mobile_app.visaocliente.componentes.FundoTela
+import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.ExcluirContaDecisao2
+import com.example.mobile_app.visaocliente.componentes.muralcomponentes.Mural
 
 @Composable
 fun Exclusao() {

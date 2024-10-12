@@ -1,4 +1,4 @@
-package com.example.homepage.visaobarbeiro
+package com.example.mobile_app.visaobarbeiro
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,8 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
-import com.example.homepage.ui.theme.HomepageTheme
+import com.example.mobile_app.R
+import com.example.mobile_app.ui.theme.mobile_appTheme
 
 @Composable
 fun BarbeiroBloqueioDiaHora() {
@@ -98,7 +98,7 @@ fun BarbeiroBloqueioDiaHora() {
 @Preview(showBackground = true)
 @Composable
 fun BarbeiroBloqueioDiaHoraPreview() {
-    HomepageTheme {
+    mobile_appTheme {
         BarbeiroBloqueioDiaHora()
     }
 }

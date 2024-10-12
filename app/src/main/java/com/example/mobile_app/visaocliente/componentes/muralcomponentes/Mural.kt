@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes.muralcomponentes
+package com.example.mobile_app.visaocliente.componentes.muralcomponentes
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -46,9 +46,7 @@ fun Mural(viewModel: MuralViewModel = viewModel()) {
         }
 
         // Use remember para armazenar os avisos apenas uma vez
-
         val avisos = remember { viewModel.getAvisos() }
-
 
         LazyColumn(
             modifier = Modifier

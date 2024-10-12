@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes.meuperfilcomponentes
+package com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -44,12 +44,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.R
+import com.example.mobile_app.R
 
-import com.example.homepage.visaocliente.ui.theme.Blue
-import com.example.homepage.visaocliente.ui.theme.Gray
-import com.example.homepage.visaocliente.ui.theme.Green
-import com.example.homepage.visaocliente.ui.theme.Red
+import com.example.mobile_app.visaocliente.ui.theme.Blue
+import com.example.mobile_app.visaocliente.ui.theme.Gray
+import com.example.mobile_app.visaocliente.ui.theme.Green
+import com.example.mobile_app.visaocliente.ui.theme.Red
 
 @Composable
 fun EditPerfil(){

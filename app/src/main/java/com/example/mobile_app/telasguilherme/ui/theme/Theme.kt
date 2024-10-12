@@ -1,4 +1,4 @@
-package com.example.homepage.telasguilherme.ui.theme
+package com.example.mobile_app.telasguilherme.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun HomepageTheme(
+fun mobile_appTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

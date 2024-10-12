@@ -1,4 +1,4 @@
-package com.example.homepage.visaocliente.componentes
+package com.example.mobile_app.visaocliente.componentes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

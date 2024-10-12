@@ -1,3 +1,62 @@
 <resources>
-    <string name="app_name">mobile-app</string>
+    <string name="app_name">mobile_app</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_seja_bem_vindo">SejaBemVindo</string>
+    <string name="title_activity_tela_agendamentos">TelaAgendamentos</string>
+    <string name="title_activity_vizualizacao_agendamento">VizualizacaoAgendamento</string>
+    <string name="title_activity_agendamento_selecao_barbeiro">AgendamentoSelecaoBarbeiro</string>
+    <string name="title_activity_agendamento_servico">AgendamentoServico</string>
+    <string name="title_activity_atividade2_theme">Atividade2Theme</string>
+    <string name="title_activity_tela_usuario_confirmacao_exclusao_conta">
+        TelaUsuarioConfirmacaoExclusaoConta
+    </string>
+    <string name="title_activity_calendario">calendario</string>
+    <string name="title_activity_tela_calendario_vizualizacao">TelaCalendarioVizualizacao</string>
+    <string name="title_activity_tela_calendario_barbeiro">TelaCalendarioBarbeiro</string>
+    <string name="title_activity_dido">Dido</string>
+    <string name="title_activity_aviso_criado_com_sucesso">AvisoCriadoComSucesso</string>
+    <string name="title_activity_mural_aviso">MuralAviso</string>
+    <string name="title_activity_aviso_apagado_com_sucesso">AvisoApagadoComSucesso</string>
+    <string name="title_activity_mural_avisos_confirmacao_exclusao_aviso">
+        MuralAvisosConfirmacaoExclusaoAviso
+    </string>
+    <string name="title_activity_mural_aviso_edicao">MuralAvisoEdicao</string>
+    <string name="title_activity_mural_aviso_barbeiro">MuralAvisoBarbeiro</string>
+    <string name="title_activity_barbeiro_cadastrado_com_sucesso">BarbeiroCadastradoComSucesso
+    </string>
+    <string name="title_activity_barbeiro_atualizado_com_sucesso">BarbeiroAtualizadoComSucesso
+    </string>
+    <string name="title_activity_barbeiro_cadastro">BarbeiroCadastro</string>
+    <string name="title_activity_tela_barbeiro_edicao">TelaBarbeiroEdicao</string>
+    <string name="title_activity_barbeiro_excluido_com_sucesso">BarbeiroExcluidoComSucesso</string>
+
+
+    <string name="login_image">Login image</string>
+    <string name="agendamentos">AGENDAMENTOS</string>
+    <string name="corte_simples">Corte simples</string>
+    <string name="preco_corte_simples">R$ 40,00</string>
+    <string name="duracao_corte_simples">30 Min</string>
+    <string name="barba_simples">Barba simples</string>
+    <string name="preco_barba_simples">R$ 45,00</string>
+    <string name="duracao_barba_simples">30 Min</string>
+    <string name="corte_feminino_simples">Corte feminino simples</string>
+    <string name="preco_corte_feminino_simples">R$ 50,00</string>
+    <string name="duracao_corte_feminino_simples">60 Min</string>
+    <string name="platinado">Platinado</string>
+    <string name="preco_platinado">R$ 60,00</string>
+    <string name="duracao_platinado">120 Min</string>
+    <string name="hora_exemplo">10H00</string>
+    <string name="checked">Checked</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="title_activity_tela_inicial_barbeiro">TelaInicialBarbeiro</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_tela_inicializacao">TelaInicializacao</string>
+    <string name="title_activity_cliente_tela_inicial">ClienteTelaInicial</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_tela_escolher_servico">TelaEscolherServico</string>
+
+
 </resources>
