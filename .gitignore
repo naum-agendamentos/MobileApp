@@ -28,3 +28,7 @@ local.properties
 *.iml
 .idea
 .kotlin/
+
+# Bloquear os dados do ip
+app/src/main/java/com/example/mobile_app/RetrofitService.kt
+app/src/main/res/xml/network_security_config.xml
