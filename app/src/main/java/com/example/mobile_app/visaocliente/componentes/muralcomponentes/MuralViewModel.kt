@@ -15,10 +15,6 @@ class MuralViewModel : ViewModel() {
         apiMural = RetrofitService.getApiAviso()
     }
 
-//    init {
-//        avisos.add(Aviso("Aviso 1", "Descrição do Aviso 1"))
-//        avisos.add(Aviso("Aviso 2", "Descrição do Aviso 2"))
-//    }
     fun getAvisos() : List<Aviso> {
         GlobalScope.launch {
             try {
