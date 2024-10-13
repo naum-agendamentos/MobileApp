@@ -18,12 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobile_app.R
 
 @Composable
 fun Mural(viewModel: MuralViewModel = viewModel()) {
@@ -39,7 +41,7 @@ fun Mural(viewModel: MuralViewModel = viewModel()) {
                 .fillMaxHeight(0.2f)
         ) {
             Text(
-                text = "MURAL DE AVISOS",
+                text = stringResource(R.string.title_activity_mural),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )

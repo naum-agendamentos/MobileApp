@@ -59,4 +59,7 @@
     <string name="title_activity_tela_escolher_servico">TelaEscolherServico</string>
 
 
+
+    <!--Mural visão cliente-->
+    <string name="title_activity_mural">MURAL DE AVISOS</string>
 </resources>
