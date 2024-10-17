@@ -1,34 +1,34 @@
-# built application files
-*.apk
-*.ap_
+# # built application files
+# *.apk
+# *.ap_
 
-# Mac files
-.DS_Store
+# # Mac files
+# .DS_Store
 
-# files for the dex VM
-*.dex
+# # files for the dex VM
+# *.dex
 
-# Java class files
-*.class
+# # Java class files
+# *.class
 
-# generated files
-bin/
-gen/
+# # generated files
+# bin/
+# gen/
 
-# Ignore gradle files
-.gradle/
-build/
-build.gradle.kts
-libs.versions.toml
+# # Ignore gradle files
+# .gradle/
+# build/
+# build.gradle.kts
+# libs.versions.toml
 
-# Local configuration file (sdk path, etc)
-local.properties
+# # Local configuration file (sdk path, etc)
+# local.properties
 
-# Android Studio/IDEA
-*.iml
-.idea
-.kotlin/
+# # Android Studio/IDEA
+# *.iml
+# .idea
+# .kotlin/
 
-# Bloquear os dados do ip
-app/src/main/java/com/example/mobile_app/RetrofitService.kt
-app/src/main/res/xml/network_security_config.xml
+# # Bloquear os dados do ip
+# app/src/main/java/com/example/mobile_app/RetrofitService.kt
+# app/src/main/res/xml/network_security_config.xml
