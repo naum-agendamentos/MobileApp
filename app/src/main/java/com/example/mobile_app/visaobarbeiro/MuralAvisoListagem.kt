@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,24 +16,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun MuralListagem(navController: NavController, viewModel: MuralViewModel = viewModel(), modifier: Modifier = Modifier) {
-    val avisos = viewModel.getAvisos()
+fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
     Box(
@@ -80,6 +77,7 @@ fun MuralListagem(navController: NavController, viewModel: MuralViewModel = view
                 )
             }
 
+
             Box(
                 modifier = Modifier
                     .width(370.dp)
@@ -90,12 +88,44 @@ fun MuralListagem(navController: NavController, viewModel: MuralViewModel = view
                     )
                     .align(Alignment.CenterHorizontally)
             ) {
-                LazyColumn {
+                LazyColumn(
+                    modifier = Modifier.padding(10.dp)
+                ) {
                     items(items = viewModel.getAvisos()) { item ->
-                        Box() {
-                            Column(modifier = Modifier.padding(10.dp)) {
+
+                        Text(
+                            text = stringResource(id = R.string.data_exemplo), // Usando string do resources
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp,
+                                color = Color.White
+                            ),
+                            modifier = Modifier.padding(8.dp)
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .border(
+                                    1.dp,
+                                    Color.White,
+                                    RoundedCornerShape(5.dp)
+                                )
+                                .padding(8.dp)
+                        ) {
+                            Column {
                                 Text(
-                                    text = stringResource(id = R.string.data_exemplo), // Usando string do resources
+                                    text = "${item.titulo}",
+                                    style = TextStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 24.sp,
+                                        color = Color.White
+                                    ),
+                                    modifier = Modifier.padding(8.dp)
+                                )
+
+                                Text(
+                                    text = "${item.descricao}",
                                     style = TextStyle(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 18.sp,
@@ -104,63 +134,39 @@ fun MuralListagem(navController: NavController, viewModel: MuralViewModel = view
                                     modifier = Modifier.padding(8.dp)
                                 )
 
-                                Box(
+                                Button(
+                                    onClick = {
+//                                                viewModel.itemAtual = item
+//                                                navController.navigate("muralEdicao/${item.titulo}/${item.descricao}")
+                                    },
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .border(
-                                            1.dp,
-                                            Color.White,
-                                            RoundedCornerShape(5.dp)
-                                        )
+                                        .width(120.dp)
+                                        .height(40.dp)
+                                        .padding(horizontal = 8.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = colorResource(id = R.color.btn_editar),
+                                        contentColor = Color.White
+                                    ),
+                                    shape = RoundedCornerShape(10.dp),
                                 ) {
-                                    Column {
-                                        Text(
-                                            text = "${item.titulo}",
-                                            style = TextStyle(
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 24.sp,
-                                                color = Color.White
-                                            ),
-                                            modifier = Modifier.padding(8.dp)
-                                        )
-
-                                        Text(
-                                            text = "${item.descricao}",
-                                            style = TextStyle(
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 18.sp,
-                                                color = Color.White
-                                            ),
-                                            modifier = Modifier.padding(8.dp)
-                                        )
-
-                                        ClickableText(
-                                            text = AnnotatedString(stringResource(id = R.string.editar_aviso)), // Usando string do resources
-                                            style = TextStyle(fontSize = 15.sp),
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            viewModel.itemAtual = item
-                                            navController.navigate("muralEdicao/${item.titulo}/${item.descricao}")
-                                        }
-                                    }
+                                    Text(
+                                        text = "Editar",
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Bold,
+                                    )
                                 }
-
-                                Spacer(modifier = Modifier.height(15.dp))
                             }
                         }
                     }
                 }
             }
         }
-
+        IconRow()
     }
-
-    IconRow()
 }
-
 
 @Preview
 @Composable
-fun MuralBarbeiro(navController: NavController = rememberNavController()) {
-    MuralListagem(navController = navController)  // Passando o navController
+fun MuralBarbeiro() {
+    MuralListagem()
 }

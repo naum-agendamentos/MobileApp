@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-
-        <!--coloque o ip do seu computador-->
-        <domain includeSubdomains="true">192.168.18.46</domain>
+        // seu ip aqui
+        <domain includeSubdomains="true">SEU IP</domain>
     </domain-config>
 </network-security-config>
