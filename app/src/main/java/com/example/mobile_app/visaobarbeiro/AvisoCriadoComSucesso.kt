@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.example.homepage.visaocliente.componentes.muralcomponentes.Aviso
 import com.example.mobile_app.R
 
 @Composable
@@ -232,5 +233,5 @@ fun Criado(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun Aviso() {
-    AvisoCriado()
+    AvisoCriado()  // Removendo o retorno
 }

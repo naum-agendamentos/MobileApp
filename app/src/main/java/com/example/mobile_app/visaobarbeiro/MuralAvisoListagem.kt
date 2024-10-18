@@ -1,16 +1,11 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,18 +15,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
+import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+
 
 @Composable
-fun MuralListagem() {
+fun MuralListagem(navController: NavController, viewModel: MuralViewModel = viewModel(), modifier: Modifier = Modifier) {
+    val avisos = viewModel.getAvisos()
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
     Box(
@@ -53,16 +54,15 @@ fun MuralListagem() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically, // Alinha verticalmente os itens
-                horizontalArrangement = Arrangement.SpaceBetween // Espaça os itens
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Coloca um Box para centralizar o texto
                 Box(
-                    modifier = Modifier.weight(1f), // Faz o Box ocupar o espaço restante
-                    contentAlignment = Alignment.Center // Centraliza o texto dentro do Box
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "MURAL DE AVISOS",
+                        text = stringResource(id = R.string.mural_de_avisos), // Usando string do resources
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp,
@@ -71,14 +71,12 @@ fun MuralListagem() {
                     )
                 }
 
-                // Imagem ou ícone à direita
-
                 Image(
-                    painter = painterResource(id = R.drawable.icon_adicionar), // Substitua pelo seu recurso de imagem
-                    contentDescription = "Descrição da imagem",
+                    painter = painterResource(id = R.drawable.icon_adicionar),
+                    contentDescription = stringResource(id = R.string.icone_adicionar_desc), // Usando string do resources
                     modifier = Modifier
-                        .size(50.dp) // Ajuste o tamanho da imagem conforme necessário
-                        .padding(start = 8.dp) // Espaçamento entre a imagem e o texto
+                        .size(50.dp)
+                        .padding(start = 8.dp)
                 )
             }
 
@@ -91,90 +89,68 @@ fun MuralListagem() {
                         RoundedCornerShape(12.dp)
                     )
                     .align(Alignment.CenterHorizontally)
-            ){
-                Column {
-                    Box(){
-                        Column(modifier = Modifier.padding(10.dp)) {
-                            Text(
-                                text = "10/09/2024 - 18:42",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier.padding(8.dp)
-                            )
-
-                            Box(modifier = Modifier
-                                .fillMaxWidth()
-                                .border(
-                                    1.dp,
-                                    Color.White,
-                                    RoundedCornerShape(5.dp)
+            ) {
+                LazyColumn {
+                    items(items = viewModel.getAvisos()) { item ->
+                        Box() {
+                            Column(modifier = Modifier.padding(10.dp)) {
+                                Text(
+                                    text = stringResource(id = R.string.data_exemplo), // Usando string do resources
+                                    style = TextStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp,
+                                        color = Color.White
+                                    ),
+                                    modifier = Modifier.padding(8.dp)
                                 )
-                            ){
-                                Column {
-                                    Text(
-                                        text = "Desconto em todos os produtos capilares durante o dia de hoje !!!",
-                                        style = TextStyle(
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 24.sp,
-                                            color = Color.White
-                                        ),
-                                        modifier = Modifier.padding(8.dp)
-                                    )
 
-                                    Text(
-                                        text = "Alguns dos produtos em promoção: Pomada, Gel, Pomada em pó ...",
-                                        style = TextStyle(
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 18.sp,
-                                            color = Color.White
-                                        ),
-                                        modifier = Modifier.padding(8.dp)
-                                    )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .border(
+                                            1.dp,
+                                            Color.White,
+                                            RoundedCornerShape(5.dp)
+                                        )
+                                ) {
+                                    Column {
+                                        Text(
+                                            text = "${item.titulo}",
+                                            style = TextStyle(
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 24.sp,
+                                                color = Color.White
+                                            ),
+                                            modifier = Modifier.padding(8.dp)
+                                        )
+
+                                        Text(
+                                            text = "${item.descricao}",
+                                            style = TextStyle(
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 18.sp,
+                                                color = Color.White
+                                            ),
+                                            modifier = Modifier.padding(8.dp)
+                                        )
+
+                                        ClickableText(
+                                            text = AnnotatedString(stringResource(id = R.string.editar_aviso)), // Usando string do resources
+                                            style = TextStyle(fontSize = 15.sp),
+                                            modifier = Modifier.padding(5.dp)
+                                        ) {
+                                            viewModel.itemAtual = item
+                                            navController.navigate("muralEdicao/${item.titulo}/${item.descricao}")
+                                        }
+                                    }
                                 }
-                            }
 
-                            Spacer(modifier = Modifier.height(15.dp)) // Define o espaçamento desejado
-
-                            Box(modifier = Modifier
-                                .fillMaxWidth()
-                                .border(
-                                    1.dp,
-                                    Color.White,
-                                    RoundedCornerShape(5.dp)
-                                )
-                            ){
-                                Column {
-                                    Text(
-                                        text = "Desconto em todos os produtos capilares durante o dia de hoje !!!",
-                                        style = TextStyle(
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 24.sp,
-                                            color = Color.White
-                                        ),
-                                        modifier = Modifier.padding(8.dp)
-                                    )
-
-                                    Text(
-                                        text = "Alguns dos produtos em promoção: Pomada, Gel, Pomada em pó ...",
-                                        style = TextStyle(
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 18.sp,
-                                            color = Color.White
-                                        ),
-                                        modifier = Modifier.padding(8.dp)
-                                    )
-                                }
+                                Spacer(modifier = Modifier.height(15.dp))
                             }
                         }
-
                     }
-
                 }
             }
-
         }
 
     }
@@ -183,58 +159,8 @@ fun MuralListagem() {
 }
 
 
-// MUDAR PARA OS ATRIBUTOS DO MURAL: TITULO, DESCRIÇÃO, URGÊNCIA... (SE NECESSÁRIO)
-
-//@Composable
-//fun MuralDeAviso(
-//    nome: String,
-//    preco: String,
-//    duracao: String,
-//    isSelected: Boolean
-//) {
-//    var checked by remember { mutableStateOf(isSelected) }
-//
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .background(Color(0xFFCCCCFF), RoundedCornerShape(12.dp))
-//            .border(2.dp, Color.Black, RoundedCornerShape(12.dp))
-//            .padding(8.dp),
-//        horizontalArrangement = Arrangement.SpaceBetween,
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Column(
-//            modifier = Modifier.padding(start = 8.dp)
-//        ) {
-//            Text(text = nome, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-//            Text(text = preco, fontSize = 14.sp)
-//            Text(text = duracao, fontSize = 14.sp)
-//        }
-//
-//        Box(
-//            modifier = Modifier
-//                .size(40.dp)
-//                .background(
-//                    if (checked) Color.Blue else Color.White,
-//                    shape = RoundedCornerShape(4.dp)
-//                )
-//                .border(2.dp, Color.Black, shape = RoundedCornerShape(4.dp))
-//                .clickable { checked = !checked },
-//            contentAlignment = Alignment.Center
-//        ) {
-//            if (checked) {
-//                Icon(
-//                    imageVector = Icons.Default.Check,
-//                    contentDescription = stringResource(id = R.string.checked),
-//                    tint = Color.White
-//                )
-//            }
-//        }
-//    }
-//}
-
 @Preview
 @Composable
-fun MuralBarbeiro() {
-    MuralListagem()
+fun MuralBarbeiro(navController: NavController = rememberNavController()) {
+    MuralListagem(navController = navController)  // Passando o navController
 }

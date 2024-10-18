@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitService {
 
     //Coloque o ip do seu computador aqui
-    val BASE_URL_FEIRA = "http://111.111.11.1:8080/"
+    val BASE_URL_FEIRA = "http://192.168.18.46:8080/"
 
     // função que retorna o cliente para a API de filmes
     fun getApiAviso(): ApiMural {

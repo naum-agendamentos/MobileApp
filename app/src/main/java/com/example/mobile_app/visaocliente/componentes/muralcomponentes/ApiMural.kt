@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaocliente.componentes.muralcomponentes
 
+import com.example.homepage.visaocliente.componentes.muralcomponentes.Aviso
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE

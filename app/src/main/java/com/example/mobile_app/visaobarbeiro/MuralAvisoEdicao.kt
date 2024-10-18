@@ -7,11 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,17 +19,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MuralEdicao() {
+fun MuralEdicao(titulo: String, descricao: String, navController: NavController, viewModel: MuralViewModel = viewModel()) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
-    var titulo by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
-
-    var selectedButton by remember { mutableStateOf<ButtonType?>(null) }
+    var currentTitulo by remember { mutableStateOf(titulo) }
+    var currentDescricao by remember { mutableStateOf(descricao) }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -64,16 +62,15 @@ fun MuralEdicao() {
             ) {
                 Column() {
                     Row(
-                        modifier = Modifier
-                            .padding(20.dp),
+                        modifier = Modifier.padding(20.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.seta_retorno), // Substitua pelo seu recurso de imagem
+                            painter = painterResource(id = R.drawable.seta_retorno),
                             contentDescription = "Descrição da imagem",
                             modifier = Modifier
-                                .size(50.dp) // Ajuste o tamanho da imagem conforme necessário
-                                .padding(start = 8.dp) // Espaçamento entre a imagem e o texto
+                                .size(50.dp)
+                                .padding(start = 8.dp)
                         )
 
                         Text(
@@ -83,172 +80,57 @@ fun MuralEdicao() {
                                 fontSize = 25.sp,
                                 color = Color.White
                             ),
-                            modifier = Modifier
-                                .padding(start = 35.dp)
+                            modifier = Modifier.padding(start = 35.dp)
                         )
                     }
 
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
                             text = "Titulo:",
-                            style = TextStyle(
-                                fontSize = 25.sp,
-                                color = Color.White
-                            )
+                            style = TextStyle(fontSize = 25.sp, color = Color.White)
                         )
 
-                        // Adicionando um espaçamento entre o Text e o OutlinedTextField
-                        Spacer(modifier = Modifier.height(15.dp)) // Define o espaçamento desejado
+                        Spacer(modifier = Modifier.height(15.dp))
 
                         OutlinedTextField(
-                            value = titulo,
-                            onValueChange = { titulo = it },
+                            value = currentTitulo,
+                            onValueChange = { currentTitulo = it },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .border(
-                                    0.dp,
-                                    Color.Transparent,
-                                    RoundedCornerShape(0.dp)
-                                ) // Remove as bordas padrão do OutlinedTextField
-                                .padding(bottom = 4.dp) // Espaçamento para a borda inferior
+                                .border(0.dp, Color.Transparent, RoundedCornerShape(0.dp))
+                                .padding(bottom = 4.dp)
                         )
-
 
                         Text(
                             text = "Descrição:",
-                            style = TextStyle(
-                                fontSize = 25.sp,
-                                color = Color.White
-                            )
+                            style = TextStyle(fontSize = 25.sp, color = Color.White)
                         )
 
-                        // Adicionando um espaçamento entre o Text e o OutlinedTextField
-                        Spacer(modifier = Modifier.height(15.dp)) // Define o espaçamento desejado
+                        Spacer(modifier = Modifier.height(15.dp))
 
                         OutlinedTextField(
-                            value = descricao,
-                            onValueChange = { descricao = it },
+                            value = currentDescricao,
+                            onValueChange = { currentDescricao = it },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(100.dp)
-                                .border(
-                                    0.dp,
-                                    Color.Transparent,
-                                    RoundedCornerShape(0.dp)
-                                ) // Remove as bordas padrão do OutlinedTextField
-                                .padding(bottom = 4.dp) // Espaçamento para a borda inferior
+                                .border(0.dp, Color.Transparent, RoundedCornerShape(0.dp))
+                                .padding(bottom = 4.dp)
                         )
 
-                        Text(
-                            modifier = Modifier.padding(10.dp),
-                            text = "Urgência:",
-                            style = TextStyle(
-                                fontSize = 25.sp,
-                                color = Color.White,
-                            )
-                        )
-
-                        Row {
-                            Button(
-                                onClick = {
-                                    selectedButton =
-                                        if (selectedButton == ButtonType.INFO) null else ButtonType.INFO
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (selectedButton == ButtonType.INFO) colorResource(
-                                        id = R.color.btn_editar
-                                    ) else Color.Transparent,
-                                    contentColor = Color.White
-                                ),
-                                shape = RoundedCornerShape(12.dp),
-                                modifier = Modifier
-                                    .width(100.dp) // Faz os botões ocuparem o mesmo espaço
-                                    .height(50.dp)
-                                    .padding(horizontal = 8.dp)
-                                    .border(
-                                        width = 0.5.dp, // Largura da borda
-                                        color = Color.White, // Cor da borda
-                                        shape = RoundedCornerShape(12.dp) // Forma da borda
-                                    )
-                            ) {
-                                Text(text = "Info")
-                            }
-                            Button(
-                                onClick = {
-                                    selectedButton =
-                                        if (selectedButton == ButtonType.ALERT) null else ButtonType.ALERT
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (selectedButton == ButtonType.ALERT) colorResource(
-                                        id = R.color.btn_editar
-                                    ) else Color.Transparent,
-                                    contentColor = Color.White
-                                ),
-                                shape = RoundedCornerShape(12.dp),
-                                modifier = Modifier
-                                    .width(110.dp) // Faz os botões ocuparem o mesmo espaço
-                                    .height(50.dp)
-                                    .padding(horizontal = 8.dp)
-                                    .border(
-                                        width = 0.5.dp, // Largura da borda
-                                        color = Color.White, // Cor da borda
-                                        shape = RoundedCornerShape(12.dp) // Forma da borda
-                                    )
-                            ) {
-                                Text(text = "Alerta")
-                            }
-                            Button(
-                                onClick = {
-                                    selectedButton =
-                                        if (selectedButton == ButtonType.URGENT) null else ButtonType.URGENT
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (selectedButton == ButtonType.URGENT) colorResource(
-                                        id = R.color.btn_editar
-                                    ) else Color.Transparent,
-                                    contentColor = Color.White
-                                ),
-                                shape = RoundedCornerShape(12.dp),
-                                modifier = Modifier
-                                    .width(120.dp) // Faz os botões ocuparem o mesmo espaço
-                                    .height(50.dp)
-                                    .padding(horizontal = 8.dp)
-                                    .border(
-                                        width = 0.5.dp, // Largura da borda
-                                        color = Color.White, // Cor da borda
-                                        shape = RoundedCornerShape(12.dp) // Forma da borda
-                                    )
-                            ) {
-                                Text(text = "Urgente")
-                            }
-                        }
-
+                        // Botões para salvar ou cancelar
                         Spacer(modifier = Modifier.height(30.dp))
 
                         Row {
                             Button(
-                                {},
-                                Modifier
-                                    .width(140.dp)
-                                    .height(50.dp)
-                                    .padding(horizontal = 8.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(id = R.color.btn_cancelar), // Cor de fundo do botão "Info"
-                                    contentColor = Color.White   // Cor do texto do botão "Info"
-                                ),
-                                shape = RoundedCornerShape(10.dp),
-
-                                ) {
-                                Text(
-                                    text = "Cancelar",
-                                    fontSize = 16.sp, // Define o tamanho da fonte
-                                    fontWeight = FontWeight.Bold, // Define o peso da fonte (negrito, normal, etc.)
-                                )
-                            }
-
-                            Button(
-                                {},
-                                Modifier
+                                onClick = {
+                                    // Atualiza a itemAtual na ViewModel com os dados do usuário
+                                    viewModel.itemAtual = viewModel.itemAtual.copy(titulo = currentTitulo, descricao = currentDescricao)
+                                    viewModel.salvar()
+                                    // Voltar para a tela anterior após salvar
+                                    navController.popBackStack()
+                                },
+                                modifier = Modifier
                                     .width(140.dp)
                                     .height(50.dp)
                                     .padding(horizontal = 8.dp),
@@ -264,10 +146,31 @@ fun MuralEdicao() {
                                     fontWeight = FontWeight.Bold,
                                 )
                             }
+
+                            Button(
+                                onClick = {
+                                    // Voltar sem salvar
+                                    navController.popBackStack()
+                                },
+                                modifier = Modifier
+                                    .width(140.dp)
+                                    .height(50.dp)
+                                    .padding(horizontal = 8.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colorResource(id = R.color.btn_cancelar),
+                                    contentColor = Color.White
+                                ),
+                                shape = RoundedCornerShape(10.dp),
+                            ) {
+                                Text(
+                                    text = "Cancelar",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
                         }
                     }
                 }
-
             }
         }
     }
@@ -277,5 +180,7 @@ fun MuralEdicao() {
 @Preview
 @Composable
 fun AvisoEditar() {
-    MuralEdicao()
+    // Passar valores default para a pré-visualização
+    val navController = rememberNavController() // Utilize um NavController fictício
+    MuralEdicao(titulo = "Título de Exemplo", descricao = "Descrição de Exemplo", navController = navController)
 }

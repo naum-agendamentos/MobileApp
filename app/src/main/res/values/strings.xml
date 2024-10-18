@@ -62,4 +62,12 @@
 
     <!--Mural visão cliente-->
     <string name="title_activity_mural">MURAL DE AVISOS</string>
+
+<!--    Mural Listagem - visão barbeiro-->
+
+    <string name="mural_de_avisos">MURAL DE AVISOS</string>
+    <string name="data_exemplo">10/09/2024 - 18:42</string>
+    <string name="icone_adicionar_desc">Descrição da imagem</string>
+    <string name="editar_aviso">✏️</string>
+
 </resources>

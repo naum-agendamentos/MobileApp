@@ -3,6 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
 
         <!--coloque o ip do seu computador-->
-        <domain includeSubdomains="true">111.111.11.1</domain>
+        <domain includeSubdomains="true">192.168.18.46</domain>
     </domain-config>
 </network-security-config>
