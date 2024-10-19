@@ -1,4 +1,4 @@
-package com.example.mobile_app.visaobarbeiro
+package com.example.mobile_app.visaobarbeiro.ver_barbeiro
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,8 +21,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,12 +36,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_app.R
 import com.example.mobile_app.ui.theme.mobile_appTheme
+import com.example.mobile_app.visaobarbeiro.IconRow
+import com.example.mobile_app.visaobarbeiro.navBarb
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.BarbeirosViewModel
+import com.example.mobile_app.visaobarbeiro.ver_barbeiro.componente.CardBarbeiro
 
 @Composable
-fun TelaBarbeiros() {
+fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
+    val barbeiros = remember { viewModel.barbeiros }
+    val isLoading by remember { viewModel.isLoading }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -51,7 +61,6 @@ fun TelaBarbeiros() {
         )
 
         navBarb()
-
 
         Row(
             modifier = Modifier
@@ -95,40 +104,34 @@ fun TelaBarbeiros() {
             }
         }
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .width(350.dp)
-                .height(550.dp)
-                .background(Color(0x0FFFFFFF), shape = RoundedCornerShape(15.dp))
-        ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .width(350.dp)
+                    .height(550.dp)
+                    .background(Color(0x0FFFFFFF), shape = RoundedCornerShape(15.dp))
             ) {
-
-                val barbeiros = listOf(
-                    Pair("Barbeiro 1", R.drawable.barbeiro1),
-                    Pair("Barbeiro 2", R.drawable.barbeiro2),
-                    Pair("Barbeiro 3", R.drawable.barbeiro3),
-                    Pair("Barbeiro 4", R.drawable.barbeiro3)
-                )
-
-                items(barbeiros) { (name, imageRes) ->
-                    CardBarbeiro(name = name, imageRes = imageRes)
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(barbeiros) { barbeiro ->
+                        CardBarbeiro(name = barbeiro.nome, imageUrl = barbeiro.imagemUrl)
+                    }
                 }
             }
         }
     }
 
     IconRow()
-
 }
 
-
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun TelaBarb() {
     mobile_appTheme {
