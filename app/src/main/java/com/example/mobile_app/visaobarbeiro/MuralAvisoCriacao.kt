@@ -266,7 +266,7 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                 }
             }
         }
-        IconRow()
+       // IconRow()
     }
 }
 

@@ -84,7 +84,7 @@ fun EditarBarbeiro() {
             )
         }
     }
-    IconRow()
+   // IconRow()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -22,14 +22,13 @@ import com.example.mobile_app.R
 
 @Composable
 fun navBarb() {
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
+            .padding(top = 16.dp) // Adicione um padding superior para empurrar a barra para baixo
             .wrapContentSize(Alignment.TopCenter)
     ) {
-
         Row(
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -37,7 +36,6 @@ fun navBarb() {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
             Image(
                 painter = painterResource(id = R.drawable.logo_nav_barb),
                 contentDescription = "Login image",

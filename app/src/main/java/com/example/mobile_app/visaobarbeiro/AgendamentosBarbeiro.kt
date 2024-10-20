@@ -201,7 +201,7 @@ fun ScheduleScreen() {
 
     }
 
-    IconRow()
+  //  IconRow()
 
 }
 

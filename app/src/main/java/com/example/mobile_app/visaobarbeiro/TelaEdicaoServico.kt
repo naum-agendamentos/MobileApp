@@ -79,7 +79,7 @@ fun EdicaoServ() {
             )
         }
     }
-    IconRow()
+    //IconRow()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

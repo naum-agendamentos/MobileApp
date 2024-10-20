@@ -87,7 +87,7 @@ fun BarbeiroBloqueioDiaHora() {
                     )
 
                     items(barbeiros) { (name, imageRes) ->
-                        CardBarbeiro(name = name, imageRes = imageRes)
+                        //CardBarbeiro(name = name, imageRes = imageRes)
                     }
                 }
             }

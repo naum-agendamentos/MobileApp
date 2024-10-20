@@ -161,7 +161,7 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
                 }
             }
         }
-        IconRow()
+       // IconRow()
     }
 }
 

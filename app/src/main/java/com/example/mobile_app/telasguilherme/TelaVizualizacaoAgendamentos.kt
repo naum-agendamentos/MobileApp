@@ -127,7 +127,7 @@ fun AgendamentosCliente() {
 
         }
     }
-    IconRow()
+   // IconRow()
 }
 
 

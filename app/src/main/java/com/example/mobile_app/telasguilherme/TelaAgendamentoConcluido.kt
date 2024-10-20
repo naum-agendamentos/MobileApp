@@ -147,7 +147,7 @@ fun AgendamentoConcluido() {
 
         }
     }
-    IconRow()
+    //IconRow()
 }
 
 

@@ -79,7 +79,7 @@ fun CadastroServico() {
             )
         }
     }
-    IconRow()
+   // IconRow()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

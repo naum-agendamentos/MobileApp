@@ -152,7 +152,7 @@ fun ServicoEscolha() {
             )
         }
     }
-    IconRow()
+    //IconRow()
 }
 
 @Composable

@@ -174,7 +174,7 @@ fun MuralEdicao(titulo: String, descricao: String, navController: NavController,
             }
         }
     }
-    IconRow()
+  //  IconRow()
 }
 
 @Preview

@@ -41,7 +41,7 @@ import com.example.mobile_app.R
 import com.example.mobile_app.ui.theme.mobile_appTheme
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
-import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.BarbeirosViewModel
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.componente.CardBarbeiro
 
 @Composable
@@ -121,14 +121,14 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(barbeiros) { barbeiro ->
-                        CardBarbeiro(name = barbeiro.nome, imageUrl = barbeiro.imagemUrl)
+                        CardBarbeiro(name = barbeiro.nome, imageUrl = barbeiro.foto)
                     }
                 }
             }
         }
     }
 
-    IconRow()
+    IconRow(activeIcon = R.drawable.pngbarbeiros)
 }
 
 @Preview(showBackground = true, apiLevel = 34)

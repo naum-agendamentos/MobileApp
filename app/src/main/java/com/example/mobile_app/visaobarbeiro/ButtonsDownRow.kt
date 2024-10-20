@@ -3,9 +3,14 @@ package com.example.mobile_app.visaobarbeiro
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,10 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.example.mobile_app.R
 
 @Composable
-fun IconRow() {
+fun IconRow(activeIcon: Int) {
     Box(
-        modifier = Modifier
-            .fillMaxSize() // Ocupar toda a tela
+        modifier = Modifier.fillMaxSize() // Ocupar toda a tela
     ) {
         Column(
             modifier = Modifier.fillMaxSize(), // Ocupar toda a tela
@@ -43,7 +47,7 @@ fun IconRow() {
                 )
 
                 icons.forEach { iconRes ->
-                    IconBox(iconRes)
+                    IconBox(iconRes, iconRes == activeIcon)
                 }
             }
         }
@@ -51,20 +55,21 @@ fun IconRow() {
 }
 
 @Composable
-fun IconBox(iconRes: Int) {
+fun IconBox(iconRes: Int, isActive: Boolean) {
+    val backgroundColor = if (isActive) Color(0xFF8B8000) else Color(0xFF333333) // Altera a cor de fundo com base na atividade
+
     Box(
         modifier = Modifier
             .offset(y = -40.dp)
             .size(50.dp)
-            .background(Color(0xFF333333), shape = RoundedCornerShape(15.dp))
+            .background(backgroundColor, shape = RoundedCornerShape(15.dp))
             .border(1.dp, Color(0xFF8B8000), shape = RoundedCornerShape(15.dp)),
         contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = iconRes),
             contentDescription = null,
-            modifier = Modifier
-                .size(30.dp)
+            modifier = Modifier.size(30.dp)
         )
     }
 }
@@ -72,5 +77,5 @@ fun IconBox(iconRes: Int) {
 @Preview(showSystemUi = false, showBackground = true)
 @Composable
 fun IconRowPreview() {
-    IconRow()
+    IconRow(activeIcon = R.drawable.pngbarbeiros) // Exemplo de visualização com o ícone "barbeiros" ativo
 }

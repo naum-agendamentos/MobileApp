@@ -258,7 +258,7 @@ fun Dashboard(name: String, modifier: Modifier = Modifier) {
             }
         }
     }
-    IconRow()
+  //  IconRow()
 }
 
 @Preview(showBackground = true, showSystemUi = true)
