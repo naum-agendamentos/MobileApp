@@ -3,7 +3,6 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -27,10 +26,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.R
-import com.example.mobile_app.visaobarbeiro.IconRow
-import com.example.mobile_app.visaobarbeiro.navBarb
+import com.example.mobile_app.visaobarbeiro.componentes.IconRow
+import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
-import com.example.mobile_app.visaobarbeiro.telas_barbeiro.cadastrar_barbeiro.componente.CadastrarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.editar_barbeiro.componente.EditarBarbeiro
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -242,7 +240,7 @@ fun BarbeiroEdit(viewModel: BarbeirosViewModel = viewModel(), navController: Nav
         }
     }
 
-    IconRow(activeIcon = R.drawable.pngbarbeiros)
+    IconRow(navController = navController, activeIcon = R.drawable.pngbarbeiros)
 }
 
 @Composable

@@ -35,15 +35,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mobile_app.R
-import com.example.mobile_app.ui.theme.mobile_appTheme
-import com.example.mobile_app.visaobarbeiro.IconRow
-import com.example.mobile_app.visaobarbeiro.navBarb
+import com.example.mobile_app.visaobarbeiro.componentes.IconRow
+import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.componente.CardBarbeiro
 
@@ -141,7 +139,7 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel(), navController: Na
         }
     }
 
-    IconRow(activeIcon = R.drawable.pngbarbeiros)
+    IconRow(navController = navController, activeIcon = R.drawable.pngbarbeiros)
 }
 
 

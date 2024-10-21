@@ -21,8 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
-import com.example.mobile_app.visaobarbeiro.IconRow
-import com.example.mobile_app.visaobarbeiro.navBarb
+import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController

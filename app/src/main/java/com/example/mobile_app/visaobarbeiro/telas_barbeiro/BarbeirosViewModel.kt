@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mobile_app.visaobarbeiro.api.RetrofitService
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.cadastrar_barbeiro.componente.CadastrarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.editar_barbeiro.componente.EditarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.VerBarbeiro
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class BarbeirosViewModel : ViewModel() {
     private val _barbeiros = mutableStateListOf<VerBarbeiro>()
