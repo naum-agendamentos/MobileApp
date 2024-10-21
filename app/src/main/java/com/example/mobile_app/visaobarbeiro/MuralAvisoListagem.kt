@@ -1,6 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,14 +24,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
+fun MuralListagem(navController: NavHostController, viewModel: MuralViewModel = viewModel()) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
     Box(
@@ -70,10 +76,14 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
 
                 Image(
                     painter = painterResource(id = R.drawable.icon_adicionar),
-                    contentDescription = stringResource(id = R.string.icone_adicionar_desc), // Usando string do resources
+                    contentDescription = stringResource(id = R.string.icone_adicionar_desc),
                     modifier = Modifier
-                        .size(50.dp)
-                        .padding(start = 8.dp)
+                        .size(70.dp)
+                        .padding(16.dp)
+                        .clickable {
+                            // Navegar para MuralCriacao
+                            navController.navigate("muralCriacao")
+                        }
                 )
             }
 
@@ -92,9 +102,14 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
                     modifier = Modifier.padding(10.dp)
                 ) {
                     items(items = viewModel.getAvisos()) { item ->
+                        // Formatação da data com '/'
+                        val dataFormatada = item.data?.let {
+                            val partes = it.split("T")
+                            "${partes[0].split("-").reversed().joinToString("/")} - ${partes[1]}"
+                        } ?: "Data não disponível" // Caso a data seja nula
 
                         Text(
-                            text = stringResource(id = R.string.data_exemplo), // Usando string do resources
+                            text = dataFormatada,
                             style = TextStyle(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp,
@@ -103,12 +118,20 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
                             modifier = Modifier.padding(8.dp)
                         )
 
+                        // Definindo a cor da borda com base no tipoAviso
+                        val borderColor = when (item.tipoAviso) {
+                            "INFORMACAO" -> Color.Blue
+                            "ALERTA" -> Color.Yellow
+                            "URGENTE" -> Color.Red
+                            else -> Color.Transparent // Cor padrão se não corresponder
+                        }
+
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .border(
                                     1.dp,
-                                    Color.White,
+                                    borderColor,
                                     RoundedCornerShape(5.dp)
                                 )
                                 .padding(8.dp)
@@ -136,8 +159,7 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
 
                                 Button(
                                     onClick = {
-//                                                viewModel.itemAtual = item
-//                                                navController.navigate("muralEdicao/${item.titulo}/${item.descricao}")
+                                        navController.navigate("muralEdicao/${item.id}/${item.titulo}/${item.descricao}")
                                     },
                                     modifier = Modifier
                                         .width(120.dp)
@@ -150,7 +172,7 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
                                     shape = RoundedCornerShape(10.dp),
                                 ) {
                                     Text(
-                                        text = "Editar",
+                                        text = stringResource(id = R.string.editar_button), // Correção
                                         fontSize = 16.sp,
                                         fontWeight = FontWeight.Bold,
                                     )
@@ -159,6 +181,7 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
                         }
                     }
                 }
+
             }
         }
         IconRow()
@@ -167,6 +190,7 @@ fun MuralListagem(viewModel: MuralViewModel = viewModel()) {
 
 @Preview
 @Composable
-fun MuralBarbeiro() {
-    MuralListagem()
+fun MuralAvisoListagemPreview() {
+    val navController = rememberNavController() // Cria um navController fictício
+    MuralListagem(navController = navController)
 }

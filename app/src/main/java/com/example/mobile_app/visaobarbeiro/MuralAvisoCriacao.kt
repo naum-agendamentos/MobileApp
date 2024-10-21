@@ -1,6 +1,9 @@
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -8,6 +11,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,8 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,18 +33,18 @@ import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
-
 
 enum class ButtonType {
     INFO, ALERT, URGENT
 }
 
 @Composable
-fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = Modifier) {
+fun MuralCriacao(navController: NavHostController, viewModel: MuralViewModel = viewModel(), context: Context) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
-    var titulo by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
+    var showToast by remember { mutableStateOf(false) }
 
     var selectedButton by remember { mutableStateOf<ButtonType?>(null) }
 
@@ -77,14 +83,15 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.seta_retorno),
-                            contentDescription = "Descrição da imagem",
+                            contentDescription = "Voltar",
                             modifier = Modifier
                                 .size(50.dp)
                                 .padding(start = 8.dp)
+                                .clickable { navController.navigate("muralListagem") } // Navegar para MuralListagem
                         )
 
                         Text(
-                            text = "CRIAÇÃO DE AVISO",
+                            text = stringResource(R.string.title_activity_mural_criacao),
                             style = TextStyle(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 25.sp,
@@ -97,7 +104,7 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
 
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
-                            text = "Titulo:",
+                            text = stringResource(R.string.titulo_label),
                             style = TextStyle(
                                 fontSize = 25.sp,
                                 color = Color.White
@@ -116,7 +123,7 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                         )
 
                         Text(
-                            text = "Descrição:",
+                            text = stringResource(R.string.descricao_label),
                             style = TextStyle(
                                 fontSize = 25.sp,
                                 color = Color.White
@@ -135,12 +142,14 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                             onValueChange = { viewModel.itemAtual = viewModel.itemAtual.copy(descricao = it) }
                         )
 
+                        viewModel.itemAtual = viewModel.itemAtual.copy(barbeiroId  = 1)
+                        viewModel.itemAtual = viewModel.itemAtual.copy(url = "https://www.youtube.com/")
+
                         Text(
-                            modifier = Modifier.padding(10.dp),
-                            text = "Urgência:",
+                            text = stringResource(R.string.urgencia_label),
                             style = TextStyle(
                                 fontSize = 25.sp,
-                                color = Color.White,
+                                color = Color.White
                             )
                         )
 
@@ -169,7 +178,7 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                                         shape = RoundedCornerShape(12.dp)
                                     )
                             ) {
-                                Text(text = "Info")
+                                Text(text = stringResource(R.string.info_button))
                             }
 
                             Button(
@@ -195,7 +204,7 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                                         shape = RoundedCornerShape(12.dp)
                                     )
                             ) {
-                                Text(text = "Alerta")
+                                Text(text = stringResource(R.string.alert_button))
                             }
 
                             Button(
@@ -221,7 +230,7 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                                         shape = RoundedCornerShape(12.dp)
                                     )
                             ) {
-                                Text(text = "Urgente")
+                                Text(text = stringResource(R.string.urgent_button))
                             }
                         }
 
@@ -233,22 +242,10 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                             modifier = Modifier.align(Alignment.CenterHorizontally) // Centraliza os botões
                         ) {
                             Button(
-                                onClick = { /* Cancelar ação */ },
-                                Modifier
-                                    .width(140.dp)
-                                    .height(50.dp)
-                                    .padding(horizontal = 8.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(id = R.color.btn_cancelar),
-                                    contentColor = Color.White
-                                ),
-                                shape = RoundedCornerShape(10.dp),
-                            ) {
-                                Text(text = "Cancelar", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                            }
-
-                            Button(
-                                onClick = { viewModel.salvar() },
+                                onClick = {
+                                    viewModel.salvar()
+                                    showToast = true // Sinaliza que o Toast deve ser exibido
+                                },
                                 Modifier
                                     .width(140.dp)
                                     .height(50.dp)
@@ -259,7 +256,16 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
                                 ),
                                 shape = RoundedCornerShape(10.dp),
                             ) {
-                                Text(text = "Cadastrar", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                                Text(text = stringResource(R.string.cadastrar_button), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                            }
+
+                            val cadastradoSucessoMessage = stringResource(R.string.cadastrado_sucesso)
+
+                            LaunchedEffect(showToast) {
+                                if (showToast) {
+                                    Toast.makeText(context, cadastradoSucessoMessage, Toast.LENGTH_SHORT).show()
+                                    showToast = false // Reseta o estado para evitar múltiplas exibições
+                                }
                             }
                         }
                     }
@@ -272,6 +278,8 @@ fun MuralCriacao(viewModel: MuralViewModel = viewModel(), modifier: Modifier = M
 
 @Preview
 @Composable
-fun MuralAviso() {
-    MuralCriacao()
+fun MuralAvisoPreview() {
+    val context = LocalContext.current
+    val navController = rememberNavController() // Cria um navController fictício
+    MuralCriacao(navController = navController, context = context)
 }
