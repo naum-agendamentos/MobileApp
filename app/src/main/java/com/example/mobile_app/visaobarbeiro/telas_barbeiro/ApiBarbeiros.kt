@@ -14,6 +14,9 @@ interface ApiBarbeiros {
     @GET("barbeiros")
     suspend fun get(): Response<List<VerBarbeiro>>
 
+    @GET("barbeiros/{id}")
+    suspend fun getBarbeiroPorId(@Path("id") barbeiroId: Long): Response<List<VerBarbeiro>>
+
     @POST("barbeiros")
     suspend fun cadastrar(@Body novoBarbeiro: CadastrarBarbeiro): Response<VerBarbeiro>
 

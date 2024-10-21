@@ -32,7 +32,18 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
             Servicos(viewModel = ServicosViewModel(), navController = navController)
         }
         composable("cadastrar_servico") {
+            CadastroServico(navController = navController)
+        }
 
+        composable("editar_servico/{servicoId}") { backStackEntry ->
+            val servicoId = backStackEntry.arguments?.getString("servicoId")?.toLongOrNull()
+            Log.d("NavGraph", "ID do barbeiro recebido: $servicoId") // Verificando o ID recebido
+            if (servicoId != null) {
+               // BarbeiroEdit(navController = navController, servicoId = servicoId)
+            } else {
+                // Lidar com o caso de ID nulo
+                Log.e("NavGraph", "ID do serviço é nulo.")
+            }
         }
     }
 }

@@ -142,7 +142,7 @@ fun Servicos(viewModel: ServicosViewModel = viewModel(), navController: NavContr
                     items(servicos) { servico ->
                         Log.d("TelaServicos", "ID do serviço: ${servico.id}")
                         CardServico(servico = servico) {
-                            navController.navigate("editar_servicos/${servico.id}") // Navegando com ID
+                            navController.navigate("editar_servico/${servico.id}") // Navegando com ID
                         }
                     }
                 }

@@ -308,7 +308,7 @@ fun Editar(
     descricao: String,
     foto: String,
     viewModel: BarbeirosViewModel,
-    navController: NavController, // Adicione o NavController como parâmetro
+    navController: NavController,
     onError: (String) -> Unit
 ) {
     Column(
