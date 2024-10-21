@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.ver_barbeiro
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +25,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.mobile_app.R
 import com.example.mobile_app.ui.theme.mobile_appTheme
 import com.example.mobile_app.visaobarbeiro.IconRow
@@ -45,10 +48,10 @@ import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.componente.CardBarbeiro
 
 @Composable
-fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
+fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel(), navController: NavController) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
     val barbeiros = remember { viewModel.barbeiros }
-    val isLoading by remember { viewModel.isLoading }
+    val isLoading by viewModel.isLoading // Atualização aqui
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -85,7 +88,7 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
-                onClick = { /* Adicione a ação desejada aqui */ },
+                onClick = { navController.navigate("cadastrar_barbeiro") },
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(Color.Transparent),
                 contentPadding = PaddingValues(0.dp),
@@ -104,7 +107,12 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
             }
         }
 
-        if (isLoading) {
+        // Use LaunchedEffect para recarregar barbeiros ao entrar na tela
+        LaunchedEffect(Unit) {
+            viewModel.fetchBarbeiros()
+        }
+
+        if (isLoading) { // Alteração aqui
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
             Box(
@@ -121,7 +129,12 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(barbeiros) { barbeiro ->
-                        CardBarbeiro(name = barbeiro.nome, imageUrl = barbeiro.foto)
+                        barbeiro.foto?.let { imageUrl ->
+                            Log.d("TelaBarbeiros", "ID do barbeiro: ${barbeiro.id}") // Adicione este log
+                            CardBarbeiro(name = barbeiro.nome, imageUrl = imageUrl) {
+                                navController.navigate("editar_barbeiro/${barbeiro.id}") // Navegando com ID
+                            }
+                        }
                     }
                 }
             }
@@ -131,10 +144,12 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel()) {
     IconRow(activeIcon = R.drawable.pngbarbeiros)
 }
 
-@Preview(showBackground = true, apiLevel = 34)
-@Composable
-fun TelaBarb() {
-    mobile_appTheme {
-        TelaBarbeiros()
-    }
-}
+
+
+//@Preview(showBackground = true, apiLevel = 34)
+//@Composable
+//fun TelaBarb() {
+//    mobile_appTheme {
+//        TelaBarbeiros()
+//    }
+//}

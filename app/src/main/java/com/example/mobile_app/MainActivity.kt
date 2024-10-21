@@ -1,10 +1,12 @@
 package com.example.mobile_app
 
 import BarbeiroCad
+import NavGraph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
 
 
 class MainActivity : ComponentActivity() {
@@ -12,8 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BarbeiroCad()
-            //TelaBarbeiros()
+            //BarbeiroCad()
+            NavGraph()
             //MuralAvisos()
 //            MyApp()
         }

@@ -3,6 +3,7 @@ package com.example.mobile_app.visaobarbeiro.ver_barbeiro.componente
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -21,28 +22,28 @@ import coil.compose.rememberImagePainter
 import com.example.mobile_app.R
 
 @Composable
-fun CardBarbeiro(name: String, imageUrl: String?) {
+fun CardBarbeiro(name: String, imageUrl: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .width(154.dp)
             .height(295.dp)
-            .border(1.dp, Color.White, shape = RoundedCornerShape(15.dp)) // Adiciona borda ao card
+            .border(1.dp, Color.White, shape = RoundedCornerShape(15.dp))
     ) {
         Column(
             modifier = Modifier
+                .clickable { onClick() } // Mantém a funcionalidade de clique
                 .fillMaxSize()
                 .background(Color(0xFF424242)),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
-                // Carregando a imagem a partir da URL
                 Image(
                     painter = rememberImagePainter(
                         data = imageUrl,
                         builder = {
-                            placeholder(R.drawable.placeholder_image) // Placeholder enquanto a imagem carrega
-                            error(R.drawable.error_image) // Imagem de erro, se a URL falhar
+                            placeholder(R.drawable.placeholder_image)
+                            error(R.drawable.error_image)
                         }
                     ),
                     contentDescription = null,
@@ -50,16 +51,15 @@ fun CardBarbeiro(name: String, imageUrl: String?) {
                     modifier = Modifier
                         .width(154.dp)
                         .height(208.dp)
-                        .background(Color(0xFF424242)) // Cor de fundo da imagem
+                        .background(Color(0xFF424242))
                 )
 
-                // Adiciona uma borda branca na parte inferior da imagem
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(1.dp) // Altura da borda
+                        .height(1.dp)
                         .align(Alignment.BottomCenter)
-                        .background(Color.White) // Cor da borda
+                        .background(Color.White)
                 )
             }
             Text(
@@ -77,5 +77,5 @@ fun CardBarbeiro(name: String, imageUrl: String?) {
 @Preview(showBackground = false)
 @Composable
 fun CardBarbeiroPreview() {
-    CardBarbeiro(name = "Bryan Liaris", imageUrl = "https://example.com/barbeiro1.jpg")
+    CardBarbeiro(name = "Bryan Liaris", imageUrl = "https://example.com/barbeiro1.jpg", onClick = {})
 }

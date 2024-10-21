@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
@@ -51,7 +52,7 @@ import com.example.mobile_app.visaobarbeiro.telas_barbeiro.cadastrar_barbeiro.co
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
+fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel(), navController: NavController) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
     var nome by remember { mutableStateOf("") }
@@ -104,7 +105,7 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
                             modifier = Modifier.padding(bottom = 16.dp)
                         ) {
                             Button(
-                                onClick = { /* Adicione a ação desejada aqui */ },
+                                onClick = { navController.popBackStack() },
                                 shape = CircleShape,
                                 colors = ButtonDefaults.buttonColors(Color.Transparent),
                                 contentPadding = PaddingValues(0.dp),
@@ -157,7 +158,8 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
                                 focusedBorderColor = Color.White,
                                 unfocusedBorderColor = Color.White,
                                 cursorColor = Color.White
-                            )
+                            ),
+                             textStyle = TextStyle(color = Color.White)
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
@@ -169,19 +171,25 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
                                 focusedBorderColor = Color.White,
                                 unfocusedBorderColor = Color.White,
                                 cursorColor = Color.White
-                            )
+                            ),
+                             textStyle = TextStyle(color = Color.White)
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
                             value = celular,
-                            onValueChange = { celular = it },
+                            onValueChange = {
+                                if (it.length <= 11) { // Limita a 11 caracteres
+                                    celular = it
+                                }
+                            },
                             label = { Text("Celular:", color = Color.White) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 focusedBorderColor = Color.White,
                                 unfocusedBorderColor = Color.White,
                                 cursorColor = Color.White
-                            )
+                            ),
+                            textStyle = TextStyle(color = Color.White)
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
@@ -194,7 +202,8 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
                                 focusedBorderColor = Color.White,
                                 unfocusedBorderColor = Color.White,
                                 cursorColor = Color.White
-                            )
+                            ),
+                             textStyle = TextStyle(color = Color.White)
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
@@ -207,7 +216,8 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
                                 focusedBorderColor = Color.White,
                                 unfocusedBorderColor = Color.White,
                                 cursorColor = Color.White
-                            )
+                            ),
+                             textStyle = TextStyle(color = Color.White)
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
@@ -219,7 +229,8 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
                                 focusedBorderColor = Color.White,
                                 unfocusedBorderColor = Color.White,
                                 cursorColor = Color.White
-                            )
+                            ),
+                             textStyle = TextStyle(color = Color.White)
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -239,8 +250,9 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel()) {
             senha = senha,
             confirmarSenha = confirmarSenha,
             descricao = descricao,
-            foto = uploadUrl ?: "",
+            foto = uploadUrl ?: "https://img.freepik.com/fotos-gratis/homem-barbeiro-profissional-com-uma-tesoura-cabeleireiro-elegante-na-barbearia_167187-796.jpg?size=626&ext=jpg",
             viewModel = viewModel,
+            navController = navController,
             onError = { errorMessage = it }
         )
     }
@@ -259,6 +271,7 @@ fun Cadastrado(
     descricao: String,
     foto: String,
     viewModel: BarbeirosViewModel,
+    navController: NavController,
     onError: (String) -> Unit
 ) {
     Column(
@@ -268,7 +281,7 @@ fun Cadastrado(
             .offset(y = -75.dp)
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
@@ -297,7 +310,7 @@ fun Cadastrado(
                                 foto = foto
                             )
                         )
-                        // Ação de navegação ou mensagem de sucesso
+                        navController.popBackStack()
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
@@ -309,8 +322,8 @@ fun Cadastrado(
     }
 }
 
-@Preview
-@Composable
-fun BarbeiroCadPreview() {
-    BarbeiroCad()
-}
+//@Preview
+//@Composable
+//fun BarbeiroCadPreview() {
+//    BarbeiroCad()
+//}
