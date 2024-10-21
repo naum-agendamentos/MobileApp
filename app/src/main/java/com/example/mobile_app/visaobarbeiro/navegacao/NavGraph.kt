@@ -3,9 +3,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mobile_app.visaobarbeiro.telas_servicos.ServicosViewModel
-import com.example.mobile_app.visaobarbeiro.telas_servicos.ver_servicos.Servicos
+import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
+import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.Servicos
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
+import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeirosAgendamento
 
 @Composable
 fun NavGraph(startDestination: String = "tela_barbeiros") {
@@ -28,6 +29,7 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
             }
         }
 
+        //Parte servicos
         composable("tela_servicos") {
             Servicos(viewModel = ServicosViewModel(), navController = navController)
         }
@@ -37,13 +39,18 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
 
         composable("editar_servico/{servicoId}") { backStackEntry ->
             val servicoId = backStackEntry.arguments?.getString("servicoId")?.toLongOrNull()
-            Log.d("NavGraph", "ID do barbeiro recebido: $servicoId") // Verificando o ID recebido
+            Log.d("NavGraph", "ID do servico recebido: $servicoId") // Verificando o ID recebido
             if (servicoId != null) {
-               // BarbeiroEdit(navController = navController, servicoId = servicoId)
+                EditServico(navController = navController, servicoId = servicoId)
             } else {
                 // Lidar com o caso de ID nulo
                 Log.e("NavGraph", "ID do serviço é nulo.")
             }
+        }
+
+        //parte-agendamentos
+        composable("telas_barbeiros_agendamento") {
+            TelaBarbeirosAgendamento(navController = navController)
         }
     }
 }

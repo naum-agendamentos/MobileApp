@@ -1,14 +1,10 @@
 package com.example.mobile_app
 
-import BarbeiroCad
 import NavGraph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.navigation.NavController
-import com.example.mobile_app.visaobarbeiro.telas_servicos.ver_servicos.Servicos
-import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
 
 
 class MainActivity : ComponentActivity() {
