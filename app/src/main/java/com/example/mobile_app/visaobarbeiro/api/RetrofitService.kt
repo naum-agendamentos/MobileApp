@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.api
 
+import com.example.mobile_app.visaobarbeiro.telas_agendamento.ApiAgendamentos
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ApiBarbeiros
 import com.example.mobile_app.visaobarbeiro.telas_servico.ApiServicos
 import okhttp3.OkHttpClient
@@ -7,9 +8,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
-    private const val BASE_URL_BARBEIRO = "http://192.168.15.4:8080/"
+    private const val BASE_URL_BARBEIRO = "http://54.161.184.186:8080/"
 
-    private val token = "yJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzI5NTM2NTk5LCJleHAiOjE3MzMxMzY1OTl9.F9TAg0i5RxLBTL_H2yNGbMQi5ht2doxqu6NpNk2YDTJ5zD_zJeIvAWEjhTwDCwVEFR8vn3OPLb46r_pqy8Hiyg"
+    private val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzI5NTU1MzcwLCJleHAiOjE3MzMxNTUzNzB9.G4P7ybqcSMSOrjkMK4mg4P24OKGhA3BWJsSqsflyLIsyxBjhb9erHconfmnrEhqj_P54pzlrhjpp86Tk204_VQ"
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor(token))
@@ -23,4 +24,6 @@ object RetrofitService {
 
     val apiBarbeiros: ApiBarbeiros = retrofit.create(ApiBarbeiros::class.java)
     val apiServicos: ApiServicos = retrofit.create(ApiServicos::class.java)
+    val apiAgendamentos: ApiAgendamentos = retrofit.create(ApiAgendamentos::class.java)
+
 }

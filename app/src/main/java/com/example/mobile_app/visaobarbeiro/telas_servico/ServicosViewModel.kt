@@ -27,10 +27,6 @@ class ServicosViewModel : ViewModel() {
 
     private val apiServico: ApiServicos = RetrofitService.apiServicos
 
-    init {
-        // Você pode inicializar com um valor padrão se desejar
-        getServicos(1)
-    }
 
     fun getServicos(idBarbearia: Long) {
         isLoading.value = true // Define loading como true antes da chamada

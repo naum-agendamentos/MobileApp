@@ -3,15 +3,22 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.visaobarbeiro.TelaInicial
 import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
 import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.Servicos
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeirosAgendamento
+import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
 
 @Composable
 fun NavGraph(startDestination: String = "tela_barbeiros") {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "tela_barbeiros") {
+    NavHost(navController = navController, startDestination = "tela_inicial") {
+        composable("tela_inicial") {
+            TelaInicial(navController = navController)
+        }
+
+        //parte barbeiro
         composable("tela_barbeiros") {
             TelaBarbeiros(navController = navController)
         }
@@ -51,6 +58,17 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
         //parte-agendamentos
         composable("telas_barbeiros_agendamento") {
             TelaBarbeirosAgendamento(navController = navController)
+        }
+
+        composable("buscar-agendamento/{barbeiroId}") { backStackEntry ->
+            val barbeiroId = backStackEntry.arguments?.getString("barbeiroId")?.toLongOrNull()
+            Log.d("NavGraph", "ID do agendamento recebido: $barbeiroId") // Verificando o ID recebido
+            if (barbeiroId != null) {
+              // AgendamentoBarbeiro(navController = navController, barbeiroId = barbeiroId)
+            } else {
+                // Lidar com o caso de ID nulo
+                Log.e("NavGraph", "ID do agendamento é nulo.")
+            }
         }
     }
 }

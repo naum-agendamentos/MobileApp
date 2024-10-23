@@ -113,7 +113,7 @@ fun TelaBarbeirosAgendamento(viewModel: BarbeirosViewModel = viewModel(), navCon
                         barbeiro.foto?.let { imageUrl ->
                             Log.d("TelaBarbeiros", "ID do barbeiro: ${barbeiro.id}") // Adicione este log
                             CardBarbeiro(name = barbeiro.nome, imageUrl = imageUrl) {
-                                navController.navigate("editar_barbeiro/${barbeiro.id}") // Navegando com ID
+                                navController.navigate("buscar-agendamento/${barbeiro.id}") // Navegando com ID
                             }
                         }
                     }
