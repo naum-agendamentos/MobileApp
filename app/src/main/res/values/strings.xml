@@ -68,6 +68,38 @@
     <string name="mural_de_avisos">MURAL DE AVISOS</string>
     <string name="data_exemplo">10/09/2024 - 18:42</string>
     <string name="icone_adicionar_desc">Descrição da imagem</string>
-    <string name="editar_aviso">✏️</string>
+
+<!--    Mural Edição - visão barbeiro-->
+
+    <string name="editar_aviso">EDITAR AVISO</string>
+    <string name="titulo_label">Titulo:</string>
+    <string name="descricao_label">Descrição:</string>
+    <string name="urgencia_label">Urgência:</string>
+
+    <!-- Botões de urgência -->
+    <string name="info_button">Info</string>
+    <string name="alert_button">Alerta</string>
+    <string name="urgent_button">Urgente</string>
+
+    <!-- Botão de edição -->
+    <string name="editar_button">Editar</string>
+
+    <!-- Mensagens de Toast -->
+    <string name="aviso_editado_sucesso">Aviso editado com sucesso!</string>
+
+    <!-- Descrições de imagem -->
+    <string name="imagem_retorno_desc">Seta de retorno</string>
+
+
+<!--    Mural Criação - visão barbeiro-->
+
+    <!-- Títulos e descrições -->
+    <string name="title_activity_mural_criacao">CRIAÇÃO DE AVISO</string>
+
+    <!-- Botão de cadastro -->
+    <string name="cadastrar_button">Cadastrar</string>
+
+    <!-- Mensagens de Toast -->
+    <string name="cadastrado_sucesso">Cadastrado com sucesso</string>
 
 </resources>

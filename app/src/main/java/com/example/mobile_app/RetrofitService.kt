@@ -1,8 +1,10 @@
 package com.example.mobile_app
 
 import com.example.mobile_app.visaocliente.componentes.muralcomponentes.ApiMural
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
 
 object RetrofitService {
 

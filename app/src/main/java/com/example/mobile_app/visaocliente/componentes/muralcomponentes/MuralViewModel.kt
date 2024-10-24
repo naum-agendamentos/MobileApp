@@ -6,13 +6,16 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mobile_app.RetrofitService
 import com.example.mobile_app.visaocliente.componentes.muralcomponentes.ApiMural
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MuralViewModel : ViewModel() {
-    private val apiMural : ApiMural
+    private val apiMural: ApiMural
     private val avisos = mutableStateListOf<Aviso>()
 
     var itemAtual by mutableStateOf(Aviso())
@@ -21,15 +24,17 @@ class MuralViewModel : ViewModel() {
         apiMural = RetrofitService.getApiAviso()
     }
 
-    fun getAvisos() : List<Aviso> {
-        GlobalScope.launch {
+
+    fun getAvisos(): List<Aviso> {
+        viewModelScope.launch {
             try {
                 val resposta = apiMural.get()
                 Log.i("api", "Resposta da api ${resposta.body()}")
                 if (resposta.isSuccessful) {
                     Log.i("api", "items da API: ${resposta.body()}")
                     avisos.clear()
-                    avisos.addAll(resposta.body() ?: emptyList())
+                    resposta.body()
+                        ?.let { avisos.addAll(it) } // Adiciona todos os avisos diretamente
                 } else {
                     Log.e("api", "Erro ao buscar items: ${resposta.errorBody()?.string()}")
                 }
@@ -41,28 +46,26 @@ class MuralViewModel : ViewModel() {
     }
 
     fun salvar() {
-        GlobalScope.launch {
+        viewModelScope.launch {
             try {
-                if(isNovo()){
-                    val resposta = apiMural.post(itemAtual)
+                val resposta = if (isNovo()) {
+                    apiMural.post(itemAtual)
+                } else {
+                    apiMural.put(itemAtual.id!!, itemAtual)
+                }
 
-                    if(resposta.isSuccessful){
-                        avisos.add(itemAtual)
-                    } else{
-                        Log.e("api", "Erro ao cadastrar aviso: ${resposta.errorBody()?.string()}")
-                    }
-                } else{
-                    val resposta = apiMural.put(itemAtual.id!!, itemAtual)
-
-                    if(resposta.isSuccessful){
+                if (resposta.isSuccessful) {
+                    if (isNovo()) {
+                        avisos.add(resposta.body()!!)
+                    } else {
                         val posicaoDoAtual = avisos.indexOfFirst { it.id == itemAtual.id }
                         avisos[posicaoDoAtual] = resposta.body()!!
-                    } else{
-                        Log.e("api", "Erro ao atualizar aviso: ${resposta.errorBody()?.string()}")
                     }
+                } else {
+                    Log.e("api", "Erro ao salvar aviso: ${resposta.errorBody()?.string()}")
                 }
-            } catch (exception: Exception){
-                Log.e("api", "Erro ao atualizar aviso", exception)
+            } catch (exception: Exception) {
+                Log.e("api", "Erro ao salvar aviso", exception)
             }
         }
     }
@@ -73,3 +76,4 @@ class MuralViewModel : ViewModel() {
         itemAtual = aviso
     }
 }
+

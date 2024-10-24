@@ -20,6 +20,6 @@ interface ApiMural {
     suspend fun post(@Body aviso: Aviso): Response<Aviso>
 
     @PUT("/mural-avisos/{id}") // mapeia o endpoint PUT /filmes/{id}
-    suspend fun put(@Path("id") id:Int, @Body Aviso: Aviso): Response<Aviso>
+    suspend fun put(@Path("id") id:Long, @Body Aviso: Aviso): Response<Aviso>
 
 }
