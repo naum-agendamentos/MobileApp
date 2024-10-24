@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 object RetrofitService {
 
     //Coloque o ip do seu computador aqui
-    val BASE_URL_FEIRA = "http://SEU IP:8080/"
+    val BASE_URL_FEIRA = "http://192.168.15.12:8080/"
 
     // função que retorna o cliente para a API de filmes
     fun getApiAviso(): ApiMural {

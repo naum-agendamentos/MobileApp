@@ -28,10 +28,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
+<<<<<<< HEAD
+import com.example.mobile_app.visaobarbeiro.componentes.navBarb
+=======
 import com.example.mobile_app.visaobarbeiro.IconRow
 import com.example.mobile_app.visaobarbeiro.navBarb
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+>>>>>>> main
 
 
 @Composable
@@ -184,7 +188,7 @@ fun MuralListagem(navController: NavHostController, viewModel: MuralViewModel = 
 
             }
         }
-        IconRow()
+       // IconRow()
     }
 }
 

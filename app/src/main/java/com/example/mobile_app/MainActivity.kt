@@ -1,14 +1,22 @@
 package com.example.mobile_app
 
+<<<<<<< HEAD
+import NavGraph
+=======
 import MuralCriacao
 import MuralEdicao
 import MuralListagem
 import android.content.Context
+>>>>>>> main
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+<<<<<<< HEAD
+import com.example.mobile_app.visaobarbeiro.componentes.BlackBackground
+
+=======
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -17,12 +25,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
+>>>>>>> main
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+<<<<<<< HEAD
+
+            BlackBackground {
+                NavGraph()
+            }
+
+=======
             // Chamar a Criação de Aviso
             //            val muralViewModel: MuralViewModel = viewModel()
             //            MuralCriacao(viewModel = muralViewModel, context = this)
@@ -64,6 +80,7 @@ fun MyApp(context: Context) {
                 viewModel = muralViewModel,
                 context = context
             )
+>>>>>>> main
         }
     }
 }

@@ -30,8 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobile_app.R
-import com.example.mobile_app.visaobarbeiro.IconRow
-import com.example.mobile_app.visaobarbeiro.navBarb
+import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -272,7 +271,7 @@ fun MuralCriacao(navController: NavHostController, viewModel: MuralViewModel = v
                 }
             }
         }
-        IconRow()
+       // IconRow()
     }
 }
 

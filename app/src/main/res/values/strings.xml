@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mobile_app</string>
+    <string name="app_name">Barbearia TM</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_seja_bem_vindo">SejaBemVindo</string>
     <string name="title_activity_tela_agendamentos">TelaAgendamentos</string>

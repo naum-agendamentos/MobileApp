@@ -2,19 +2,8 @@ package com.example.mobile_app.visaobarbeiro
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,10 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.mobile_app.R
+import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 
 @Composable
-fun botoesTelas() {
+fun TelaInicial(navController: NavController) {
 
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
@@ -47,10 +38,8 @@ fun botoesTelas() {
 
         navBarb()
 
-
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             Text(
                 text = "SEJA BEM VINDO, CARLOS!",
@@ -70,224 +59,70 @@ fun botoesTelas() {
                     .width(350.dp)
                     .height(500.dp)
                     .offset(y = -20.dp)
-
             ) {
-
                 Column(
-                    modifier = Modifier
-                    .fillMaxHeight(),
-                    verticalArrangement = Arrangement.SpaceEvenly) {
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .width(159.dp)
-                                .height(133.dp)
-                                .offset(y = 20.dp)
-                                .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
+                    // Definindo os botões e suas rotas
+                    val buttons = listOf(
+                        R.drawable.pngcalendario to Pair("AGENDAMENTOS", "telas_barbeiros_agendamento"),
+                        R.drawable.pngbarbeiros to Pair("BARBEIROS", "tela_barbeiros"),
+                        R.drawable.pngtesoura to Pair("SERVIÇOS", "tela_servicos"),
+                        R.drawable.pngrelogio to Pair("HORÁRIO", "tela_relogio"),
+                        R.drawable.pngalerta to Pair("MURAL", "tela_alerta"),
+                        R.drawable.pnggrafico to Pair("MEUS DADOS", "tela_grafico")
+                    )
 
+                    buttons.chunked(2).forEach { rowButtons ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.pngcalendario),
-                                contentDescription = "calendario",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .offset(y = -10.dp)
-                                    .width(58.dp)
-                                    .height(62.28.dp)
-                            )
-                            Text(
-                                text = "AGENDAMENTOS",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 105.dp)
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .width(159.dp)
-                                .height(133.dp)
-                                .offset(y = 20.dp)
-                                .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
-
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.pngbarbeiros),
-                                contentDescription = "Barbeiros",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .offset(y = -10.dp)
-                                    .width(58.dp)
-                                    .height(62.28.dp)
-                            )
-                            Text(
-                                text = "BARBEIROS",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 105.dp)
-                            )
+                            rowButtons.forEach { (iconRes, pair) ->
+                                val (buttonText, route) = pair
+                                Box(
+                                    modifier = Modifier
+                                        .width(159.dp)
+                                        .height(133.dp)
+                                        .offset(y = 20.dp)
+                                        .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
+                                        .clickable { navController.navigate(route) } // Navegação
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = iconRes),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .align(Alignment.Center)
+                                            .offset(y = -10.dp)
+                                            .width(58.dp)
+                                            .height(62.28.dp)
+                                    )
+                                    Text(
+                                        text = buttonText, // Usando texto fixo
+                                        style = TextStyle(
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 18.sp,
+                                            color = Color.White
+                                        ),
+                                        modifier = Modifier
+                                            .align(Alignment.TopCenter)
+                                            .padding(top = 105.dp)
+                                    )
+                                }
+                            }
                         }
                     }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .width(159.dp)
-                                .height(133.dp)
-                                .offset(y = 20.dp)
-                                .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
-
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.pngtesoura),
-                                contentDescription = "Serviços",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .offset(y = -10.dp)
-                                    .width(58.dp)
-                                    .height(62.28.dp)
-                            )
-                            Text(
-                                text = "SERVIÇOS",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 105.dp)
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .width(159.dp)
-                                .height(133.dp)
-                                .offset(y = 20.dp)
-                                .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
-
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.pngrelogio),
-                                contentDescription = "Horário",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .offset(y = -10.dp)
-                                    .width(58.dp)
-                                    .height(62.28.dp)
-                            )
-                            Text(
-                                text = "HORÁRIO",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 105.dp)
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .width(159.dp)
-                                .height(133.dp)
-                                .offset(y = 20.dp)
-                                .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
-
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.pngalerta),
-                                contentDescription = "Mural",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .offset(y = -10.dp)
-                                    .width(58.dp)
-                                    .height(62.28.dp)
-                            )
-                            Text(
-                                text = "MURAL",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 105.dp)
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .width(159.dp)
-                                .height(133.dp)
-                                .offset(y = 20.dp)
-                                .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
-
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.pnggrafico),
-                                contentDescription = "Dashboard",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .offset(y = -10.dp)
-                                    .width(58.dp)
-                                    .height(62.28.dp)
-                            )
-                            Text(
-                                text = "MEUS DADOS",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 105.dp)
-                            )
-                        }
-                    }
-
                 }
-
-
             }
-
         }
     }
-
 }
 
 @Preview(showBackground = false)
 @Composable
 fun TelaInicialBarbeiro() {
-    botoesTelas()
+    // Para visualizar a tela, o NavController deve ser fornecido em um ambiente de navegação.
+    // Considerar a utilização de um Preview que simule a navegação ou um ambiente de teste.
 }
