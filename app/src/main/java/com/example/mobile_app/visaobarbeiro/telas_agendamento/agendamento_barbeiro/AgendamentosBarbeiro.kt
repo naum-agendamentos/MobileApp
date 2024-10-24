@@ -23,7 +23,11 @@ import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.AgendamentosViewModel
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.ui.draw.shadow
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -43,6 +47,7 @@ fun AgendamentoBarbeiro(
 
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val dateFormatter = DateTimeFormatter.ofPattern("dd MMMM")
+    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
     navBarb()
@@ -59,137 +64,154 @@ fun AgendamentoBarbeiro(
 
         navBarb()
 
-        androidx.compose.material3.Text(
-            text = "AGENDAMENTOS",
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = Color.White
-            ),
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 90.dp)
-        )
-
         Column(
             modifier = Modifier
-                .align(Alignment.Center)
-                .offset(y = -10.dp)
-                .width(350.dp)
-                .height(550.dp)
-                .background(Color(0x0FFFFFFF), shape = RoundedCornerShape(15.dp))
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+                .fillMaxSize()
+                .padding(top = 90.dp)
         ) {
+            androidx.compose.material3.Text(
+                text = "AGENDAMENTOS",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    color = Color.White
+                ),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
 
             // Cabeçalho para seleção de data
-            Box(modifier = Modifier
-                .width(336.dp)
-                .height(58.dp)
-                .background(Color(0xFFFFFFFF), shape = RoundedCornerShape(15.dp))
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .width(350.dp)
+                    .height(70.dp)
+                    .background(Color(0xFFFFFFFF), shape = RoundedCornerShape(15.dp))
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Botão de dia anterior
-                    Box(
-                        modifier = Modifier
-                            .width(29.dp)
-                            .height(29.dp)
-                            .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
-                            .align(Alignment.CenterVertically)
+                    Button(
+                        onClick = { selectedDate = selectedDate.minusDays(1) },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
                     ) {
-                        Button(
-                            onClick = { selectedDate = selectedDate.minusDays(1) }, // Corrigir para dia anterior
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                            contentPadding = PaddingValues(0.dp),
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            Text(text = "<", color = Color.Black)
-                        }
+                        Text(text = "<", color = Color.Black)
                     }
 
-                    Column {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = "COLOCAR BARBEIRO AQUI",
+                            text = viewModel.agendamentos.firstOrNull()?.barbeiro?.nome ?: "",
                             fontSize = 20.sp,
-                            color = Color.Black,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                            color = Color.Black
                         )
-
                         Text(
                             text = selectedDate.format(dateFormatter),
                             fontSize = 20.sp,
-                            color = Color.Black,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                            color = Color.Black
                         )
                     }
 
-                    // Botão de dia seguinte
-                    Box(
-                        modifier = Modifier
-                            .width(29.dp)
-                            .height(29.dp)
-                            .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
-                            .align(Alignment.CenterVertically)
+                    Button(
+                        onClick = { selectedDate = selectedDate.plusDays(1) },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
                     ) {
-                        Button(
-                            onClick = { selectedDate = selectedDate.plusDays(1) },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                            contentPadding = PaddingValues(0.dp),
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            Text(text = ">", color = Color.Black)
-                        }
+                        Text(text = ">", color = Color.Black)
                     }
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (isLoading) {
-                CircularProgressIndicator(color = Color.Black)
-            } else if (errorMessage != null) {
-                Text(text = "Erro: $errorMessage", color = Color.Red)
-            } else if (agendamentos.isEmpty()) {
-                Text(text = "Nenhum agendamento encontrado", color = Color.Black)
-            } else {
-                agendamentos.forEach { agendamento ->
-                    // Montar detalhes do agendamento
-                    val clienteNome = agendamento.cliente.nome
-                    val servicos = agendamento.servicos.joinToString(", ") { it.nome }
-                    val total = agendamento.valorTotal
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .offset(y = -10.dp)
+                    .width(350.dp)
+                    .height(550.dp)
+                    .background(Color(0x0FFFFFFF), shape = RoundedCornerShape(15.dp))
+                    .padding(16.dp),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(color = Color.Black)
+                } else if (errorMessage != null) {
+                    Text(text = "Erro: $errorMessage", color = Color.Red)
+                } else {
+                    val agendamentosFiltrados = viewModel.getAgendamentosPorData(selectedDate)
 
-                    Card(
-                        shape = RoundedCornerShape(15.dp),
-                        backgroundColor = Color.DarkGray,
-                        modifier = Modifier
-                            .width(318.dp)
-                            .height(72.dp)
-                            .padding(vertical = 2.9.dp)
-                            .border(1.dp, Color.White, RoundedCornerShape(15.dp))
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                    if (agendamentosFiltrados.isEmpty()) {
+                        Text(text = "Nenhum agendamento encontrado", fontSize = 18.sp, color = Color.White)
+                    } else {
+                        // Ordena os agendamentos pelo horário
+                        val agendamentosOrdenados = agendamentosFiltrados.sortedBy {
+                            LocalDateTime.parse(it.dataHoraAgendamento)
+                        }
+
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(1), // Pode ajustar o número de colunas
+                            contentPadding = PaddingValues(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = "$clienteNome - $servicos",
-                                fontSize = 18.sp,
-                                color = Color.White
-                            )
-                            Spacer(modifier = Modifier.weight(1f)) // Espaço flexível
-                            Text(
-                                text = "R$ $total",
-                                fontSize = 18.sp,
-                                color = Color.White
-                            )
+                            items(agendamentosOrdenados.size) { index ->
+                                val agendamento = agendamentosOrdenados[index]
+                                // Convertemos a string para LocalDateTime
+                                val dataHoraAgendamento = LocalDateTime.parse(agendamento.dataHoraAgendamento)
+
+                                Card(
+                                    shape = RoundedCornerShape(15.dp),
+                                    backgroundColor = Color.DarkGray,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 2.9.dp)
+                                        .border(1.dp, Color.White, RoundedCornerShape(15.dp))
+                                        .shadow(8.dp, RoundedCornerShape(15.dp)) // Adiciona sombra ao card
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(16.dp),
+                                        verticalAlignment = Alignment.Top
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.weight(1f)
+                                        ) {
+                                            Text(
+                                                text = "${agendamento.cliente.nome}",
+                                                fontSize = 18.sp,
+                                                color = Color.White
+                                            )
+
+
+                                            val servicosVisiveis = agendamento.servicos
+                                            Text(
+                                                text = "Serviços: ${servicosVisiveis.joinToString(", ") { it.nomeServico ?: "Indisponível" }}",
+                                                fontSize = 16.sp,
+                                                color = Color.Gray
+                                            )
+
+                                            Spacer(modifier = Modifier.weight(1f))
+
+                                            Text(
+                                                text = dataHoraAgendamento.format(timeFormatter),
+                                                fontSize = 16.sp,
+                                                color = Color.LightGray
+                                            )
+                                        }
+
+
+                                        Text(
+                                            text = "R$ ${agendamento.valorTotal}",
+                                            fontSize = 18.sp,
+                                            color = Color.White,
+                                            modifier = Modifier.align(Alignment.Bottom)
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -199,4 +221,3 @@ fun AgendamentoBarbeiro(
 
     IconRow(navController = navController, activeIcon = R.drawable.pngcalendario)
 }
-

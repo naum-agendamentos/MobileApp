@@ -1,12 +1,12 @@
-import java.time.LocalDateTime
+import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.componente.Servico
 
 data class AgendamentoListagemDto(
     val id: Long,
-    val dataHoraAgendamento: LocalDateTime,
+    val dataHoraAgendamento: String, 
     val cliente: ClienteListagemDto,
     val barbeiro: BarbeiroListagemDto,
     val valorTotal: Double,
-    val servicos: List<ServicoListagemDto> // Note que Servico foi trocado por ServicoListagemDto
+    val servicos: List<Servico>
 ) {
     data class ClienteListagemDto(
         val id: Long,
@@ -23,10 +23,4 @@ data class AgendamentoListagemDto(
         val foto: String
     )
 
-    data class ServicoListagemDto(
-        val id: Long,
-        val nome: String,
-        val preco: Double,
-        val tempoServico: Int
-    )
 }

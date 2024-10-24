@@ -64,7 +64,7 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
             val barbeiroId = backStackEntry.arguments?.getString("barbeiroId")?.toLongOrNull()
             Log.d("NavGraph", "ID do agendamento recebido: $barbeiroId") // Verificando o ID recebido
             if (barbeiroId != null) {
-              // AgendamentoBarbeiro(navController = navController, barbeiroId = barbeiroId)
+              AgendamentoBarbeiro(navController = navController, barbeiroId = barbeiroId)
             } else {
                 // Lidar com o caso de ID nulo
                 Log.e("NavGraph", "ID do agendamento é nulo.")

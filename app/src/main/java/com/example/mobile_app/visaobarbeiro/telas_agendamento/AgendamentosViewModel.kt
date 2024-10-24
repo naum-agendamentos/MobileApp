@@ -10,6 +10,7 @@ import com.example.mobile_app.visaobarbeiro.api.RetrofitService
 import com.example.mobile_app.visaobarbeiro.telas_servico.ApiServicos
 import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.componente.Servico
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class AgendamentosViewModel : ViewModel() {
     private val _agendamentos = mutableStateListOf<AgendamentoListagemDto>()
@@ -27,30 +28,32 @@ class AgendamentosViewModel : ViewModel() {
     private val apiAgendamentos: ApiAgendamentos = RetrofitService.apiAgendamentos
 
     fun getAgendamentos(barbeiroId: Long) {
-        isLoading.value = true // Define loading como true antes da chamada
+        isLoading.value = true
         viewModelScope.launch {
             try {
                 val resposta = apiAgendamentos.getAgendamentoPorId(barbeiroId)
                 Log.i("api", "Resposta da API: ${resposta.body()}")
                 if (resposta.isSuccessful) {
-                    resposta.body()?.let {
+                    resposta.body()?.let { agendamentosDtoList ->
                         _agendamentos.clear()
-                        _agendamentos.addAll(it)
-                        Log.i(
-                            "api",
-                            "Agendamentos carregados com sucesso: ${_agendamentos.size} agendamentos encontrados."
-                        )
+                        _agendamentos.addAll(agendamentosDtoList)
                     }
                 } else {
                     errorMessage.value = resposta.errorBody()?.string()
-                    Log.e("api", "Erro ao buscar Agendamentos: ${errorMessage.value}")
                 }
             } catch (exception: Exception) {
-                Log.e("api", "Erro ao buscar Agendamentos: ${exception.message}")
-                errorMessage.value = exception.message // Armazena mensagem de erro
+                errorMessage.value = exception.message
             } finally {
                 isLoading.value = false
             }
         }
     }
+
+    fun getAgendamentosPorData(data: LocalDate): List<AgendamentoListagemDto> {
+        return _agendamentos.filter {
+            val dataAgendamento = LocalDate.parse(it.dataHoraAgendamento.substring(0, 10))
+            dataAgendamento.isEqual(data)
+        }
+    }
 }
+

@@ -27,6 +27,10 @@ class ServicosViewModel : ViewModel() {
 
     private val apiServico: ApiServicos = RetrofitService.apiServicos
 
+    init {
+        getServicos(1)
+    }
+
 
     fun getServicos(idBarbearia: Long) {
         isLoading.value = true // Define loading como true antes da chamada

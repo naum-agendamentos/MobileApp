@@ -49,7 +49,7 @@ fun CardBarbeiro(name: String, imageUrl: String, onClick: () -> Unit) {
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .width(154.dp)
+                        .fillMaxWidth()
                         .height(208.dp)
                         .background(Color(0xFF424242))
                 )

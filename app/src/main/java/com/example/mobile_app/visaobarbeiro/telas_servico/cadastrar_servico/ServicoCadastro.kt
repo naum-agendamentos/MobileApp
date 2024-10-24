@@ -228,7 +228,7 @@ fun CadastradoServ(
                             ),
                             idBarbearia
                         )
-                        navController.popBackStack()
+                        navController.navigate("tela_servicos")
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),

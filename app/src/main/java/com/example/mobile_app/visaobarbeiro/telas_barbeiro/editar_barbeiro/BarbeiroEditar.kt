@@ -349,7 +349,7 @@ fun Editar(
                                 foto = foto
                             )
                         )
-                        navController.popBackStack()
+                        navController.navigate("tela_barbeiros")
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF303495)),

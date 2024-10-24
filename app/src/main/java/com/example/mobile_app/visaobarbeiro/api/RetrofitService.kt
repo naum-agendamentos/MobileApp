@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
-    private const val BASE_URL_BARBEIRO = "http://54.161.184.186:8080/"
+    private const val BASE_URL_BARBEIRO = "http://3.233.14.6:8080/"
 
     private val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzI5NTU1MzcwLCJleHAiOjE3MzMxNTUzNzB9.G4P7ybqcSMSOrjkMK4mg4P24OKGhA3BWJsSqsflyLIsyxBjhb9erHconfmnrEhqj_P54pzlrhjpp86Tk204_VQ"
 

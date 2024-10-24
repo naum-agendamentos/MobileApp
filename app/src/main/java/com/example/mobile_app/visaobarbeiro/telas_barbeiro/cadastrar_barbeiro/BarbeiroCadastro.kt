@@ -298,7 +298,7 @@ fun Cadastrado(
                                 foto = foto
                             )
                         )
-                        navController.popBackStack()
+                        navController.navigate("tela_barbeiros")
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
