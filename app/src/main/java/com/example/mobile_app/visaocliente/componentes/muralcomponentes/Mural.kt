@@ -32,7 +32,8 @@ import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewM
 import com.example.mobile_app.R
 
 @Composable
-fun Mural(viewModel: MuralViewModel = viewModel()) {
+fun
+        Mural(viewModel: MuralViewModel = viewModel()) {
 
     Column(
         modifier = Modifier

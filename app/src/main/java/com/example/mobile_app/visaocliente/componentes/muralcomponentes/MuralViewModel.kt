@@ -21,7 +21,7 @@ class MuralViewModel : ViewModel() {
     var itemAtual by mutableStateOf(Aviso())
 
     init {
-        apiMural = RetrofitService.getApiAviso()
+        apiMural = RetrofitService.getApiAviso
     }
 
 
