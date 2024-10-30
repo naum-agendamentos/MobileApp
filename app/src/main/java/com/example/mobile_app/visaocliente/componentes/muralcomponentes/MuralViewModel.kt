@@ -7,12 +7,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobile_app.RetrofitService
+import com.example.mobile_app.RetrofitServiceApagada
 import com.example.mobile_app.visaocliente.componentes.muralcomponentes.ApiMural
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class MuralViewModel : ViewModel() {
     private val apiMural: ApiMural
@@ -21,7 +18,7 @@ class MuralViewModel : ViewModel() {
     var itemAtual by mutableStateOf(Aviso())
 
     init {
-        apiMural = RetrofitService.getApiAviso
+        apiMural = RetrofitServiceApagada.getApiAviso
     }
 
 

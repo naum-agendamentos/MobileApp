@@ -7,13 +7,13 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitService {
+object RetrofitServiceApagada2 {
     private const val BASE_URL_BARBEIRO = "http://3.233.14.6:8080/"
 
     private val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzMwMTUxMDgwLCJleHAiOjE3MzM3NTEwODB9.wT-aKvrFLWhJlCxp0fYyv9V3BnIjffbSXw-skjsPzuobmCy9Ksxk1HECitABwRy1Zq_gKnXPKiz_hmcUWpKQvA"
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(AuthInterceptor(token))
+        .addInterceptor(AuthInterceptorApagada(token))
         .build()
 
     val retrofit: Retrofit = Retrofit.Builder()

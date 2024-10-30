@@ -19,6 +19,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
+import com.example.mobile_app.login.Login
+import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.EditPerfil
+import com.example.mobile_app.visaocliente.pages.MeuPerfil
 import com.example.mobile_app.visaocliente.pages.MuralAvisos
 
 
@@ -27,7 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           MuralAvisos()
+            MyApp(context = this)
         }
     }
 }
@@ -36,7 +39,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp(context: Context) {
     val navController = rememberNavController()
     val muralViewModel: MuralViewModel = viewModel()
-    NavHost(navController = navController, startDestination = "muralListagem") {
+    NavHost(navController = navController, startDestination = "login") {
         composable("muralListagem") { MuralListagem(navController) }
         composable("muralEdicao/{id}/{titulo}/{descricao}") { backStackEntry ->
             val idString = backStackEntry.arguments?.getString("id")
@@ -65,6 +68,15 @@ fun MyApp(context: Context) {
                 viewModel = muralViewModel,
                 context = context
             )
+        }
+        composable("login") {
+           Login(
+               navController = navController,
+               context = context
+           )
+        }
+        composable("editarPerfil") {
+            MeuPerfil()
         }
     }
 }

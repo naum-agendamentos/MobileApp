@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes
 
+import EditPerfilViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -30,6 +31,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,7 +46,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_app.R
+import com.example.mobile_app.login.UserLoginSession
+import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
 
 import com.example.mobile_app.visaocliente.ui.theme.Blue
 import com.example.mobile_app.visaocliente.ui.theme.Gray
@@ -52,7 +57,25 @@ import com.example.mobile_app.visaocliente.ui.theme.Green
 import com.example.mobile_app.visaocliente.ui.theme.Red
 
 @Composable
-fun EditPerfil(){
+fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
+
+    val dadosCliente = remember { mutableStateOf(viewModel.dadosCliente) }
+    var idCliente by remember { mutableStateOf<Long?>(null) }
+    var nomeState by remember { mutableStateOf(viewModel.dadosCliente.value?.nome ?: "Carregando...") }
+    var emailState by remember { mutableStateOf(viewModel.dadosCliente.value?.email ?: "Carregando...") }
+    var telefoneState by remember { mutableStateOf(viewModel.dadosCliente.value?.telefone ?: "Carregando...") }
+
+    var senhaState by remember { mutableStateOf(UserLoginSession.senha ?: "") }
+
+
+    LaunchedEffect(viewModel.dadosCliente.value) {
+        viewModel.dadosCliente.value?.let {
+            idCliente = it.id ?: null
+            nomeState = it.nome ?: "Nome indisponível"
+            emailState = it.email ?: "Email indisponível"
+            telefoneState = it.telefone ?: "Telefone indisponível"
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -112,7 +135,7 @@ fun EditPerfil(){
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        var nomeState by remember { mutableStateOf("Diego Hessel") }
+
                         var nomeSufixe by remember { mutableStateOf("Nome:") }
 
 
@@ -164,7 +187,6 @@ fun EditPerfil(){
                     }
 
 
-                    var emailState by remember { mutableStateOf("diego.hessel@gmail.com") }
                     var emailSufixe by remember { mutableStateOf("Email:") }
 
 
@@ -222,7 +244,6 @@ fun EditPerfil(){
                         }
                     }
 
-                    var telefoneState by remember { mutableStateOf("(11) 98756-1234") }
                     var telefoneSufixe by remember { mutableStateOf("Telefone:") }
 
 
@@ -524,6 +545,7 @@ fun EditPerfil(){
                         onClick = {
                             dadosAtualizados = !dadosAtualizados
                             btnsEdit = !btnsEdit
+
                         },
                         modifier = Modifier
                             .width(155.dp)
@@ -538,7 +560,7 @@ fun EditPerfil(){
                         Row {
                             Text(
                                 fontSize = 20.sp,
-                                text = "SALVAR",
+                                text = "SALVAR1",
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -590,8 +612,13 @@ fun EditPerfil(){
                 ){
                     Button(
                         onClick = {
-                            dadosAtualizados = !dadosAtualizados
-                            btnsEdit = !btnsEdit
+//                            dadosAtualizados = !dadosAtualizados
+//                            btnsEdit = !btnsEdit
+                            viewModel.updateDadosCliente(DadosCliente(idCliente, nomeState, emailState, senhaState, telefoneState)) {
+                                // Executa essas alterações de estado apenas após o sucesso
+                                dadosAtualizados = !dadosAtualizados
+                                btnsEdit = !btnsEdit
+                            }
                         },
                         modifier = Modifier
                             .width(155.dp)
@@ -606,7 +633,7 @@ fun EditPerfil(){
                         Row {
                             Text(
                                 fontSize = 20.sp,
-                                text = "SALVAR",
+                                text = "SALVAR2",
                                 fontWeight = FontWeight.Bold
                             )
                         }

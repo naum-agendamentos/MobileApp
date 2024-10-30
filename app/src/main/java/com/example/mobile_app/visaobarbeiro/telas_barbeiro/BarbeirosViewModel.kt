@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobile_app.visaobarbeiro.api.RetrofitService
+import com.example.mobile_app.visaobarbeiro.api.RetrofitServiceApagada2
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.cadastrar_barbeiro.componente.CadastrarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.editar_barbeiro.componente.EditarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.VerBarbeiro
@@ -24,7 +24,7 @@ class BarbeirosViewModel : ViewModel() {
     var errorMessage = mutableStateOf<String?>(null)
         private set
 
-    private val apiBarbeiro: ApiBarbeiros = RetrofitService.apiBarbeiros
+    private val apiBarbeiro: ApiBarbeiros = RetrofitServiceApagada2.apiBarbeiros
 
     init {
         fetchBarbeiros()
