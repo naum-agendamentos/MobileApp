@@ -2,6 +2,7 @@ package com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -13,5 +14,8 @@ interface ApiDadosCliente {
 
     @PUT("clientes/{id}")
     suspend fun updateDadosCliente(@Path("id") id: Long, @Body dadosCliente: DadosCliente): Response<Void>
+
+    @DELETE("clientes/{id}")
+    suspend fun deleteCliente(@Path("id") id: Long): Response<Void>
 
 }
