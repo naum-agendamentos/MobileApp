@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -142,7 +143,9 @@ fun Servicos(viewModel: ServicosViewModel = viewModel(), navController: NavContr
                     items(servicos) { servico ->
                         Log.d("TelaServicos", "ID do serviço: ${servico.id}")
                         CardServico(servico = servico) {
-                            navController.navigate("editar_servico/${servico.id}") // Navegando com ID
+                            val servicoJson = """{"id": ${servico.id}, "nomeServico": "${servico.nomeServico}", "preco": "${servico.preco}", "tempoServico": "${servico.tempoServico}"}"""
+                            val encodedServicoJson = Uri.encode(servicoJson)
+                            navController.navigate("editar_servico/${servico.id}/$encodedServicoJson") // Navegando com ID
                         }
                     }
                 }

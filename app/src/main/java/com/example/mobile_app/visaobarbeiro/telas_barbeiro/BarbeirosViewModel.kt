@@ -1,5 +1,7 @@
 package com.example.mobile_app.visaobarbeiro.telas_barbeiro
 
+import android.content.ContentResolver
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -9,7 +11,18 @@ import com.example.mobile_app.visaobarbeiro.api.RetrofitServiceApagada2
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.cadastrar_barbeiro.componente.CadastrarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.editar_barbeiro.componente.EditarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.VerBarbeiro
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okio.BufferedSink
+import okio.source
+import org.json.JSONObject
+import java.io.InputStream
 
 class BarbeirosViewModel : ViewModel() {
     private val _barbeiros = mutableStateListOf<VerBarbeiro>()
@@ -101,6 +114,61 @@ class BarbeirosViewModel : ViewModel() {
                 Log.e("api", "Erro ao editar barbeiro: ${exception}")
             } finally {
                 isSubmitting.value = false
+            }
+        }
+    }
+
+    fun uploadImageToCloudinary(imageUri: Uri, contentResolver: ContentResolver, onUploadComplete: (String?) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // Obtém o InputStream do URI
+                val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+                if (inputStream == null) {
+                    Log.e("Upload", "InputStream is null")
+                    onUploadComplete(null)
+                    return@launch
+                }
+
+                val fileName = imageUri.lastPathSegment ?: "image.jpg"
+
+                // Cria o RequestBody para o arquivo da imagem
+                val requestFile = object : RequestBody() {
+                    override fun contentType(): MediaType? {
+                        return "image/jpeg".toMediaTypeOrNull() // ou outro tipo de imagem
+                    }
+
+                    override fun writeTo(sink: BufferedSink) {
+                        sink.writeAll(inputStream.source())
+                        inputStream.close() // Feche o InputStream após a escrita
+                    }
+                }
+
+                // Cria o MultipartBody para enviar o arquivo e o upload preset
+                val requestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", fileName, requestFile)
+                    .addFormDataPart("upload_preset", "fdl9l3yj") // Seu upload preset
+                    .build()
+
+                val request = Request.Builder()
+                    .url("https://api.cloudinary.com/v1_1/dmgfyyioo/image/upload")
+                    .post(requestBody)
+                    .build()
+
+                val client = OkHttpClient()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    val jsonObject = JSONObject(responseBody)
+                    val secureUrl = jsonObject.getString("secure_url") // Obtém a URL segura
+                    onUploadComplete(secureUrl)
+                } else {
+                    Log.e("Upload", "Erro no upload: ${response.message}")
+                    onUploadComplete(null)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onUploadComplete(null)
             }
         }
     }

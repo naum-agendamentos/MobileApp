@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.ver_barbeiro
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -130,7 +131,10 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel(), navController: Na
                         barbeiro.foto?.let { imageUrl ->
                             Log.d("TelaBarbeiros", "ID do barbeiro: ${barbeiro.id}") // Adicione este log
                             CardBarbeiro(name = barbeiro.nome, imageUrl = imageUrl) {
-                                navController.navigate("editar_barbeiro/${barbeiro.id}") // Navegando com ID
+                                // Criando uma string JSON com os dados do barbeiro
+                                val barbeiroJson = """{"id": ${barbeiro.id}, "nome": "${barbeiro.nome}", "email": "${barbeiro.email}", "celular": "${barbeiro.telefone}", "descricao": "${barbeiro.descricao}", "foto": "$imageUrl"}"""
+                                val encodedBarbeiroJson = Uri.encode(barbeiroJson) // Encode the JSON
+                                navController.navigate("editar_barbeiro/${barbeiro.id}/$encodedBarbeiroJson") // Navegando com ID e JSON codificado
                             }
                         }
                     }
