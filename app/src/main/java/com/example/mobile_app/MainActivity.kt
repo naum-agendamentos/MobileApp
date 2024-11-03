@@ -3,6 +3,7 @@ package com.example.mobile_app
 import MuralCriacao
 import MuralEdicao
 import MuralListagem
+import NavGraph
 import android.content.Context
 
 import android.os.Bundle
@@ -20,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.login.Login
+import com.example.mobile_app.visaobarbeiro.componentes.BlackBackground
 import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.EditPerfil
 import com.example.mobile_app.visaocliente.pages.MeuPerfil
 import com.example.mobile_app.visaocliente.pages.MuralAvisos
@@ -30,7 +32,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApp(context = this)
+            BlackBackground {
+                NavGraph()
+            }
         }
     }
 }

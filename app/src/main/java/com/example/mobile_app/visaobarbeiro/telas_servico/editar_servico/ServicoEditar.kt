@@ -1,3 +1,4 @@
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,6 +14,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,18 +37,41 @@ import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
 import com.example.mobile_app.visaobarbeiro.telas_servico.editar_servico.componente.EditarServico
+import org.json.JSONObject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditServico(viewModel: ServicosViewModel = viewModel(), navController: NavController, servicoId: Long?) {
+fun EditServico(viewModel: ServicosViewModel = viewModel(), navController: NavController, servicoId: Long?, servicoJson: String?) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
     val id = servicoId
+    val context = LocalContext.current
 
     var nomeServico by remember { mutableStateOf("") }
     var preco by remember { mutableStateOf("") }
     var tempoServico by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    var erroNomeServico by remember { mutableStateOf<String?>(null) }
+    var erroPreco by remember { mutableStateOf<String?>(null) }
+    var erroTempoServico by remember { mutableStateOf<String?>(null) }
+
+    if (servicoJson != null) {
+        val isInitialized = remember { mutableStateOf(false) }
+
+        if (!isInitialized.value) {
+            LaunchedEffect(servicoJson) {
+                // Analise o JSON aqui
+                val json = JSONObject(servicoJson)
+                nomeServico = json.getString("nomeServico")
+                preco = json.getString("preco")
+                tempoServico = json.getString("tempoServico")
+
+                // Marque como inicializado
+                isInitialized.value = true
+            }
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -105,7 +131,7 @@ fun EditServico(viewModel: ServicosViewModel = viewModel(), navController: NavCo
                             }
                             Spacer(modifier = Modifier.width(16.dp))
                             Text(
-                                text = "CADASTRAR SERVIÇO",
+                                text = "EDITAR SERVIÇO",
                                 style = TextStyle(
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 22.sp,
@@ -118,49 +144,83 @@ fun EditServico(viewModel: ServicosViewModel = viewModel(), navController: NavCo
 
                         OutlinedTextField(
                             value = nomeServico,
-                            onValueChange = { nomeServico = it },
+                            onValueChange = {
+                                nomeServico = it
+                                erroNomeServico = if (it.isEmpty()) "Nome não pode estar vazio" else null
+                            },
                             label = { Text("Nome:", color = Color.White) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedBorderColor = Color.White,
-                                unfocusedBorderColor = Color.White,
+                                focusedBorderColor = if (erroNomeServico != null) Color.Red else Color.White,
+                                unfocusedBorderColor = if (erroNomeServico != null) Color.Red else Color.White,
                                 cursorColor = Color.White
                             ),
                             textStyle = TextStyle(color = Color.White)
                         )
+                        erroNomeServico?.let { Text(text = it, color = Color.Red) }
                         Spacer(modifier = Modifier.height(16.dp))
+
                         OutlinedTextField(
                             value = preco,
-                            onValueChange = { preco = it },
+                            onValueChange = { input ->
+                                // Substitui a vírgula por ponto e permite apenas dígitos e um único ponto
+                                val sanitizedInput = input.replace(',', '.')
+
+                                if (sanitizedInput.all { char -> char.isDigit() || char == '.' }) {
+                                    preco = sanitizedInput
+
+                                    // Validação de preço: Verifica se o formato está correto
+                                    erroPreco = when {
+                                        sanitizedInput.isEmpty() -> "O preço não pode estar vazio." // Campo vazio
+                                        sanitizedInput.count { it == '.' } > 1 -> "Insira um preço válido" // Mais de um ponto
+                                        sanitizedInput.last() == '.' -> null // Nenhum erro
+                                        else -> null // Nenhum erro se o formato for válido
+                                    }
+                                }
+                            },
                             label = { Text("Preço: R$", color = Color.White) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedBorderColor = Color.White,
-                                unfocusedBorderColor = Color.White,
+                                focusedBorderColor = if (erroPreco != null) Color.Red else Color.White,
+                                unfocusedBorderColor = if (erroPreco != null) Color.Red else Color.White,
                                 cursorColor = Color.White
                             ),
                             textStyle = TextStyle(color = Color.White)
                         )
+
+                        erroPreco?.let { Text(text = it, color = Color.Red) }
                         Spacer(modifier = Modifier.height(16.dp))
+
+
+
+
                         OutlinedTextField(
                             value = tempoServico,
-                            onValueChange = {
-                                if (it.length <= 5) {
-                                    tempoServico = it
+                            onValueChange = { input ->
+                                // Atualiza o campo tempoServico com a nova entrada
+                                tempoServico = input
+
+                                // Validação para apenas permitir "30", "60", "90" ou deixar vazio
+                                erroTempoServico = when {
+                                    input.isEmpty() -> null // Permite campo vazio
+                                    input in listOf("30", "60", "90") -> null // Permite valores válidos
+                                    else -> "Insira um tempo válido (30, 60 ou 90)" // Mensagem de erro para valores inválidos
                                 }
                             },
-                            label = { Text("Tempo: min", color = Color.White) },
+                            label = { Text("Tempo: 30, 60, 90", color = Color.White) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedBorderColor = Color.White,
-                                unfocusedBorderColor = Color.White,
+                                focusedBorderColor = if (erroTempoServico != null) Color.Red else Color.White,
+                                unfocusedBorderColor = if (erroTempoServico != null) Color.Red else Color.White,
                                 cursorColor = Color.White
                             ),
                             textStyle = TextStyle(color = Color.White)
                         )
 
 
+                        erroTempoServico?.let { Text(text = it, color = Color.Red) }
                         Spacer(modifier = Modifier.height(16.dp))
+
                     }
                 }
             }
@@ -177,6 +237,12 @@ fun EditServico(viewModel: ServicosViewModel = viewModel(), navController: NavCo
                 tempoServico = tempoServico,
                 viewModel = viewModel,
                 navController = navController,
+                isValid = nomeServico.isNotEmpty() &&
+                        preco.isNotEmpty() &&
+                        tempoServico.isNotEmpty() &&
+                        erroNomeServico == null &&
+                        erroPreco == null &&
+                        erroTempoServico == null,
                 onError = { errorMessage = it }
             )
             }
@@ -194,8 +260,10 @@ fun EditarServ(
     tempoServico: String,
     viewModel: ServicosViewModel,
     navController: NavController,
+    isValid: Boolean,
     onError: (String) -> Unit
 ) {
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .background(color = Color.Transparent)
@@ -217,8 +285,14 @@ fun EditarServ(
             Button(
                 onClick = {
                     // Validação dos campos obrigatórios
-                    if (nomeServico.isEmpty() || preco.isEmpty() || tempoServico.isEmpty()) {
-                        onError("Todos os campos são obrigatórios")
+                    // Validação dos campos obrigatórios
+                    if (!isValid) {
+                        onError("Preencha todos os campos corretamente")
+                        Toast.makeText(
+                            context,
+                            "Todos os campos são obrigatórios e devem ser válidos",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
 
                         val precoDouble = preco.toDouble()
@@ -233,6 +307,7 @@ fun EditarServ(
 
                                 )
                         )
+                        Toast.makeText(context, "Serviço editado com sucesso!", Toast.LENGTH_SHORT).show()
                         navController.navigate("tela_servicos")
                     }
                 },

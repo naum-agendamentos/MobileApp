@@ -25,11 +25,16 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
         composable("cadastrar_barbeiro") { // Adicionando a tela de cadastro
             BarbeiroCad(navController = navController) // Supondo que essa seja a sua tela de cadastro
         }
-        composable("editar_barbeiro/{barbeiroId}") { backStackEntry ->
+        composable("editar_barbeiro/{barbeiroId}/{barbeiroJson}") { backStackEntry ->
             val barbeiroId = backStackEntry.arguments?.getString("barbeiroId")?.toLongOrNull()
+            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
+
             Log.d("NavGraph", "ID do barbeiro recebido: $barbeiroId") // Verificando o ID recebido
+            Log.d("NavGraph", "JSON do barbeiro recebido: $barbeiroJson") // Verificando o JSON recebido
+
             if (barbeiroId != null) {
-                BarbeiroEdit(navController = navController, barbeiroId = barbeiroId)
+                // Chama o componente BarbeiroEdit passando ID e JSON
+                BarbeiroEdit(navController = navController, barbeiroId = barbeiroId, barbeiroJson = barbeiroJson)
             } else {
                 // Lidar com o caso de ID nulo
                 Log.e("NavGraph", "ID do barbeiro é nulo.")
@@ -44,11 +49,13 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
             CadastroServico(navController = navController)
         }
 
-        composable("editar_servico/{servicoId}") { backStackEntry ->
+        composable("editar_servico/{servicoId}/{servicoJson}") { backStackEntry ->
             val servicoId = backStackEntry.arguments?.getString("servicoId")?.toLongOrNull()
+            val servicoJson = backStackEntry.arguments?.getString("servicoJson")
             Log.d("NavGraph", "ID do servico recebido: $servicoId") // Verificando o ID recebido
+            Log.d("NavGraph", "JSON do servico recebido: $servicoJson") // Verificando o JSON recebido
             if (servicoId != null) {
-                EditServico(navController = navController, servicoId = servicoId)
+                EditServico(navController = navController, servicoId = servicoId, servicoJson = servicoJson)
             } else {
                 // Lidar com o caso de ID nulo
                 Log.e("NavGraph", "ID do serviço é nulo.")
