@@ -5,8 +5,10 @@ import com.example.mobile_app.login.ApiLogin
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.ApiAgendamentos
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ApiBarbeiros
 import com.example.mobile_app.visaobarbeiro.telas_servico.ApiServicos
+import com.example.mobile_app.visaocliente.componentes.agendamentocomponentes.ApiAgendamentoCliente
 import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.ApiDadosCliente
 import com.example.mobile_app.visaocliente.componentes.muralcomponentes.ApiMural
+import com.example.mobile_app.visaocliente.componentes.servicocomponente.ApiServico
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,10 +16,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitService {
     private const val BASE_URL_APIREST = "http://3.233.14.6:8080/"
 
+    private val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzMwMTUxMDgwLCJleHAiOjE3MzM3NTEwODB9.wT-aKvrFLWhJlCxp0fYyv9V3BnIjffbSXw-skjsPzuobmCy9Ksxk1HECitABwRy1Zq_gKnXPKiz_hmcUWpKQvA"
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(AuthInterceptorApagada(token))
+        .build()
     // Inicialmente, o token é nulo
     private val authInterceptor = AuthInterceptor(null.toString())
 
-    private val client = OkHttpClient.Builder()
+    private val client2 = OkHttpClient.Builder()
         .addInterceptor(authInterceptor)
         .build()
 
@@ -29,8 +36,10 @@ object RetrofitService {
 
 
     val apiBarbeiros: ApiBarbeiros = retrofit.create(ApiBarbeiros::class.java)
-    val apiServicos: ApiServicos = retrofit.create(ApiServicos::class.java)
+    val apiServicos: ApiServicos = retrofit.create(ApiServicos::class.java) // barbeiro
+    val apiServico: ApiServico = retrofit.create(ApiServico::class.java) // cliente
     val apiAgendamentos: ApiAgendamentos = retrofit.create(ApiAgendamentos::class.java)
+    val apiAgendamentoCliente: ApiAgendamentoCliente = retrofit.create(ApiAgendamentoCliente::class.java)
     val getApiAviso: ApiMural = retrofit.create(ApiMural::class.java)
 
     val apiDadosCliente : ApiDadosCliente = retrofit.create(ApiDadosCliente::class.java)

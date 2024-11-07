@@ -1,3 +1,5 @@
+package com.example.mobile_app.visaocliente.pages.agendamento
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,14 +23,6 @@ import androidx.compose.ui.unit.sp
 import com.example.mobile_app.R
 import java.time.LocalDate
 
-class MainActivity4 : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            SchedulingScreen()
-        }
-    }
-}
 
 @Composable
 fun SchedulingScreen() {

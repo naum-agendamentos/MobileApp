@@ -1,5 +1,6 @@
 package com.example.mobile_app
 
+import EscolherData
 import MuralCriacao
 import MuralEdicao
 import MuralListagem
@@ -25,6 +26,7 @@ import com.example.mobile_app.visaobarbeiro.componentes.BlackBackground
 import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.EditPerfil
 import com.example.mobile_app.visaocliente.pages.MeuPerfil
 import com.example.mobile_app.visaocliente.pages.MuralAvisos
+import com.example.mobile_app.visaocliente.pages.servico.ServicoEscolha
 
 
 class MainActivity : ComponentActivity() {
@@ -32,10 +34,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BlackBackground {
-                NavGraph()
-            }
+            ServicoEscolha(navController = rememberNavController(), context = this@MainActivity)
         }
+
     }
 }
 
@@ -81,6 +82,9 @@ fun MyApp(context: Context) {
         }
         composable("editarPerfil") {
             MeuPerfil()
+        }
+        composable("agendamento") {
+            EscolherData()
         }
     }
 }

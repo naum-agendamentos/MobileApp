@@ -1,3 +1,5 @@
+package com.example.mobile_app.visaocliente.pages.agendamento
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,29 +28,28 @@ fun AgendamentosCliente() {
     ) {
         Image(
             painter = backgroundImage,
-            contentDescription = null,
+            contentDescription = "Background image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
 
         Image(
             painter = painterResource(id = R.drawable.logobarbeiro),
-            contentDescription = "Login image",
+            contentDescription = "Logo Barbeiro",
             modifier = Modifier
                 .size(60.dp)
-                .padding(start = 5.dp)
-                .padding(top = 10.dp)
+                .padding(start = 5.dp, top = 10.dp)
         )
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             Text(
                 text = "MEUS AGENDAMENTOS",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp
+                    fontSize = 30.sp,
+                    color = Color.White
                 ),
                 modifier = Modifier
                     .align(Alignment.TopCenter)
@@ -69,8 +70,7 @@ fun AgendamentosCliente() {
                 contentAlignment = Alignment.TopStart
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(16.dp)
+                    modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
                         text = "Quarta-Feira, 20 de Outubro",
@@ -92,16 +92,20 @@ fun AgendamentosCliente() {
                 }
             }
 
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-
+                // Exemplos de ícones de ação para editar e cancelar o agendamento
+                // IconButton(onClick = { /* Ação de editar */ }) {
+                //     Icon(Icons.Filled.Edit, contentDescription = "Editar agendamento")
+                // }
+                // IconButton(onClick = { /* Ação de cancelar */ }) {
+                //     Icon(Icons.Filled.Delete, contentDescription = "Cancelar agendamento")
+                // }
             }
-
 
             Text(
                 text = "10H00",
@@ -114,13 +118,9 @@ fun AgendamentosCliente() {
                     .align(Alignment.BottomEnd)
                     .padding(8.dp)
             )
-
         }
     }
-   // IconRow()
 }
-
-
 
 @Preview
 @Composable

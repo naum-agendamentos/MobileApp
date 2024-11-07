@@ -1,8 +1,12 @@
+package com.example.mobile_app.visaocliente.pages.agendamento
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mobile_app.R
 
 @Composable
-fun AgendamentoExcluirOuEditar() {
+fun AgendamentoConcluido() {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
 
     Box(
@@ -45,22 +49,22 @@ fun AgendamentoExcluirOuEditar() {
                 .fillMaxSize()
         ) {
             Text(
-                text = "MEUS AGENDAMENTOS",
+                text = "AGENDAMENTO",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp
                 ),
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 100.dp)
+                    .padding(top = 90.dp)
             )
 
             Box(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .width(350.dp)
-                    .height(350.dp)
-                    .offset(y = -100.dp)
+                    .height(500.dp)
+                    .offset(y = -20.dp)
                     .background(
                         color = Color.White.copy(alpha = 0.5f),
                         shape = RoundedCornerShape(12.dp)
@@ -72,36 +76,62 @@ fun AgendamentoExcluirOuEditar() {
                     modifier = Modifier
                         .padding(16.dp)
                 ) {
-                    Text(
-                        text = "Quarta-Feira, 20 de Outubro",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            color = Color.Black
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "PROFISSIONAL: BRYAN LIARIS",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            color = Color.Black
-                        )
-                    )
                 }
             }
 
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                horizontalArrangement = Arrangement.SpaceAround
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.align(Alignment.Center)
             ) {
+                Text(
+                    text = "AGENDAMENTO",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                )
 
+                Text(
+                    text = "CONCLUIDO COM",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                )
+
+                Text(
+                    text = "SUCESSO",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.check2),
+                    contentDescription = "Ícone de verificação",
+                    modifier = Modifier
+                        .size(130.dp)
+                        .padding(bottom = 32.dp)
+                        .offset(y = 80.dp)
+                )
+
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF003CFF),
+                        contentColor = Color.White
+
+                    ),
+                    modifier = Modifier
+                        .padding(top = 140.dp)
+                        .height(50.dp)
+                        .width(100.dp)
+                ) {
+                    Text(text = "OK")
+                }
             }
-
 
             Text(
                 text = "10H00",
@@ -115,15 +145,15 @@ fun AgendamentoExcluirOuEditar() {
                     .padding(8.dp)
             )
 
+
         }
     }
     //IconRow()
 }
 
 
-
 @Preview
 @Composable
-fun OlharAgendamento() {
-    AgendamentoExcluirOuEditar()
+fun Agend() {
+    AgendamentoConcluido()
 }

@@ -1,8 +1,14 @@
+package com.example.mobile_app.visaocliente.pages.servico
+
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -21,11 +27,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_app.R
+import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
+import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.componente.CardServico
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
+import com.example.mobile_app.visaocliente.componentes.servicocomponente.Servico
+import com.example.mobile_app.visaocliente.componentes.servicocomponente.ServicosViewModelCliente
 
 @Composable
-fun ServicoEscolha() {
+fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navController: NavHostController, context: Context) {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
+    val servicos = remember { viewModel.servicos }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -74,49 +91,37 @@ fun ServicoEscolha() {
                     .border(2.dp, Color.Gray, RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.TopStart
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                ) {
+
+                    LaunchedEffect(Unit) {
+                        val idBarbearia = 1L
+                        viewModel.getServicos(idBarbearia)
+                    }
+
+                    LazyColumn(modifier = Modifier
+                        .padding(16.dp)) {
+
+
+                        items(servicos) { servico ->
+                            Log.d("TelaServicos", "ID do serviço: ${servico.id}")
+                            ServicoItem2(
+
+                                servico,
+                                viewModel,
+                                isSelected = false
+                            )
+                            Spacer(modifier = Modifier.padding(5.dp))
+                        }
+                    }
+
+
                     // Adicionando os itens de serviço
-                    ServicoItem2(
-                        nome = "Corte simples",
-                        preco = "R$ 40,00",
-                        duracao = "30 Min",
-                        isSelected = true
-                    )
 
-                    Spacer(modifier = Modifier.padding(7.dp))
 
-                    ServicoItem2(
-                        nome = "Barba simples",
-                        preco = "R$ 45,00",
-                        duracao = "30 Min",
-                        isSelected = true
-                    )
-
-                    Spacer(modifier = Modifier.padding(7.dp))
-
-                    ServicoItem2(
-                        nome = "Corte feminino simples",
-                        preco = "R$ 50,00",
-                        duracao = "60 Min",
-                        isSelected = false
-                    )
-
-                    Spacer(modifier = Modifier.padding(7.dp))
-
-                    ServicoItem2(
-                        nome = "Platinado",
-                        preco = "R$ 60,00",
-                        duracao = "120 Min",
-                        isSelected = false
-                    )
                     Box(
                         modifier = Modifier.fillMaxSize() // Preenche toda a tela
                     ) {
                         Button(
-                            onClick = { /* Ação ao clicar no botão */ },
+                            onClick = { navController.navigate("agendamento")},
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue), // Define a cor de fundo do botão
                             modifier = Modifier
                                 .padding(start = 16.dp, bottom = 32.dp) // Ajusta o espaçamento para baixo e para a esquerda
@@ -125,12 +130,6 @@ fun ServicoEscolha() {
                             Text(text = "Próximo", color = Color.White) // Texto dentro do botão
                         }
                     }
-
-
-
-                }
-
-
             }
 
             Text(
@@ -151,9 +150,8 @@ fun ServicoEscolha() {
 
 @Composable
 fun ServicoItem2(
-    nome: String,
-    preco: String,
-    duracao: String,
+    servico: Servico,
+    viewModel: ServicosViewModelCliente,
     isSelected: Boolean
 ) {
     var checked by remember { mutableStateOf(isSelected) }
@@ -170,9 +168,9 @@ fun ServicoItem2(
         Column(
             modifier = Modifier.padding(start = 8.dp)
         ) {
-            Text(text = nome, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-            Text(text = preco, fontSize = 14.sp)
-            Text(text = duracao, fontSize = 14.sp)
+            Text(text = servico.nomeServico ?: "", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(text = servico.preco?.toString() ?: "Preço não disponível", fontSize = 14.sp)
+            Text(text = servico.tempoServico?.toString() ?: "Tempo não disponível", fontSize = 14.sp)
         }
 
         Box(
@@ -183,7 +181,10 @@ fun ServicoItem2(
                     shape = RoundedCornerShape(4.dp)
                 )
                 .border(2.dp, Color.Black, shape = RoundedCornerShape(4.dp))
-                .clickable { checked = !checked },
+                .clickable {
+                    checked = !checked
+                    viewModel.addServicos(servico)
+                },
             contentAlignment = Alignment.Center
         ) {
             if (checked) {
@@ -197,8 +198,8 @@ fun ServicoItem2(
     }
 }
 
-@Preview
-@Composable
-fun EscolherServico() {
-    ServicoEscolha()
-}
+//@Preview
+//@Composable
+//fun EscolherServico() {
+//    ServicoEscolha()
+//}

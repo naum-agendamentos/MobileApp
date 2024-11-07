@@ -1,3 +1,5 @@
+package com.example.mobile_app.visaocliente.pages.agendamento
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

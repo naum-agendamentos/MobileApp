@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,14 +23,15 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.YearMonth
 import com.example.mobile_app.R
+import java.time.MonthDay
 
 @Composable
-fun ServicoEscolhas() {
+fun EscolherData() {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
 
     Box(
         modifier = Modifier.fillMaxSize()
-    ) {
+     ) {
         Image(
             painter = backgroundImage,
             contentDescription = null,
@@ -263,7 +265,10 @@ fun Calendar(selectedDate: Int, selectedMonth: Int, onDateSelected: (Int) -> Uni
                                     color = if (day == selectedDate) Color.Blue else Color.Transparent,
                                     shape = RoundedCornerShape(8.dp)
                                 )
-                                .clickable { onDateSelected(day) },
+                                .clickable {
+                                    onDateSelected(day)
+
+                                           },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(text = day.toString())
@@ -294,9 +299,11 @@ fun BarberProfiles(imageId: Int) {
         )
     }
 }
-
-@Preview
-@Composable
-fun EscolherServicos() {
-    ServicoEscolhas()
+fun teste(day: MonthDay){
+    Log.i("Teste: ", "Day: ${day}" )
 }
+//@Preview
+//@Composable
+//fun EscolherServicos() {
+//    ServicoEscolhas()
+//}

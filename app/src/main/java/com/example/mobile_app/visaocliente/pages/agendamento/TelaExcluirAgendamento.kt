@@ -1,4 +1,4 @@
-package com.example.mobile_app.telasguilherme
+package com.example.mobile_app.visaocliente.pages.agendamento
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

@@ -1,14 +1,10 @@
+package com.example.mobile_app.visaocliente.pages.agendamento
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,12 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import com.example.mobile_app.R
 
 @Composable
-fun TelaAgendamento() {
-    val backgroundImage = painterResource(id = R.drawable.telafundo)
+fun AgendamentoExcluirOuEditar() {
+    val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -35,7 +30,7 @@ fun TelaAgendamento() {
             painter = backgroundImage,
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize() // Faz a imagem cobrir toda a Box
+            modifier = Modifier.fillMaxSize()
         )
 
         Image(
@@ -52,22 +47,22 @@ fun TelaAgendamento() {
                 .fillMaxSize()
         ) {
             Text(
-                text = "AGENDAMENTOS",
+                text = "MEUS AGENDAMENTOS",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp
                 ),
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 90.dp)
+                    .padding(top = 100.dp)
             )
 
             Box(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .width(350.dp)
-                    .height(150.dp)
-                    .offset(y = -170.dp)
+                    .height(350.dp)
+                    .offset(y = -100.dp)
                     .background(
                         color = Color.White.copy(alpha = 0.5f),
                         shape = RoundedCornerShape(12.dp)
@@ -96,9 +91,19 @@ fun TelaAgendamento() {
                             color = Color.Black
                         )
                     )
-
                 }
             }
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+
+            }
+
 
             Text(
                 text = "10H00",
@@ -112,96 +117,15 @@ fun TelaAgendamento() {
                     .padding(8.dp)
             )
 
-
-            Coiudo(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-            )
         }
     }
+    //IconRow()
 }
 
-@Composable
-fun Coiudo(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .background(color = Color.White)
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .size(70.dp)
-                .background(
-                    Color.White,
-                    RoundedCornerShape(12.dp)
-                )
-                .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
-                .zIndex(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.DateRange,
-                contentDescription = "Home",
-                modifier = Modifier.size(40.dp),
-                tint = Color.Black
-            )
-        }
 
-        Box(
-            modifier = Modifier
-                .size(70.dp)
-                .background(Color.White, RoundedCornerShape(12.dp))
-                .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
-                .zIndex(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search",
-                modifier = Modifier.size(40.dp),
-                tint = Color.Black
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .size(70.dp)
-                .background(Color.White, RoundedCornerShape(12.dp))
-                .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
-                .zIndex(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "Notifications",
-                modifier = Modifier.size(40.dp),
-                tint = Color.Black
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .size(70.dp)
-                .background(Color.White, RoundedCornerShape(12.dp))
-                .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
-                .zIndex(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.Person,
-                contentDescription = "Profile",
-                modifier = Modifier.size(40.dp),
-                tint = Color.Black
-            )
-        }
-    }
-}
 
 @Preview
 @Composable
-fun TelaAgenda() {
-    TelaAgendamento()
+fun OlharAgendamento() {
+    AgendamentoExcluirOuEditar()
 }

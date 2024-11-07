@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -65,9 +64,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
     var nomeState by remember { mutableStateOf(viewModel.dadosCliente.value?.nome ?: "Carregando...") }
     var emailState by remember { mutableStateOf(viewModel.dadosCliente.value?.email ?: "Carregando...") }
     var telefoneState by remember { mutableStateOf(viewModel.dadosCliente.value?.telefone ?: "Carregando...") }
-    var senhaAtual by remember { mutableStateOf("") }
-    var novaSenha by remember { mutableStateOf("") }
-    var confirmacao by remember { mutableStateOf("") }
+
     var senhaState by remember { mutableStateOf(UserLoginSession.senha ?: "") }
 
 
@@ -311,90 +308,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                 enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
                 exit = slideOutHorizontally(targetOffsetX = { -it }) + fadeOut()
             ) {
-
-
-                Column(
-                    modifier = Modifier.fillMaxHeight(0.6f),
-                    verticalArrangement = Arrangement.SpaceAround,
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .height(60.dp)
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.SpaceAround,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Senha Atual:",
-                            fontSize = 20.sp,
-                            modifier = Modifier.fillMaxWidth(0.9f),
-                            fontWeight = FontWeight.Bold
-                        )
-                        Surface(
-                            modifier = Modifier.fillMaxWidth(0.9f),
-                            shape = RoundedCornerShape(15.dp),
-                            border = BorderStroke(1.dp, Gray)
-                        ) {
-                            OutlinedTextField(
-                                value = senhaAtual,
-                                onValueChange = { senhaAtual = it },
-                                modifier = Modifier.fillMaxWidth(0.9f)
-                            )
-                        }
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .height(60.dp)
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.SpaceAround,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Nova Senha:",
-                            fontSize = 20.sp,
-                            modifier = Modifier.fillMaxWidth(0.9f),
-                            fontWeight = FontWeight.Bold
-                        )
-                        Surface(
-                            modifier = Modifier.fillMaxWidth(0.9f),
-                            shape = RoundedCornerShape(15.dp),
-                            border = BorderStroke(1.dp, Gray)
-                        ) {
-                            OutlinedTextField(
-                                value = novaSenha,
-                                onValueChange = { novaSenha = it },
-                                modifier = Modifier.fillMaxWidth(0.9f)
-                            )
-                        }
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .height(60.dp)
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.SpaceAround,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Confirme a Senha:",
-                            fontSize = 20.sp,
-                            modifier = Modifier.fillMaxWidth(0.9f),
-                            fontWeight = FontWeight.Bold
-                        )
-                        Surface(
-                            modifier = Modifier.fillMaxWidth(0.9f),
-                            shape = RoundedCornerShape(15.dp),
-                            border = BorderStroke(1.dp, Gray)
-                        ) {
-                            OutlinedTextField(
-                                value = confirmacao,
-                                onValueChange = { confirmacao = it },
-                                modifier = Modifier.fillMaxWidth(0.9f)
-                            )
-                        }
-                    }
-                }
+                InputsTrocarSenha()
             }
 
 
@@ -494,11 +408,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                     //Botão "OK" Após Edição
                     else{
                         Button(
-                            onClick = {dadosAtualizados = !dadosAtualizados
-                                btnsEdit = false
-                                nomeClick = false
-                                emailClick = false
-                                telefoneClick = false},
+                            onClick = {dadosAtualizados = !dadosAtualizados},
                             modifier = Modifier
                                 .width(155.dp)
                                 .height(40.dp)
@@ -563,8 +473,6 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                 ){
                     Button(
                         onClick = {
-
-                            viewModel.excluirConta {  }
                             btnsEdit = !btnsEdit
                             contaExcluida = !contaExcluida
                             excluirConta = !excluirConta
@@ -582,7 +490,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                         Row {
                             Text(
                                 fontSize = 20.sp,
-                                text = "EXCLUIR2",
+                                text = "EXCLUIR",
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -635,20 +543,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                 ){
                     Button(
                         onClick = {
-                            val cliente: DadosCliente = dadosCliente.value as? DadosCliente ?: DadosCliente(0, "", "", "", "")
-
-                            viewModel.updateDadosClienteSenha(
-                                dadosCliente = cliente, // Agora é do tipo DadosCliente
-                                senhaAtual = senhaAtual,
-                                senhaNova = novaSenha,
-                                confirmacaoSenha = confirmacao,
-                                senhaState = senhaState,
-                                onSuccess = {
-                                    dadosAtualizados = !dadosAtualizados
-                                    btnsEdit = !btnsEdit
-                                }
-                            )
-                                dadosAtualizados = !dadosAtualizados
+                            dadosAtualizados = !dadosAtualizados
                             btnsEdit = !btnsEdit
 
                         },
