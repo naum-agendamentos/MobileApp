@@ -1,14 +1,13 @@
 package com.example.mobile_app.visaobarbeiro.api
 
-import com.example.mobile_app.RetrofitServiceApagada
 import com.example.mobile_app.login.ApiLogin
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.ApiAgendamentos
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ApiBarbeiros
 import com.example.mobile_app.visaobarbeiro.telas_servico.ApiServicos
-import com.example.mobile_app.visaocliente.componentes.agendamentocomponentes.ApiAgendamentoCliente
-import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.ApiDadosCliente
-import com.example.mobile_app.visaocliente.componentes.muralcomponentes.ApiMural
-import com.example.mobile_app.visaocliente.componentes.servicocomponente.ApiServico
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.ApiAgendamentoCliente
+import com.example.mobile_app.visaocliente.telas_editarPerfil.ApiDadosCliente
+import com.example.mobile_app.visaocliente.telas_muralAvisos.ApiMural
+import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ApiServico
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +18,7 @@ object RetrofitService {
     private val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzMwMTUxMDgwLCJleHAiOjE3MzM3NTEwODB9.wT-aKvrFLWhJlCxp0fYyv9V3BnIjffbSXw-skjsPzuobmCy9Ksxk1HECitABwRy1Zq_gKnXPKiz_hmcUWpKQvA"
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(AuthInterceptorApagada(token))
+        .addInterceptor(AuthInterceptor(token))
         .build()
     // Inicialmente, o token é nulo
     private val authInterceptor = AuthInterceptor(null.toString())

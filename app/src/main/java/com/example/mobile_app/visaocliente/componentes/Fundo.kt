@@ -13,7 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mobile_app.R
-import com.example.mobile_app.visaocliente.pages.MeuPerfil
+import com.example.mobile_app.visaocliente.telas_editarPerfil.MeuPerfil
 
 @Composable
 fun FundoTela(content: @Composable () -> Unit){

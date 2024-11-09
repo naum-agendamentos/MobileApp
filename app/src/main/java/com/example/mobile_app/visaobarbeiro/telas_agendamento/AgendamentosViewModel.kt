@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobile_app.visaobarbeiro.api.RetrofitServiceApagada2
+import com.example.mobile_app.visaobarbeiro.api.RetrofitService
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -23,7 +23,7 @@ class AgendamentosViewModel : ViewModel() {
     var errorMessage = mutableStateOf<String?>(null)
         private set
 
-    private val apiAgendamentos: ApiAgendamentos = RetrofitServiceApagada2.apiAgendamentos
+    private val apiAgendamentos: ApiAgendamentos = RetrofitService.apiAgendamentos
 
     fun getAgendamentos(barbeiroId: Long) {
         isLoading.value = true

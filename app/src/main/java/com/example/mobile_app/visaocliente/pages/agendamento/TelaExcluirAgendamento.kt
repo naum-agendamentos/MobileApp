@@ -21,8 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mobile_app.visaocliente.componentes.FundoTela
-import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.ExcluirContaDecisao2
-import com.example.mobile_app.visaocliente.componentes.muralcomponentes.Mural
+import com.example.mobile_app.visaocliente.telas_editarPerfil.componentes_editarPerfil.ExcluirContaDecisao2
 
 @Composable
 fun Exclusao() {

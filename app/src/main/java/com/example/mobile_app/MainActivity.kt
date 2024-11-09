@@ -1,32 +1,23 @@
 package com.example.mobile_app
 
 import EscolherData
-import MuralCriacao
-import MuralEdicao
-import MuralListagem
-import NavGraph
 import android.content.Context
-
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.login.Login
-import com.example.mobile_app.visaobarbeiro.componentes.BlackBackground
-import com.example.mobile_app.visaocliente.componentes.meuperfilcomponentes.EditPerfil
-import com.example.mobile_app.visaocliente.pages.MeuPerfil
-import com.example.mobile_app.visaocliente.pages.MuralAvisos
-import com.example.mobile_app.visaocliente.pages.servico.ServicoEscolha
+import com.example.mobile_app.visaobarbeiro.telas_mural.MuralCriacao
+import com.example.mobile_app.visaobarbeiro.telas_mural.MuralEdicao
+import com.example.mobile_app.visaobarbeiro.telas_mural.MuralListagem
+import com.example.mobile_app.visaocliente.telas_editarPerfil.MeuPerfil
 
 
 class MainActivity : ComponentActivity() {
@@ -34,7 +25,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ServicoEscolha(navController = rememberNavController(), context = this@MainActivity)
+//            ServicoEscolha(navController = rememberNavController(), context = this@MainActivity)
+            MyApp(context = this)
         }
 
     }
