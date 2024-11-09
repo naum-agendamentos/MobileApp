@@ -99,7 +99,12 @@
     <!-- Botão de cadastro -->
     <string name="cadastrar_button">Cadastrar</string>
 
+    <string name="salvar_button">SALVAR</string>
+    <string name="cancelar_button">CANCELAR</string>
+
     <!-- Mensagens de Toast -->
     <string name="cadastrado_sucesso">Cadastrado com sucesso</string>
+
+    <string name="bloquear_dia">BLOQUEAR DIA</string>
 
 </resources>

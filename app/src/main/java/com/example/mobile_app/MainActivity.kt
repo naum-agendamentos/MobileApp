@@ -13,14 +13,19 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.login.Login
 import com.example.mobile_app.visaobarbeiro.TelaInicial
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
+//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
+//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BloqueioDiaHoraMenu
+//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.telaBloqueioDeDia
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralCriacao
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralEdicao
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralListagem
@@ -181,6 +186,34 @@ fun MyApp(context: Context) {
         composable("tela_escolhaServico"){
             ServicoEscolha(servicosViewModel, navController)
         }
+
+//        composable(
+//            route = "menu-barbeiro-bloqueio"
+//        ) { backStackEntry ->
+//            // Passe `idBarbeiro` para a composable
+//            BarbeiroBloqueioDiaHora(barbeirosViewModel, navController)
+//        }
+//
+//        composable(
+//            route = "/bloqueio/{barbeiroJson}",
+//            arguments = listOf(navArgument("barbeiroJson") { type = NavType.StringType })
+//        ) { backStackEntry ->
+//            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
+//
+//            BloqueioDiaHoraMenu(navController, barbeiroJson)
+//        }
+//
+//        composable(
+//            "/semana/{barbeiroJson}"
+//        ) { backStackEntry ->
+//            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
+//
+//            if (barbeiroJson != null) {
+//                telaBloqueioDeDia(navController, barbeiroJson)
+//            } else {
+//                Log.e("MainActivity", "ID do barbeiro é nulo.")
+//            }
+//        }
     }
 }
 
