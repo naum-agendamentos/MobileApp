@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,11 +21,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
 import java.time.LocalDate
 import java.time.YearMonth
 import com.example.mobile_app.R
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.AgendamentoViewModel
 import java.time.MonthDay
 
+@Preview
 @Composable
 fun EscolherData() {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
@@ -103,6 +108,13 @@ fun SchedulingScreenn() {
     val times = generateTimeSlots(8, 20)
     var currentTimeIndex by remember { mutableStateOf(0) }
     val visibleTimeSlots = 2
+    val viewModel: AgendamentoViewModel = viewModel()
+    val barbeiros = remember { viewModel.barbeiros }
+
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchBarbeiros()
+    }
 
     Column(
         modifier = Modifier
@@ -110,10 +122,13 @@ fun SchedulingScreenn() {
             .padding(16.dp)
     ) {
         LazyRow(modifier = Modifier.fillMaxWidth()) {
-            items(4) {
-                BarberProfiles(imageId = R.drawable.barbeiro1)
+            items(barbeiros) { barbeiro ->
+                barbeiro.foto?.let { imageUrl ->
+                    BarberProfiles(imageUrl = imageUrl)
+                }
             }
         }
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -209,6 +224,15 @@ fun SchedulingScreenn() {
             }
         }
     }
+}
+
+@Composable
+fun BarberProfiles(imageUrl: String) {
+    Image(
+        painter = rememberImagePainter(data = imageUrl),
+        contentDescription = "Foto do Barbeiro",
+        modifier = Modifier.size(100.dp)
+    )
 }
 
 

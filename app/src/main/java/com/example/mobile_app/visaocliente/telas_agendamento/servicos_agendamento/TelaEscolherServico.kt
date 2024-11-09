@@ -31,7 +31,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.navigation.NavHostController
 
 @Composable
-fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navController: NavHostController, context: Context) {
+fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navController: NavHostController) {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
     val servicos = remember { viewModel.servicos }
 

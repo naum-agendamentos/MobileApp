@@ -62,4 +62,6 @@ class ServicosViewModelCliente : ViewModel() {
     fun addServicos(servico : Servico){
         servicosSelecionados.add(servico)
     }
+
+
 }

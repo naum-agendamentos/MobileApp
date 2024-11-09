@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaobarbeiro.api.RetrofitService
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ApiBarbeiros
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.VerBarbeiro
 import com.example.mobile_app.visaocliente.telas_editarPerfil.ApiDadosCliente
 import com.example.mobile_app.visaocliente.telas_editarPerfil.DadosCliente
 import kotlinx.coroutines.launch
@@ -19,6 +21,10 @@ class AgendamentoViewModel : ViewModel() {
 
     var dadosCliente = mutableStateOf<DadosCliente?>(null)
     private val apiDadosCliente: ApiDadosCliente = RetrofitService.apiDadosCliente
+
+    var barbeiroSelecionado by mutableStateOf<Long?>(null)
+    var servicosSelecionados = mutableStateListOf<Long>()
+    var dataSelecionada by mutableStateOf<LocalDateTime?>(null)
 
     init {
         carregarDadosCliente()
@@ -84,6 +90,20 @@ class AgendamentoViewModel : ViewModel() {
         }
     }
 
+    fun confirmarAgendamento() {
+        val barbeiroId = barbeiroSelecionado
+        val clienteId = dadosCliente.value?.id
+        val servicoIds = servicosSelecionados
+        val inicio = dataSelecionada
+
+        if (barbeiroId != null && clienteId != null && servicoIds.isNotEmpty() && inicio != null) {
+            salvarAgendamento(barbeiroId, clienteId, servicoIds, inicio)
+        } else {
+            Log.e("Agendamento", "Erro: Dados incompletos para o agendamento")
+        }
+    }
+
+
     fun salvarAgendamento(barbeiroId: Long, clienteId: Long, servicoIds: List<Long>, inicio: LocalDateTime) {
         viewModelScope.launch {
             try {
@@ -130,10 +150,58 @@ class AgendamentoViewModel : ViewModel() {
         }
     }
 
+    private val _barbeiros = mutableStateListOf<VerBarbeiro>()
+    val barbeiros: List<VerBarbeiro> get() = _barbeiros
+
+
+    private val apiBarbeiro: ApiBarbeiros = RetrofitService.apiBarbeiros
+
+    init {
+        fetchBarbeiros()
+    }
+
+    fun fetchBarbeiros() {
+        viewModelScope.launch {
+            try {
+                val resposta = apiBarbeiro.get()
+                Log.i("api", "Resposta da API: ${resposta.body()}")
+                if (resposta.isSuccessful) {
+                    resposta.body()?.let {
+                        _barbeiros.clear()
+                        _barbeiros.addAll(it)
+                        Log.i("api", "Barbeiros carregados com sucesso: ${_barbeiros.size} barbeiros encontrados.")
+                    }
+                } else {
+                }
+            } catch (exception: Exception) {
+                Log.e("api", "Erro ao buscar barbeiros: ${exception.message}")
+            } finally {
+            }
+        }
+    }
+
     private fun isNovo() = agendamentoAtual.id == null
 
     fun setAgendamentoParaEdicao(agendamento: Agendamento) {
         agendamentoAtual = agendamento
+    }
+
+    fun selecionarBarbeiro(barbeiroId: Long) {
+        barbeiroSelecionado = barbeiroId
+    }
+
+    // Função para atualizar a lista de serviços selecionados
+    fun selecionarServico(servicoId: Long) {
+        if (servicosSelecionados.contains(servicoId)) {
+            servicosSelecionados.remove(servicoId)
+        } else {
+            servicosSelecionados.add(servicoId)
+        }
+    }
+
+    // Função para atualizar a data e hora do agendamento
+    fun selecionarDataHora(dataHora: LocalDateTime) {
+        dataSelecionada = dataHora
     }
 }
 

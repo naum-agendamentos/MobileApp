@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora
 
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.VerBarbeiro
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -21,6 +22,9 @@ interface ApiAgendamentoCliente {
     suspend fun buscarAgendamento(
         @Path("id") id: Long
     ): Response<Agendamento>
+
+    @GET("barbeiros")
+    suspend fun get(): Response<List<VerBarbeiro>>
 
     @GET("/agendamentos/barbeiro/{barbeiroId}")
     suspend fun listarAgendamentosPorBarbeiro(
