@@ -39,7 +39,7 @@ fun IconRow(navController: NavController, activeIcon: Int) {
                     R.drawable.pngrelogio to "tela_relogio",
                     R.drawable.pngtesoura to "tela_servicos",
                     R.drawable.pngcalendario to "telas_barbeiros_agendamento",
-                    R.drawable.pngalerta to "tela_alerta"
+                    R.drawable.pngalerta to "muralListagem"
                 )
 
                 icons.forEach { (iconRes, route) ->

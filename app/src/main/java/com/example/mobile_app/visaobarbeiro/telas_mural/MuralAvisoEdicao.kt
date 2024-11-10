@@ -31,6 +31,7 @@ import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 
 enum class ButtonType2 {
     INFO, ALERT, URGENT
@@ -257,7 +258,7 @@ fun MuralEdicao(
             }
         }
     }
-  //  IconRow()
+    IconRow(navController = navController, activeIcon = R.drawable.pngalerta)
 }
 
 @Preview

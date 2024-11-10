@@ -3,14 +3,17 @@ package com.example.mobile_app.login
 import LoginViewModel
 import android.content.Context
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,15 +47,21 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun Login(navController: NavHostController, context: Context){
+fun Login(navController: NavHostController, context: Context) {
 
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        verticalArrangement = Arrangement.Center, // Centraliza verticalmente
+        horizontalAlignment = Alignment.CenterHorizontally // Centraliza horizontalmente
+    ) {
         Row(modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)){
+            .height(300.dp)) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Center,
@@ -96,6 +106,7 @@ fun Login(navController: NavHostController, context: Context){
                         .height(60.dp)
                         .border(0.dp, Color.Transparent)
                         .padding(0.dp),
+                    visualTransformation = PasswordVisualTransformation(),
                     shape = RoundedCornerShape(10.dp),
                     textStyle = TextStyle(
                         fontSize = 16.sp,
@@ -112,15 +123,12 @@ fun Login(navController: NavHostController, context: Context){
                         color = Color(0xFF0007AB)
                     )
                 }
-
-
-
             }
         }
         Column(modifier = Modifier
             .fillMaxWidth()
             .height(100.dp),
-            horizontalAlignment = Alignment.CenterHorizontally){
+            horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
                 onClick = { logar(email, senha, navController) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB)),
@@ -135,21 +143,18 @@ fun Login(navController: NavHostController, context: Context){
                     fontSize = 16.sp
                 )
             }
-
         }
         Column(modifier = Modifier
             .fillMaxWidth()
             .height(70.dp),
-            horizontalAlignment = Alignment.CenterHorizontally){
-
-            Text(text = "Ainda não tem conta?",fontSize = 16.sp,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Ainda não tem conta?", fontSize = 16.sp,
                 fontWeight = FontWeight.Bold)
-            Text(text = "Crie uma aqui", color = Color(0xFF0007AB),fontWeight = FontWeight.Bold,)
+            Text(text = "Crie uma aqui", color = Color(0xFF0007AB), fontWeight = FontWeight.Bold)
         }
-
-
     }
 }
+
 
 fun logar(email: String?, senha: String?, navController: NavHostController) {
     val novaSession = NovaSession(email = email, senha = senha)
@@ -160,7 +165,7 @@ fun logar(email: String?, senha: String?, navController: NavHostController) {
             navController.navigate("editarPerfil")
         }
         else if(session != null && session.tipo == "BARBEIRO"){
-            navController.navigate("muralListagem")
+            navController.navigate("tela_inicial")
         }
     }
 }

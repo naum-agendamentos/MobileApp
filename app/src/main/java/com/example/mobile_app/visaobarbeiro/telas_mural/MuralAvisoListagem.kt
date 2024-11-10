@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
+import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 
 
@@ -182,7 +183,7 @@ fun MuralListagem(navController: NavHostController, viewModel: MuralViewModel = 
 
             }
         }
-       // IconRow()
+        IconRow(navController = navController, activeIcon = R.drawable.pngalerta)
     }
 }
 

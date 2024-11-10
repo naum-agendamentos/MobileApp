@@ -21,6 +21,7 @@ import androidx.navigation.navArgument
 import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.login.Login
 import com.example.mobile_app.visaobarbeiro.TelaInicial
+import com.example.mobile_app.visaobarbeiro.componentes.BlackBackground
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
 //import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
@@ -43,8 +44,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            BlackBackground {
+                MyApp(context = this)
+            }
 //            ServicoEscolha(navController = rememberNavController(), context = this@MainActivity)
-            MyApp(context = this)
+
         }
 
     }
@@ -57,7 +61,7 @@ fun MyApp(context: Context) {
     val barbeirosViewModel: BarbeirosViewModel = viewModel()
     val servicosViewModel: ServicosViewModelCliente = viewModel()
 
-    NavHost(navController = navController, startDestination = "tela_escolhaServico") {
+    NavHost(navController = navController, startDestination = "login") {
 
         composable("login") {
             Login(

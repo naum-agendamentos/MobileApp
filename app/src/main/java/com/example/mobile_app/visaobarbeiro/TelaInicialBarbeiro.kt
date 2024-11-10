@@ -71,7 +71,7 @@ fun TelaInicial(navController: NavController) {
                         R.drawable.pngbarbeiros to Pair("BARBEIROS", "tela_barbeiros"),
                         R.drawable.pngtesoura to Pair("SERVIÇOS", "tela_servicos"),
                         R.drawable.pngrelogio to Pair("HORÁRIO", "tela_relogio"),
-                        R.drawable.pngalerta to Pair("MURAL", "tela_alerta"),
+                        R.drawable.pngalerta to Pair("MURAL", "muralListagem"),
                         R.drawable.pnggrafico to Pair("MEUS DADOS", "tela_grafico")
                     )
 
