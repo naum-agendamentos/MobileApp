@@ -30,7 +30,7 @@ class AgendamentoViewModel : ViewModel() {
         carregarDadosCliente()
     }
 
-    private fun carregarDadosCliente() {
+    fun carregarDadosCliente() {
         UserLoginSession.userId?.let { userId ->
             viewModelScope.launch {
                 try {
@@ -42,13 +42,16 @@ class AgendamentoViewModel : ViewModel() {
                         UserLoginSession.email = dadosCliente.value?.email
                     } else {
                         Log.e("carregar perfil", "Erro na resposta: ${response.code()}")
+                        dadosCliente.value = null // Garantir que não temos dados incompletos
                     }
                 } catch (e: Exception) {
                     Log.e("carregar perfil", "Erro ao carregar dados do cliente", e)
+                    dadosCliente.value = null // Garantir que não temos dados incompletos
                 }
             }
         } ?: Log.e("carregar perfil", "userId é nulo")
     }
+
 
     private val apiAgendamento = RetrofitService.apiAgendamentoCliente
     private val agendamentos = mutableStateListOf<Agendamento>()
@@ -97,11 +100,13 @@ class AgendamentoViewModel : ViewModel() {
         val inicio = dataSelecionada
 
         if (barbeiroId != null && clienteId != null && servicoIds.isNotEmpty() && inicio != null) {
+            Log.d("Agendamento", "Cliente ID: $clienteId, Barbeiro ID: $barbeiroId, Data e hora: $inicio")
             salvarAgendamento(barbeiroId, clienteId, servicoIds, inicio)
         } else {
-            Log.e("Agendamento", "Erro: Dados incompletos para o agendamento")
+            Log.e("Agendamento", "Erro: Dados incompletos para o agendamento. Barbeiro: $barbeiroId, Cliente: $clienteId, Servicos: $servicoIds, Hora: $inicio")
         }
     }
+
 
 
     fun salvarAgendamento(barbeiroId: Long, clienteId: Long, servicoIds: List<Long>, inicio: LocalDateTime) {
@@ -109,8 +114,10 @@ class AgendamentoViewModel : ViewModel() {
             try {
                 val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
                 val inicioFormatado = inicio.format(formatter)
+                Log.d("Agendamento", "Início formatado: $inicioFormatado")
 
                 val resposta = if (isNovo()) {
+
                     apiAgendamento.criarAgendamento(barbeiroId, clienteId, servicoIds, inicioFormatado)
                 } else {
                     apiAgendamento.atualizarAgendamento(agendamentoAtual.id!!, barbeiroId, clienteId, servicoIds, inicioFormatado)
@@ -134,6 +141,7 @@ class AgendamentoViewModel : ViewModel() {
             }
         }
     }
+
 
     fun excluirAgendamento(id: Long) {
         viewModelScope.launch {

@@ -27,7 +27,12 @@ import java.time.LocalDate
 import java.time.YearMonth
 import com.example.mobile_app.R
 import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.AgendamentoViewModel
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.DadosCliente
+import androidx.lifecycle.viewmodel.compose.viewModel
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.MonthDay
+import java.time.format.DateTimeFormatter
 
 @Preview
 @Composable
@@ -100,9 +105,10 @@ fun EscolherData() {
 
 @Composable
 fun SchedulingScreenn() {
+    var selectedBarbeiroId by remember { mutableStateOf<Long?>(null) }
     var selectedDate by remember { mutableStateOf(LocalDate.now().dayOfMonth) }
     var selectedMonth by remember { mutableStateOf(LocalDate.now().monthValue) }
-    var selectedTime by remember { mutableStateOf("") }
+    var selectedTime by remember { mutableStateOf<LocalTime?>(null) }
 
     val currentYear = LocalDate.now().year
     val times = generateTimeSlots(8, 20)
@@ -110,6 +116,8 @@ fun SchedulingScreenn() {
     val visibleTimeSlots = 2
     val viewModel: AgendamentoViewModel = viewModel()
     val barbeiros = remember { viewModel.barbeiros }
+
+    val agendamentoViewModel: AgendamentoViewModel = viewModel()
 
 
     LaunchedEffect(Unit) {
@@ -124,10 +132,14 @@ fun SchedulingScreenn() {
         LazyRow(modifier = Modifier.fillMaxWidth()) {
             items(barbeiros) { barbeiro ->
                 barbeiro.foto?.let { imageUrl ->
-                    BarberProfiles(imageUrl = imageUrl)
+                    BarberProfiles(
+                        imageUrl = imageUrl,
+                        onClick = { selectedBarbeiroId = barbeiro.id }
+                    )
                 }
             }
         }
+
 
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -181,14 +193,17 @@ fun SchedulingScreenn() {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                times.drop(currentTimeIndex).take(visibleTimeSlots).forEach { time ->
+                times.drop(currentTimeIndex).take(visibleTimeSlots).forEach { timeText ->
+                    val formatter = DateTimeFormatter.ofPattern("H:mm")
+                    val time = LocalTime.parse(timeText, formatter)
+
                     Button(
                         onClick = { selectedTime = time },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = if (selectedTime == time) Color.Blue else Color.Gray
                         )
                     ) {
-                        Text(text = time)
+                        Text(text = timeText)
                     }
                 }
             }
@@ -197,7 +212,7 @@ fun SchedulingScreenn() {
                 onClick = {
                     if (currentTimeIndex + visibleTimeSlots < times.size) currentTimeIndex += visibleTimeSlots
                 },
-                enabled = currentTimeIndex + visibleTimeSlots < times.size // Desabilitar se não puder avançar mais
+                enabled = currentTimeIndex + visibleTimeSlots < times.size
             ) {
                 Text(text = ">")
             }
@@ -211,14 +226,38 @@ fun SchedulingScreenn() {
         ) {
             Button(
                 onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB)) // Cor personalizada
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB))
             ) {
                 Text(text = "ANTERIOR", color = Color.White)
             }
 
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB)) // Cor personalizada
+                onClick = {
+                    selectedBarbeiroId?.let { barbeiroId ->
+                        val dataSelecionada = LocalDate.of(LocalDate.now().year, selectedMonth, selectedDate)
+                        val horaSelecionada = LocalDateTime.of(dataSelecionada, selectedTime ?: LocalTime.now())
+
+                        val cliente1 = DadosCliente(id = 6, nome = "João", email = "joao@example.com", senha = "1234", telefone = "99999999")
+                        val cliente2 = cliente1.copy(nome = "Maria")
+
+                        Log.d("Cliente", "Cliente alterado: ${cliente2.nome}")
+                        Log.d("Agendamento", "Dados do Agendamento: barbeiroId=$barbeiroId, clienteId=${cliente2.id}, servicoIds=[], inicio=$horaSelecionada")
+
+
+                        if (cliente2.id != null) {
+                            viewModel.salvarAgendamento(
+                                barbeiroId = barbeiroId,
+                                clienteId = cliente2.id!!,
+                                servicoIds = listOf(1),  // Adicione pelo menos um ID válido de serviço
+                                inicio = horaSelecionada
+                            )
+
+                        } else {
+                            Log.e("Agendamento", "Erro: clienteId não pode ser nulo!")
+                        }
+                    } ?: Log.e("Agendamento", "Por favor, selecione um barbeiro.")
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB))
             ) {
                 Text(text = "CONCLUIR", color = Color.White)
             }
@@ -227,13 +266,16 @@ fun SchedulingScreenn() {
 }
 
 @Composable
-fun BarberProfiles(imageUrl: String) {
+fun BarberProfiles(imageUrl: String, onClick: () -> Unit) {
     Image(
         painter = rememberImagePainter(data = imageUrl),
         contentDescription = "Foto do Barbeiro",
-        modifier = Modifier.size(100.dp)
+        modifier = Modifier
+            .size(100.dp)
+            .clickable { onClick() } // Chama a função onClick ao clicar
     )
 }
+
 
 
 fun generateTimeSlots(startHour: Int, endHour: Int): List<String> {
@@ -306,28 +348,4 @@ fun Calendar(selectedDate: Int, selectedMonth: Int, onDateSelected: (Int) -> Uni
     }
 }
 
-@Composable
-fun BarberProfiles(imageId: Int) {
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .clickable {}
-    ) {
-        Image(
-            painter = painterResource(id = imageId),
-            contentDescription = "Barber",
-            modifier = Modifier
-                .size(64.dp)
-                .background(color = Color.Gray, shape = RoundedCornerShape(50)),
-            contentScale = ContentScale.Crop
-        )
-    }
-}
-fun teste(day: MonthDay){
-    Log.i("Teste: ", "Day: ${day}" )
-}
-//@Preview
-//@Composable
-//fun EscolherServicos() {
-//    ServicoEscolhas()
-//}
+
