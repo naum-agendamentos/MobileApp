@@ -25,6 +25,7 @@ import com.example.mobile_app.visaobarbeiro.telas_mural.MuralCriacao
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralListagem
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
 import com.example.mobile_app.visaocliente.telas_editarPerfil.MeuPerfil
+import com.example.mobile_app.visaobarbeiro.componentes.BlackBackground
 import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
 import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.Servicos
@@ -43,8 +44,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            BlackBackground {
+                MyApp(context = this)
+            }
 //            ServicoEscolha(navController = rememberNavController(), context = this@MainActivity)
-            MyApp(context = this)
+
         }
 
     }
@@ -57,7 +61,7 @@ fun MyApp(context: Context) {
     val barbeirosViewModel: BarbeirosViewModel = viewModel()
     val servicosViewModel: ServicosViewModelCliente = viewModel()
 
-    NavHost(navController = navController, startDestination = "tela_inicial") {
+    NavHost(navController = navController, startDestination = "login") {
 
         composable("login") {
             Login(

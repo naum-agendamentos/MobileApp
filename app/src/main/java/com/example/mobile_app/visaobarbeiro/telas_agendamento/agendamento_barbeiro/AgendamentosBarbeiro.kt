@@ -179,27 +179,40 @@ fun AgendamentoBarbeiro(
                                         Column(
                                             modifier = Modifier.weight(1f)
                                         ) {
-                                            Text(
-                                                text = "${agendamento.cliente.nome}",
-                                                fontSize = 18.sp,
-                                                color = Color.White
-                                            )
+                                            if (agendamento.cliente != null) {
+                                                Text(
+                                                    text = "${agendamento.cliente.nome}",
+                                                    fontSize = 18.sp,
+                                                    color = Color.White
+                                                )
 
 
-                                            val servicosVisiveis = agendamento.servicos
-                                            Text(
-                                                text = "Serviços: ${servicosVisiveis.joinToString(", ") { it.nomeServico ?: "Indisponível" }}",
-                                                fontSize = 16.sp,
-                                                color = Color.Gray
-                                            )
+                                                val servicosVisiveis = agendamento.servicos
+                                                Text(
+                                                    text = "Serviços: ${
+                                                        servicosVisiveis.joinToString(
+                                                            ", "
+                                                        ) { it.nomeServico ?: "Indisponível" }
+                                                    }",
+                                                    fontSize = 16.sp,
+                                                    color = Color.Gray
+                                                )
+                                            } else {
+                                                Text(
+                                                    text = "Horário Bloqueado!",
+                                                    color = Color.Yellow
+                                                )
+                                            }
 
-                                            Spacer(modifier = Modifier.weight(1f))
+                                                Spacer(modifier = Modifier.weight(1f))
 
-                                            Text(
-                                                text = dataHoraAgendamento.format(timeFormatter),
-                                                fontSize = 16.sp,
-                                                color = Color.LightGray
-                                            )
+                                                Text(
+                                                    text = dataHoraAgendamento.format(timeFormatter),
+                                                    fontSize = 16.sp,
+                                                    color = Color.LightGray
+                                                )
+
+
                                         }
 
 
