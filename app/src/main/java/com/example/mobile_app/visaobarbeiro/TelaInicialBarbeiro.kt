@@ -70,7 +70,7 @@ fun TelaInicial(navController: NavController) {
                         R.drawable.pngcalendario to Pair("AGENDAMENTOS", "telas_barbeiros_agendamento"),
                         R.drawable.pngbarbeiros to Pair("BARBEIROS", "tela_barbeiros"),
                         R.drawable.pngtesoura to Pair("SERVIÇOS", "tela_servicos"),
-                        R.drawable.pngrelogio to Pair("HORÁRIO", "tela_relogio"),
+                        R.drawable.pngrelogio to Pair("HORÁRIO", "menu-barbeiro-bloqueio"),
                         R.drawable.pngalerta to Pair("MURAL", "tela_alerta"),
                         R.drawable.pnggrafico to Pair("MEUS DADOS", "tela_grafico")
                     )

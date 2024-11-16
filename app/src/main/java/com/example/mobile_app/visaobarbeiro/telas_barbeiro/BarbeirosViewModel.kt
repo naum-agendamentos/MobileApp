@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_app.visaobarbeiro.api.RetrofitService
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.componente.SemanaEntity
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.componente.SemanaEntity
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.cadastrar_barbeiro.componente.CadastrarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.editar_barbeiro.componente.EditarBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.ver_barbeiro.componente.VerBarbeiro
@@ -174,21 +174,21 @@ class BarbeirosViewModel : ViewModel() {
         }
     }
 
-//    fun atualizarSemanaBarbeiro(barbeiroId: Long, novaSemana: SemanaEntity) {
-//        viewModelScope.launch {
-//            Log.d("ViewModel", "Tentando editar semana do barbeiro com ID: $barbeiroId")
-//            isSubmitting.value = true
-//            try {
-//                var response = apiBarbeiro.putBarbeiros(barbeiroId, novaSemana)
-//                if (response.isSuccessful)
-//                    Log.e("Sucesso!", "Response: ${response.body()}")
-//            } catch (exception: Exception) {
-//                Log.e("api", "Erro ao editar barbeiro: ${exception}")
-//            } finally {
-//                isSubmitting.value = false
-//            }
-//        }
-//    }
+    fun atualizarSemanaBarbeiro(id: Long, novaSemana: SemanaEntity) {
+        viewModelScope.launch {
+            Log.d("ViewModel", "Tentando editar semana do barbeiro com ID: $id")
+            isSubmitting.value = true
+            try {
+                var response = apiBarbeiro.putBarbeiros(id, novaSemana)
+                if (response.isSuccessful)
+                    Log.e("Sucesso!", "Response: ${response.body()}")
+            } catch (exception: Exception) {
+                Log.e("api", "Erro ao editar barbeiro: ${exception}")
+            } finally {
+                isSubmitting.value = false
+            }
+        }
+    }
 
 
 }

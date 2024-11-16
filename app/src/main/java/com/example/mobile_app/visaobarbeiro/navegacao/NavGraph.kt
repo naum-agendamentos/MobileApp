@@ -13,9 +13,9 @@ import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeirosAgendamento
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BloqueioDiaHoraMenu
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.telaBloqueioDeDia
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BloqueioDiaHoraMenu
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.telaBloqueioDeDia
 
 @Composable
 fun NavGraph(startDestination: String = "tela_barbeiros") {
@@ -86,32 +86,37 @@ fun NavGraph(startDestination: String = "tela_barbeiros") {
                 Log.e("NavGraph", "ID do agendamento é nulo.")
             }
         }
-//
-//        composable(
-//            route = "menu-barbeiro-bloqueio"
-//        ) { backStackEntry ->
-//            // Passe `idBarbeiro` para a composable
-//            BarbeiroBloqueioDiaHora(barbeirosViewModel, navController)
-//        }
-//
-//        composable(
-//            route = "/bloqueio/{barbeiroJson}",
-//            arguments = listOf(navArgument("barbeiroJson") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
-//            if (barbeiroJson != null) BloqueioDiaHoraMenu(navController, barbeiroJson)
-//        }
-//
-//        composable(
-//            "/semana/{barbeiroJson}"
-//        ) { backStackEntry ->
-//            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
-//
-//            if (barbeiroJson != null) {
-//                telaBloqueioDeDia(navController, barbeiroJson)
-//            } else {
-//                Log.e("NavGraph", "ID do barbeiro é nulo.")
-//            }
-//        }
+
+        composable(
+            route = "menu-barbeiro-bloqueio"
+        ) { backStackEntry ->
+            // Passe `idBarbeiro` para a composable
+            BarbeiroBloqueioDiaHora(barbeirosViewModel, navController)
+        }
+
+        composable(
+            route = "/bloqueio/{id}/{semanaJson}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+                navArgument("semanaJson") { type = NavType.LongType },
+                )
+        ) { backStackEntry ->
+            val semanaJson = backStackEntry.arguments?.getString("semanaJson")
+            val id = backStackEntry.arguments?.getString("id")!!
+            if (semanaJson != null) BloqueioDiaHoraMenu(navController, semanaJson, id)
+        }
+
+        composable(
+            "/semana/{id}/{semanaJson}"
+        ) { backStackEntry ->
+            val semanaJson = backStackEntry.arguments?.getString("semanaJson")
+            val id = backStackEntry.arguments?.getString("id")!!
+
+            if (semanaJson != null) {
+                telaBloqueioDeDia(navController, semanaJson, id)
+            } else {
+                Log.e("NavGraph", "ID do barbeiro é nulo.")
+            }
+        }
     }
 }

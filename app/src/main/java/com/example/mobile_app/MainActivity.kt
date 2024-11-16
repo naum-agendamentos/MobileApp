@@ -1,41 +1,41 @@
 package com.example.mobile_app
 
 import BarbeiroCad
-import BarbeiroEdit
-import CadastroServico
 import EditServico
 import EscolherData
-import android.content.Context
-import android.os.Bundle
+import BarbeiroEdit
+import CadastroServico
 import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import android.os.Bundle
+import android.content.Context
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
+import androidx.activity.enableEdgeToEdge
 import com.example.mobile_app.login.Login
+import androidx.navigation.compose.NavHost
+import androidx.activity.ComponentActivity
+import androidx.compose.runtime.Composable
+import androidx.activity.compose.setContent
+import androidx.navigation.compose.composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_app.visaobarbeiro.TelaInicial
-import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
-import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BloqueioDiaHoraMenu
-//import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.telaBloqueioDeDia
-import com.example.mobile_app.visaobarbeiro.telas_mural.MuralCriacao
+import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralEdicao
+import com.example.mobile_app.visaobarbeiro.telas_mural.MuralCriacao
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralListagem
-import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
-import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.Servicos
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeiros
-import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeirosAgendamento
-import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicoEscolha
-import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicosViewModelCliente
 import com.example.mobile_app.visaocliente.telas_editarPerfil.MeuPerfil
+import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
+import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.Servicos
+import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeirosAgendamento
+import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.telaBloqueioDeDia
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BloqueioDiaHoraMenu
+import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicoEscolha
+import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
+import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
+import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicosViewModelCliente
 
 
 class MainActivity : ComponentActivity() {
@@ -57,7 +57,7 @@ fun MyApp(context: Context) {
     val barbeirosViewModel: BarbeirosViewModel = viewModel()
     val servicosViewModel: ServicosViewModelCliente = viewModel()
 
-    NavHost(navController = navController, startDestination = "tela_escolhaServico") {
+    NavHost(navController = navController, startDestination = "tela_inicial") {
 
         composable("login") {
             Login(
@@ -187,33 +187,38 @@ fun MyApp(context: Context) {
             ServicoEscolha(servicosViewModel, navController)
         }
 
-//        composable(
-//            route = "menu-barbeiro-bloqueio"
-//        ) { backStackEntry ->
-//            // Passe `idBarbeiro` para a composable
-//            BarbeiroBloqueioDiaHora(barbeirosViewModel, navController)
-//        }
-//
-//        composable(
-//            route = "/bloqueio/{barbeiroJson}",
-//            arguments = listOf(navArgument("barbeiroJson") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
-//
-//            BloqueioDiaHoraMenu(navController, barbeiroJson)
-//        }
-//
-//        composable(
-//            "/semana/{barbeiroJson}"
-//        ) { backStackEntry ->
-//            val barbeiroJson = backStackEntry.arguments?.getString("barbeiroJson")
-//
-//            if (barbeiroJson != null) {
-//                telaBloqueioDeDia(navController, barbeiroJson)
-//            } else {
-//                Log.e("MainActivity", "ID do barbeiro é nulo.")
-//            }
-//        }
+        composable(
+            route = "menu-barbeiro-bloqueio"
+        ) { backStackEntry ->
+            // Passe `idBarbeiro` para a composable
+            BarbeiroBloqueioDiaHora(barbeirosViewModel, navController)
+        }
+
+        composable(
+            route = "/bloqueio/{id}/{semanaJson}",
+            arguments = listOf(
+                navArgument("semanaJson") { type = NavType.StringType },
+                navArgument("id") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val semanaJson = backStackEntry.arguments?.getString("semanaJson")
+            val id = backStackEntry.arguments?.getString("id")!!
+
+            BloqueioDiaHoraMenu(navController, semanaJson, id)
+        }
+
+        composable(
+            route = "/semana/{id}/{semanaJson}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.StringType },
+                navArgument("semanaJson") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val semanaJson = backStackEntry.arguments?.getString("semanaJson")
+            val id = backStackEntry.arguments?.getString("id")!!
+
+            telaBloqueioDeDia(navController, semanaJson, id)
+        }
     }
 }
 

@@ -36,7 +36,7 @@ fun IconRow(navController: NavController, activeIcon: Int) {
                 val icons = listOf(
                     R.drawable.pngbarbeiros to "tela_barbeiros",
                     R.drawable.pnggrafico to "tela_grafico",
-                    R.drawable.pngrelogio to "tela_relogio",
+                    R.drawable.pngrelogio to "menu-barbeiro-bloqueio",
                     R.drawable.pngtesoura to "tela_servicos",
                     R.drawable.pngcalendario to "telas_barbeiros_agendamento",
                     R.drawable.pngalerta to "tela_alerta"
