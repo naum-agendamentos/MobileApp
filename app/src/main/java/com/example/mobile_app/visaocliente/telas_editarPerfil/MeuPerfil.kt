@@ -13,12 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.R
+import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaocliente.componentes.FundoTela
+import com.example.mobile_app.visaocliente.componentes.IconRowClient
 import com.example.mobile_app.visaocliente.telas_editarPerfil.componentes_editarPerfil.EditPerfil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeuPerfil() {
+fun MeuPerfil(navController: NavController) {
 
     FundoTela {
         Surface(
@@ -36,12 +41,15 @@ fun MeuPerfil() {
                 EditPerfil()
             }
         }
+
     }
+    IconRowClient(navController = navController, activeIcon = R.drawable.pnguser)
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = false)
 @Composable
 fun MeuPerfilTelaPreview() {
-    MeuPerfil()
+    val fakeNavController = rememberNavController() // Usando um NavController simulado
+    MeuPerfil(navController = fakeNavController)
 }

@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.telas_mural
 
+import MuralViewModel
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import androidx.lifecycle.viewmodel.compose.viewModel

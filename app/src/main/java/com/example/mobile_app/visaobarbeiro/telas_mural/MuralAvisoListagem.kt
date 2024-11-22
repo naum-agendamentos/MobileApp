@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.telas_mural
 
+import MuralViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
+
 import com.example.mobile_app.R
 import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
@@ -100,7 +101,10 @@ fun MuralListagem(navController: NavHostController, viewModel: MuralViewModel = 
                 LazyColumn(
                     modifier = Modifier.padding(10.dp)
                 ) {
-                    items(items = viewModel.getAvisos()) { item ->
+
+                    val avisosInvertidos = viewModel.avisos.reversed()
+
+                    items(items = avisosInvertidos) { item ->
                         // Formatação da data com '/'
                         val dataFormatada = item.data?.let {
                             val partes = it.split("T")

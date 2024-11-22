@@ -29,19 +29,22 @@ import com.example.mobile_app.R
 import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.AgendamentoViewModel
 import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.DadosCliente
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.visaocliente.componentes.IconRowClient
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.MonthDay
 import java.time.format.DateTimeFormatter
 
-@Preview
+
 @Composable
-fun EscolherData() {
+fun EscolherData(navController: NavController) {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
 
     Box(
         modifier = Modifier.fillMaxSize()
-     ) {
+    ) {
         Image(
             painter = backgroundImage,
             contentDescription = null,
@@ -100,6 +103,7 @@ fun EscolherData() {
                     .padding(8.dp)
             )
         }
+        IconRowClient(navController = navController, activeIcon = R.drawable.pngcalenduser)
     }
 }
 
@@ -263,6 +267,7 @@ fun SchedulingScreenn() {
             }
         }
     }
+
 }
 
 @Composable
@@ -334,7 +339,7 @@ fun Calendar(selectedDate: Int, selectedMonth: Int, onDateSelected: (Int) -> Uni
                                 .clickable {
                                     onDateSelected(day)
 
-                                           },
+                                },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(text = day.toString())

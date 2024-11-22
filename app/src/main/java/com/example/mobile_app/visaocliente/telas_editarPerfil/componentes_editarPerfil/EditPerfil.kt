@@ -494,7 +494,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                 }
             }
         }
-            
+
         else if(!showFirstColumn.value){
             Row(
                 modifier = Modifier
@@ -629,7 +629,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                         Row {
                             Text(
                                 fontSize = 20.sp,
-                                text = "SALVAR2",
+                                text = "SALVAR",
                                 fontWeight = FontWeight.Bold
                             )
                         }
