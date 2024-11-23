@@ -39,7 +39,7 @@ fun NavCliente() {
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.logo_nav_barb),
+                painter = painterResource(id = R.drawable.barbearialogin),
                 contentDescription = "Login image",
                 modifier = Modifier
                     .size(60.dp)

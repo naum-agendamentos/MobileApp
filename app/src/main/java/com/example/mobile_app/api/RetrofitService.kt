@@ -8,6 +8,7 @@ import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahor
 import com.example.mobile_app.visaocliente.telas_editarPerfil.ApiDadosCliente
 import com.example.mobile_app.visaocliente.telas_muralAvisos.ApiMural
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ApiServico
+import com.example.mobile_app.visaocliente.telas_avaliacao.ApiAvaliacao
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -40,6 +41,7 @@ object RetrofitService {
     val apiAgendamentos: ApiAgendamentos = retrofit.create(ApiAgendamentos::class.java)
     val apiAgendamentoCliente: ApiAgendamentoCliente = retrofit.create(ApiAgendamentoCliente::class.java)
     val getApiAviso: ApiMural = retrofit.create(ApiMural::class.java)
+    val apiAvaliacao: ApiAvaliacao = retrofit.create(ApiAvaliacao::class.java)
 
     val apiDadosCliente : ApiDadosCliente = retrofit.create(ApiDadosCliente::class.java)
 

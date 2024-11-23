@@ -72,40 +72,19 @@ fun BarbeiroBloqueioDiaHora(viewModel: BarbeirosViewModel = viewModel(), navCont
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxWidth()
-                .padding(top = 90.dp, start = 74.dp, end = 35.dp),
+                .padding(top = 90.dp, start = 74.dp, end = 74.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "BARBEIROS",
+                    text = "BLOQUEAR DIA",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         color = Color.White
                     ),
                     modifier = Modifier.align(Alignment.Center)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Button(
-                onClick = { navController.navigate("cadastrar_barbeiro") },
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                contentPadding = PaddingValues(0.dp),
-                modifier = Modifier
-                    .size(30.dp)
-                    .border(3.dp, Color.White, CircleShape)
-            ) {
-                Text(
-                    text = "+",
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp,
-                        color = Color.White
-                    )
                 )
             }
         }
