@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.R
 import com.example.mobile_app.visaocliente.telas_editarPerfil.MeuPerfil
 
@@ -31,7 +32,6 @@ fun FundoTela(content: @Composable () -> Unit){
             contentAlignment = Alignment.Center){
             content()
         }
-        Navigation()
     }
 
 
@@ -42,6 +42,7 @@ fun FundoTela(content: @Composable () -> Unit){
 @Composable
 fun FundoTelaPreview(){
     FundoTela{
-        MeuPerfil()
+        val fakeNavController = rememberNavController() // Usando um NavController simulado
+        MeuPerfil(navController = fakeNavController)
     }
 }

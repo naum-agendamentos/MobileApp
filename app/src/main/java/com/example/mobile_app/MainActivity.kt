@@ -5,6 +5,8 @@ import EditServico
 import EscolherData
 import BarbeiroEdit
 import CadastroServico
+import MuralAvisos
+import MuralViewModel
 import android.util.Log
 import android.os.Bundle
 import android.content.Context
@@ -30,13 +32,14 @@ import com.example.mobile_app.visaobarbeiro.telas_servico.ServicosViewModel
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.BarbeirosViewModel
 import com.example.mobile_app.visaobarbeiro.telas_servico.ver_servicos.Servicos
 import com.example.mobile_app.visaobarbeiro.ver_barbeiro.TelaBarbeirosAgendamento
-import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.telaBloqueioDeDia
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BloqueioDiaHoraMenu
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicoEscolha
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
+import com.example.mobile_app.visaocliente.pages.agendamento.AvaliacaoScreen
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicosViewModelCliente
+
 
 
 class MainActivity : ComponentActivity() {
@@ -139,12 +142,12 @@ fun MyApp(context: Context) {
 
         //editar Cliente
         composable("editarPerfil") {
-            MeuPerfil()
+            MeuPerfil(navController = navController)
         }
 
         //Agendamento Cliente
         composable("agendamento") {
-            EscolherData()
+            EscolherData(navController = navController)
         }
 
         composable("tela_inicial") {
@@ -222,6 +225,14 @@ fun MyApp(context: Context) {
             val id = backStackEntry.arguments?.getString("id")!!
 
             telaBloqueioDeDia(navController, semanaJson, id)
+        }
+
+        composable("tela_avaliacao") {
+            AvaliacaoScreen(navController = navController)
+        }
+
+        composable("mural-avisos-cliente"){
+            MuralAvisos(navController = navController)
         }
     }
 }

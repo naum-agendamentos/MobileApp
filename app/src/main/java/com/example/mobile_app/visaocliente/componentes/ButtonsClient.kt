@@ -1,4 +1,4 @@
-package com.example.mobile_app.visaobarbeiro.componentes
+package com.example.mobile_app.visaocliente.componentes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import com.example.mobile_app.R
 
 @Composable
-fun IconRow(navController: NavController, activeIcon: Int) {
+fun IconRowClient(navController: NavController, activeIcon: Int) {
     Box(
         modifier = Modifier.fillMaxSize() // Ocupar toda a tela
     ) {
@@ -27,19 +27,18 @@ fun IconRow(navController: NavController, activeIcon: Int) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFF333333))
+                    .background(Color(0xFF8C8C8C))
                     .width(360.dp)
                     .height(70.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val icons = listOf(
-                    R.drawable.pngbarbeiros to "tela_barbeiros",
-                    R.drawable.pnggrafico to "tela_barbeiros",
-                    R.drawable.pngrelogio to "menu-barbeiro-bloqueio",
-                    R.drawable.pngtesoura to "tela_servicos",
-                    R.drawable.pngcalendario to "telas_barbeiros_agendamento",
-                    R.drawable.pngalerta to "muralListagem"
+                    R.drawable.pngalertauser to "mural-avisos-cliente",
+                    R.drawable.pnglocalizacao to "editarPerfil",
+                    R.drawable.pngcalenduser to "agendamento",
+                    R.drawable.pngestrela to "tela_avaliacao",
+                    R.drawable.pnguser to "editarPerfil",
                 )
 
                 icons.forEach { (iconRes, route) ->
@@ -54,14 +53,14 @@ fun IconRow(navController: NavController, activeIcon: Int) {
 
 @Composable
 fun IconBox(iconRes: Int, isActive: Boolean, onClick: () -> Unit) {
-    val backgroundColor = if (isActive) Color(0xFF8B8000) else Color(0xFF333333) // Altera a cor de fundo com base na atividade
+    val backgroundColor = if (isActive) Color(0xFF8C91FF) else Color(0xFFD9D9D9) // Altera a cor de fundo com base na atividade
 
     Box(
         modifier = Modifier
             .offset(y = -40.dp)
             .size(50.dp)
             .background(backgroundColor, shape = RoundedCornerShape(15.dp))
-            .border(1.dp, Color(0xFF8B8000), shape = RoundedCornerShape(15.dp))
+            .border(1.dp, Color(0xFFD9D9D9), shape = RoundedCornerShape(15.dp))
             .clickable(onClick = onClick), // Adiciona o clique
         contentAlignment = Alignment.Center
     ) {

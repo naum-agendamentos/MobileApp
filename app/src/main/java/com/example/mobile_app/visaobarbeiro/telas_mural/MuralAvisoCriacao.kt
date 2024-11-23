@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaobarbeiro.telas_mural
 
+import MuralViewModel
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -36,7 +37,7 @@ import com.example.mobile_app.visaobarbeiro.componentes.navBarb
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.homepage.visaocliente.componentes.muralcomponentes.MuralViewModel
+
 import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 
 enum class ButtonType {
