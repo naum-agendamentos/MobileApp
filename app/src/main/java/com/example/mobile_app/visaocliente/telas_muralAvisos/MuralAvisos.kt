@@ -1,5 +1,3 @@
-package com.example.mobile_app.visaocliente.telas_muralAvisos
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -12,11 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.R
 import com.example.mobile_app.visaocliente.componentes.FundoTela
+import com.example.mobile_app.visaocliente.componentes.IconRowClient
 
 @Composable
-fun MuralAvisos() {
-
+fun MuralAvisos(navController: NavController) {
     FundoTela {
         Surface(
             shape = RoundedCornerShape(12.dp),
@@ -34,11 +35,12 @@ fun MuralAvisos() {
             }
         }
     }
+    IconRowClient(navController = navController, activeIcon = R.drawable.pngalertauser)
 }
 
-
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = false)
 @Composable
 fun MuralPreview() {
-    MuralAvisos()
+    val fakeNavController = rememberNavController()
+    MuralAvisos(navController = fakeNavController)
 }
