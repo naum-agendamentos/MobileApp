@@ -49,6 +49,7 @@ import com.example.mobile_app.visaobarbeiro.NavCliente
 import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.componente.SemanaEntity
+import com.example.mobile_app.visaocliente.componentes.IconRowClient
 import kotlinx.coroutines.launch
 
 @Composable
@@ -174,6 +175,7 @@ fun Avaliacao(navController: NavController) {
                 }
             }
         }
+        IconRowClient(navController, R.drawable.pngestrela)
     }
 }
 
