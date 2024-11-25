@@ -38,7 +38,7 @@ fun MeuPerfil(navController: NavController) {
                     .background(color = Color.White.copy(0.5f))
                     .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
             ) {
-                EditPerfil()
+                EditPerfil(navController = navController)
             }
         }
 

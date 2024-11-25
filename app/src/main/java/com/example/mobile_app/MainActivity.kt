@@ -69,7 +69,7 @@ fun MyApp(context: Context) {
         composable("login") {
             Login(
                 navController = navController,
-                context = context
+
             )
         }
 
@@ -233,6 +233,14 @@ fun MyApp(context: Context) {
 
         composable("mural-avisos-cliente"){
             MuralAvisos(navController = navController)
+        }
+
+        composable("cliente-editado"){
+            MeuPerfil(navController = navController)
+        }
+
+        composable("cliente-excluido"){
+            Login(navController = navController)
         }
     }
 }

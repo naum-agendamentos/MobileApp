@@ -44,6 +44,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaocliente.telas_editarPerfil.DadosCliente
 
@@ -53,7 +55,7 @@ import com.example.mobile_app.visaocliente.ui.theme.Green
 import com.example.mobile_app.visaocliente.ui.theme.Red
 
 @Composable
-fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
+fun EditPerfil(viewModel: EditPerfilViewModel = viewModel(), navController: NavController){
 
     val dadosCliente = remember { mutableStateOf(viewModel.dadosCliente) }
     var idCliente by remember { mutableStateOf<Long?>(null) }
@@ -140,32 +142,38 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                         OutlinedTextField(
                             value = combinedTextName,
                             onValueChange = { newText ->
-                                nomeState = newText.removePrefix(nomeSufixe).trim()
+                                // Mantém o texto digitado corretamente, incluindo espaços
+                                nomeState = newText.removePrefix(nomeSufixe).trimStart() // Remove apenas espaços no início
+                                combinedTextName = "$nomeSufixe $nomeState" // Atualiza o texto combinado
                             },
                             label = {
-                                Text("Nome:",
+                                Text(
+                                    "Nome:",
                                     style = TextStyle(
                                         fontWeight = FontWeight.Bold,
-                                        color = if(!nomeClick) Color.Transparent else Color.Black
+                                        color = if (!nomeClick) Color.Transparent else Color.Black
                                     )
-                                ) },
+                                )
+                            },
                             modifier = Modifier
                                 .fillMaxWidth(0.8f)
                                 .height(60.dp)
-                                .border(0.dp, Color.Transparent)
                                 .padding(0.dp),
                             singleLine = true,
                             textStyle = TextStyle(
                                 fontSize = 16.sp,
-                                textAlign = TextAlign.Start,
-
-                                ),
-
+                                textAlign = TextAlign.Start
+                            ),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor =  if (!nomeClick) Color.Transparent else Color.Black,
-                                unfocusedBorderColor = if (!nomeClick) Color.Transparent else Color.Black
-                            )
+                                focusedBorderColor = if (!nomeClick) Color.Transparent else Color.Black,
+                                unfocusedBorderColor = if (!nomeClick) Color.Transparent else Color.Black,
+                                disabledBorderColor = Color.Transparent,
+                                errorBorderColor = Color.Transparent,
+                                disabledTextColor = Color.Gray,
+                            ),
+                            enabled = nomeClick,
                         )
+
 
 
                         if(btnsEdit){
@@ -197,33 +205,37 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                         OutlinedTextField(
                             value = combinedTextEmail,
                             label = {
-                                Text("Email:",
+                                Text(
+                                    "Email:",
                                     style = TextStyle(
                                         fontWeight = FontWeight.Bold,
-                                        color = if(!emailClick) Color.Transparent else Color.Black
+                                        color = if (!emailClick) Color.Transparent else Color.Black
                                     )
-                                ) },
-
+                                )
+                            },
                             onValueChange = { newText ->
-                                emailState = newText.removePrefix(emailSufixe).trim() },
+                                // Ajusta o texto removendo apenas o prefixo e mantendo os espaços internos
+                                emailState = newText.removePrefix(emailSufixe).trimStart() // Remove apenas espaços no início
+                                combinedTextEmail = "$emailSufixe$emailState" // Atualiza o texto combinado
+                            },
                             modifier = Modifier
                                 .fillMaxWidth(0.8f)
                                 .height(60.dp)
-                                .border(0.dp, Color.Transparent)
                                 .padding(0.dp),
                             singleLine = true,
                             textStyle = TextStyle(
                                 fontSize = 16.sp,
-                                textAlign = TextAlign.Start,
-
-                                ),
-
+                                textAlign = TextAlign.Start
+                            ),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor =  if (!emailClick) Color.Transparent else Color.Black,
-                                unfocusedBorderColor = if (!emailClick) Color.Transparent else Color.Black
-                            )
+                                focusedBorderColor = if (!emailClick) Color.Transparent else Color.Black,
+                                unfocusedBorderColor = if (!emailClick) Color.Transparent else Color.Black,
+                                disabledBorderColor = Color.Transparent, // Transparente quando desabilitado
+                                errorBorderColor = Color.Transparent, // Transparente em erro
+                                disabledTextColor = Color.Gray // Opcional: cor do texto quando desabilitado
+                            ),
+                            enabled = emailClick // Desabilita o campo quando emailClick for falso
                         )
-
 
                         if(btnsEdit){
                             Icon(
@@ -254,31 +266,36 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                         OutlinedTextField(
                             value = combinedTextTelefone,
                             label = {
-                                Text("Telefone:",
+                                Text(
+                                    "Telefone:",
                                     style = TextStyle(
                                         fontWeight = FontWeight.Bold,
-                                        color = if(!telefoneClick) Color.Transparent else Color.Black
+                                        color = if (!telefoneClick) Color.Transparent else Color.Black
                                     )
-                                ) },
-
+                                )
+                            },
                             onValueChange = { newText ->
-                                telefoneState = newText.removePrefix(telefoneSufixe).trim()  },
+                                // Ajusta o texto, removendo apenas o prefixo e preservando os espaços internos
+                                telefoneState = newText.removePrefix(telefoneSufixe).trimStart() // Remove apenas espaços no início
+                                combinedTextTelefone = "$telefoneSufixe$telefoneState" // Atualiza o texto combinado
+                            },
                             modifier = Modifier
                                 .fillMaxWidth(0.8f)
                                 .height(60.dp)
-                                .border(0.dp, Color.Transparent)
                                 .padding(0.dp),
                             singleLine = true,
                             textStyle = TextStyle(
                                 fontSize = 16.sp,
-                                textAlign = TextAlign.Start,
-
-                                ),
-
+                                textAlign = TextAlign.Start
+                            ),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor =  if (!telefoneClick) Color.Transparent else Color.Black,
-                                unfocusedBorderColor = if (!telefoneClick) Color.Transparent else Color.Black
-                            )
+                                focusedBorderColor = if (!telefoneClick) Color.Transparent else Color.Black,
+                                unfocusedBorderColor = if (!telefoneClick) Color.Transparent else Color.Black,
+                                disabledBorderColor = Color.Transparent, // Transparente em estado desabilitado
+                                errorBorderColor = Color.Transparent, // Transparente em estado de erro
+                                disabledTextColor = Color.Gray // Opcional: cor do texto desabilitado
+                            ),
+                            enabled = telefoneClick // Desabilita o campo quando telefoneClick for falso
                         )
 
 
@@ -380,6 +397,7 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                         Button(
                             onClick = {
                                 contaExcluida = !contaExcluida
+                                navController.navigate("cliente-excluido")
                             },
                             modifier = Modifier
                                 .width(155.dp)
@@ -404,7 +422,8 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                     //Botão "OK" Após Edição
                     else{
                         Button(
-                            onClick = {dadosAtualizados = !dadosAtualizados},
+                            onClick = {dadosAtualizados = !dadosAtualizados
+                                navController.navigate("cliente-editado")},
                             modifier = Modifier
                                 .width(155.dp)
                                 .height(40.dp)
@@ -469,9 +488,13 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
                 ){
                     Button(
                         onClick = {
-                            btnsEdit = !btnsEdit
-                            contaExcluida = !contaExcluida
-                            excluirConta = !excluirConta
+                            viewModel.excluirCliente {
+                                // Ação de sucesso após a exclusão
+                                btnsEdit = !btnsEdit
+                                contaExcluida = !contaExcluida
+                                excluirConta = !excluirConta
+                            }
+
                         },
                         modifier = Modifier
                             .width(155.dp)
@@ -641,8 +664,3 @@ fun EditPerfil(viewModel: EditPerfilViewModel = viewModel()){
 }
 
 
-@Preview(showSystemUi = true)
-@Composable
-fun EditPerfilPreview(){
-    EditPerfil()
-}

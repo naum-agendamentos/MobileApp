@@ -35,6 +35,24 @@ class EditPerfilViewModel : ViewModel() {
         } ?: Log.e("carregar perfil", "userId é nulo")
     }
 
+    // ViewModel
+     fun excluirCliente(onSuccess: () -> Unit) {
+        UserLoginSession.idCliente?.let { userId ->
+            viewModelScope.launch {
+                try {
+                    val response = apiDadosCliente.deleteDadosCliente(userId)
+                    if (response.isSuccessful) {
+                        onSuccess()  // Chama a função onSuccess caso a exclusão tenha sucesso
+                    } else {
+                        Log.e("deletar", "Erro na resposta: ${response.code()}")
+                    }
+                } catch (e: Exception) {
+                    Log.e("deletar", "Erro ao deletar dados do cliente", e)
+                }
+            }
+        } ?: Log.e("deletar perfil", "userId é nulo")
+    }
+
     // Atualize a função updateDadosCliente para aceitar um callback
     fun updateDadosCliente(dadosCliente: DadosCliente, onSuccess: () -> Unit) {
         val clienteId = dadosCliente.id ?: return // Retorna se id for nulo para evitar a chamada com valor inválido

@@ -5,4 +5,6 @@ object UserLoginSession {
     var token: String? = null
     var email: String? = null
     var senha: String? = null
+    var idCliente: Long? = null
+    var idBarbeiro: Long? = null
 }

@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun Login(navController: NavHostController, context: Context) {
+fun Login(navController: NavHostController) {
 
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
