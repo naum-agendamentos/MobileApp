@@ -1,9 +1,11 @@
 package com.example.mobile_app.visaocliente.telas_editarPerfil
 
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.Cliente
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -17,4 +19,6 @@ interface ApiDadosCliente {
 
     @DELETE("clientes/{id}")
     suspend fun deleteDadosCliente(@Path("id") id: Long): Response<Void>
+    @POST("/clientes")
+    suspend fun cadastrarCliente(@Body cliente: Cliente): Response<Void>
 }

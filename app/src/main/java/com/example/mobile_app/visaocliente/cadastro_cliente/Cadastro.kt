@@ -1,10 +1,8 @@
-package com.example.mobile_app.visaocliente
+package com.example.mobile_app.visaocliente.cadastro_cliente
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +16,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,35 +33,43 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.R
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.Cliente
+import java.lang.StringBuilder
+import kotlin.text.all
+import kotlin.text.indices
+import kotlin.text.isDigit
+import kotlin.text.take
 
 @Preview
 @Composable
 
-fun Cadastro() {
+fun Cadastro(
+    viewModel: CadastroClienteViewModel = viewModel(),
+    navController: NavController = rememberNavController()
+) {
 
-    var nome by remember {
-        mutableStateOf("")
-    }
 
-    var email by remember {
-        mutableStateOf("")
-    }
+    var nome by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var telefone by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
+    var confirmarSenha by remember { mutableStateOf("") }
 
-    var senha by remember {
-        mutableStateOf("")
-    }
+    var erroNome by remember { mutableStateOf<String?>(null) }
+    var erroEmail by remember { mutableStateOf<String?>(null) }
+    var erroTelefone by remember { mutableStateOf<String?>(null) }
+    var erroSenha by remember { mutableStateOf<String?>(null) }
+    var erroConfSenha by remember { mutableStateOf<String?>(null) }
 
-    var telefone by remember {
-        mutableStateOf("")
-    }
-
-    var confirmarSenha by remember {
-        mutableStateOf("")
-    }
-
+    var showMessage by remember { mutableStateOf(false) }
+    var message by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -100,6 +109,20 @@ fun Cadastro() {
             shape = RoundedCornerShape(12.dp)
         )
 
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text(text = "Email") },
+            modifier = Modifier
+                .width(280.dp)
+                .height(56.dp)
+                .background(Color.White, shape = RoundedCornerShape(12.dp)),
+            shape = RoundedCornerShape(12.dp)
+        )
+
         Spacer(modifier = Modifier.height(10.dp))
 
         fun phoneVisualTransformation(): VisualTransformation {
@@ -116,8 +139,6 @@ fun Cadastro() {
                 TransformedText(AnnotatedString(output.toString()), OffsetMapping.Identity)
             }
         }
-
-
 
         OutlinedTextField(
             value = telefone,
@@ -138,18 +159,6 @@ fun Cadastro() {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(text = "Email") },
-            modifier = Modifier
-                .width(280.dp)
-                .height(56.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp)
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = senha,
@@ -181,7 +190,31 @@ fun Cadastro() {
 
         Button(
             onClick = {
-
+                if (nome.isEmpty() || email.isEmpty() || telefone.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
+                    message = "Preencha todos os campos"
+                    showMessage = true
+                } else if (senha != confirmarSenha) {
+                    message = "As senhas não coincidem"
+                    showMessage = true
+                } else {
+                    viewModel.cadastrarCliente(
+                        Cliente(
+                            nome = nome,
+                            email = email,
+                            telefone = telefone,
+                            senha = senha
+                        ),
+                        onSuccess = {
+                            message = "Cliente cadastrado com sucesso"
+                            showMessage = true
+                            navController.navigate("")
+                        },
+                        onError = { errorMessage ->
+                            message = errorMessage
+                            showMessage = true
+                        }
+                    )
+                }
             },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -199,18 +232,32 @@ fun Cadastro() {
             )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
 
+        Spacer(modifier = Modifier.height(30.dp))
 
         Text(text = "Já tem uma conta?")
         Text(
             text = "Entre aqui",
             style = TextStyle(
                 color = Color(0xFF0000FF)
-            )
+            ),
+            modifier = Modifier.clickable {
+                navController.navigate("login_screen")
+            }
         )
-
-
-
     }
+
+    if (showMessage) {
+        Snackbar(
+            action = {
+                TextButton(onClick = { showMessage = false }) {
+                    Text("OK", color = Color.White)
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(text = message)
+        }
+    }
+
 }
