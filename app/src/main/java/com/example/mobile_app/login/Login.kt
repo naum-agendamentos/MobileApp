@@ -114,15 +114,6 @@ fun Login(navController: NavHostController) {
 
                         ),
                 )
-                Box(modifier = Modifier.fillMaxWidth(0.8f)) {
-                    Text(
-                        text = "Esqueceu a senha?",
-                        modifier = Modifier.align(Alignment.CenterEnd),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0007AB)
-                    )
-                }
             }
         }
         Column(modifier = Modifier
@@ -151,6 +142,7 @@ fun Login(navController: NavHostController) {
             Text(text = "Ainda não tem conta?", fontSize = 16.sp,
                 fontWeight = FontWeight.Bold)
             Text(text = "Crie uma aqui", color = Color(0xFF0007AB), fontWeight = FontWeight.Bold)
+            navController.navigate("cadastrar_cliente")
         }
     }
 }

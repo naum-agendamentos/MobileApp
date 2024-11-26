@@ -228,7 +228,10 @@ fun Cadastro(
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     color = Color.White
-                )
+                ),
+                modifier = Modifier.clickable {
+                    navController.navigate("login")
+                }
             )
         }
 
@@ -242,7 +245,7 @@ fun Cadastro(
                 color = Color(0xFF0000FF)
             ),
             modifier = Modifier.clickable {
-                navController.navigate("login_screen")
+                navController.navigate("login")
             }
         )
     }
