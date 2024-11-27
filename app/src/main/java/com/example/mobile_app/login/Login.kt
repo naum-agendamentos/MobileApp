@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -135,14 +136,25 @@ fun Login(navController: NavHostController) {
                 )
             }
         }
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .height(70.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Ainda não tem conta?", fontSize = 16.sp,
-                fontWeight = FontWeight.Bold)
-            Text(text = "Crie uma aqui", color = Color(0xFF0007AB), fontWeight = FontWeight.Bold)
-            navController.navigate("cadastrar_cliente")
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Ainda não tem conta?",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Crie uma aqui",
+                color = Color(0xFF0007AB),
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.clickable {
+                    navController.navigate("cadastrar_cliente")
+                }
+            )
         }
     }
 }

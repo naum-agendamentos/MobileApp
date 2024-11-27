@@ -1,5 +1,6 @@
 package com.example.mobile_app.visaocliente.cadastro_cliente
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,15 +17,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors
 import androidx.compose.runtime.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -47,15 +54,13 @@ import kotlin.text.indices
 import kotlin.text.isDigit
 import kotlin.text.take
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-
 fun Cadastro(
     viewModel: CadastroClienteViewModel = viewModel(),
     navController: NavController = rememberNavController()
 ) {
-
-
     var nome by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var telefone by remember { mutableStateOf("") }
@@ -84,7 +89,6 @@ fun Cadastro(
             modifier = Modifier
                 .size(200.dp)
                 .padding(top = 40.dp)
-
         )
 
         Spacer(modifier = Modifier.height(6.dp))
@@ -97,170 +101,171 @@ fun Cadastro(
 
         Spacer(modifier = Modifier.height(50.dp))
 
-
         OutlinedTextField(
             value = nome,
-            onValueChange = { nome = it },
-            label = { Text(text = "Nome") },
+            onValueChange = {
+                nome = it
+                erroNome = if (it.isEmpty()) "Nome não pode estar vazio" else null
+            },
+            label = { Text("Nome:", color = Color.Black) },
             modifier = Modifier
-                .width(280.dp)
-                .height(56.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp)
+                .width(280.dp) ,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = if (erroNome != null) Color.Red else Color.Black,
+                unfocusedBorderColor = if (erroNome != null) Color.Red else Color.Black,
+                cursorColor = Color.Black
+            ),
+            textStyle = TextStyle(color = Color.Black)
         )
-
-
-        Spacer(modifier = Modifier.height(10.dp))
+        erroNome?.let { Text(text = it, color = Color.Red) }
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
-            label = { Text(text = "Email") },
+            onValueChange = {
+                email = it
+                val regexEmail = Regex("^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")
+                erroEmail = if (!it.matches(regexEmail)) "Insira um email válido" else null
+            },
+            label = { Text("E-mail:", color = Color.Black) },
             modifier = Modifier
-                .width(280.dp)
-                .height(56.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp)
+                .width(280.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = if (erroEmail != null) Color.Red else Color.Black,
+                unfocusedBorderColor = if (erroEmail != null) Color.Red else Color.Black,
+                cursorColor = Color.Black
+            ),
+            textStyle = TextStyle(color = Color.Black)
         )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        fun phoneVisualTransformation(): VisualTransformation {
-            return VisualTransformation { text ->
-                val trimmed = text.text.take(11)
-                val output = StringBuilder()
-                for (i in trimmed.indices) {
-                    output.append(trimmed[i])
-                    when (i) {
-                        1 -> output.append(" ")
-                        6 -> output.append("-")
-                    }
-                }
-                TransformedText(AnnotatedString(output.toString()), OffsetMapping.Identity)
-            }
-        }
+        erroEmail?.let { Text(text = it, color = Color.Red) }
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = telefone,
             onValueChange = {
-                if (it.all { char -> char.isDigit() }) {
-                    telefone = it.take(11)
+                // Permite apenas números
+                if (it.all { char -> char.isDigit() } && it.length <= 11) {
+                    telefone = it
+                    erroTelefone = if (it.length != 11) {
+                        "Insira um telefone válido"
+                    } else {
+                        null // Nenhum erro
+                    }
                 }
             },
-            label = { Text(text = "Telefone") },
+            label = { Text("Celular:", color = Color.Black) },
             modifier = Modifier
-                .width(280.dp)
-                .height(56.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            visualTransformation = phoneVisualTransformation()
+                .width(280.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = if (erroTelefone != null) Color.Red else Color.Black,
+                unfocusedBorderColor = if (erroTelefone != null) Color.Red else Color.Black,
+                cursorColor = Color.Black
+            ),
+            textStyle = TextStyle(color = Color.Black)
         )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
+        erroTelefone?.let { Text(text = it, color = Color.Red) }
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = senha,
-            onValueChange = { senha = it },
-            label = { Text(text = "Password") },
+            onValueChange = {
+                senha = it
+                erroSenha = if (it.length < 6) "A senha deve conter no mínimo 6 dígitos" else null
+            },
+            label = { Text("Senha:", color = Color.Black) },
             modifier = Modifier
-                .width(280.dp)
-                .height(56.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp),
-            visualTransformation = PasswordVisualTransformation()
+                .width(280.dp),
+            visualTransformation = PasswordVisualTransformation(),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = if (erroSenha != null) Color.Red else Color.Black,
+                unfocusedBorderColor = if (erroSenha != null) Color.Red else Color.Black,
+                cursorColor = Color.Black
+            ),
+            textStyle = TextStyle(color = Color.Black)
         )
-
-        Spacer(modifier = Modifier.height(10.dp))
+        erroSenha?.let { Text(text = it, color = Color.Red) }
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = confirmarSenha,
-            onValueChange = { confirmarSenha = it },
-            label = { Text(text = "Confirmar senha") },
+            onValueChange = {
+                confirmarSenha = it
+                erroConfSenha = if (it != senha) "As senhas não coincidem" else null
+            },
+            label = { Text("Confirmar Senha:", color = Color.Black) },
             modifier = Modifier
-                .width(280.dp)
-                .height(56.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp),
-            visualTransformation = PasswordVisualTransformation()
+                .width(280.dp),
+            visualTransformation = PasswordVisualTransformation(),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = if (erroConfSenha != null) Color.Red else Color.Black,
+                unfocusedBorderColor = if (erroConfSenha != null) Color.Red else Color.Black,
+                cursorColor = Color.Black
+            ),
+            textStyle = TextStyle(color = Color.Black)
         )
-
-        Spacer(modifier = Modifier.height(40.dp))
+        erroConfSenha?.let { Text(text = it, color = Color.Red) }
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
                 if (nome.isEmpty() || email.isEmpty() || telefone.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
-                    message = "Preencha todos os campos"
                     showMessage = true
+                    message = "Todos os campos são obrigatórios"
                 } else if (senha != confirmarSenha) {
-                    message = "As senhas não coincidem"
                     showMessage = true
+                    message = "As senhas não coincidem"
                 } else {
-                    viewModel.cadastrarCliente(
-                        Cliente(
-                            nome = nome,
-                            email = email,
-                            telefone = telefone,
-                            senha = senha
-                        ),
+                    val cliente = Cliente(
+                        id = 0, // ou qualquer valor apropriado
+                        nome = nome,
+                        email = email,
+                        telefone = telefone,
+                        senha = senha
+                    )
+                    viewModel.cadastrarCliente(cliente,
                         onSuccess = {
-                            message = "Cliente cadastrado com sucesso"
                             showMessage = true
-                            navController.navigate("")
+                            message = "Cliente cadastrado com sucesso!"
+                            navController.navigate("Login") // Ajuste para a rota correta
                         },
-                        onError = { errorMessage ->
-                            message = errorMessage
+                        onError = {
                             showMessage = true
+                            message = it
                         }
                     )
                 }
             },
             modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .width(150.dp)
-                .height(40.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB))
+                .width(280.dp)
+                .height(56.dp)
+                .background(Color(0xFFFF9800), shape = RoundedCornerShape(12.dp)) // Gradiente ou cor sólida
+                .shadow(8.dp, shape = RoundedCornerShape(12.dp)), // Adicionando sombra para dar profundidade
+            shape = RoundedCornerShape(12.dp)
         ) {
-            Text(
-                text = "Cadastrar",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    color = Color.White
-                ),
-                modifier = Modifier.clickable {
-                    navController.navigate("login")
-                }
-            )
+            Text(text = "Cadastrar", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(text = "Já tem uma conta?")
         Text(
-            text = "Entre aqui",
-            style = TextStyle(
-                color = Color(0xFF0000FF)
-            ),
+            text = "Já tem conta?",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "faça login aqui",
+            color = Color(0xFF0007AB),
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.clickable {
                 navController.navigate("login")
             }
         )
-    }
 
-    if (showMessage) {
-        Snackbar(
-            action = {
-                TextButton(onClick = { showMessage = false }) {
-                    Text("OK", color = Color.White)
-                }
-            },
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Text(text = message)
+        if (showMessage) {
+            Toast.makeText(LocalContext.current, message, Toast.LENGTH_SHORT).show()
+            showMessage = false
         }
     }
-
 }
+
+

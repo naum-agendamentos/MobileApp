@@ -6,10 +6,13 @@ import com.example.mobile_app.visaobarbeiro.api.RetrofitService
 import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.Cliente
 import com.example.mobile_app.visaocliente.telas_editarPerfil.ApiDadosCliente
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
-class CadastroClienteViewModel : ViewModel(){
+class CadastroClienteViewModel : ViewModel() {
 
-    private  val apiCliente: ApiDadosCliente  = RetrofitService.apiDadosCliente
+    private val apiCliente: ApiDadosCliente = RetrofitService.apiDadosCliente
+
     fun cadastrarCliente(cliente: Cliente, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
             try {
@@ -17,10 +20,19 @@ class CadastroClienteViewModel : ViewModel(){
                 if (response.isSuccessful) {
                     onSuccess()
                 } else {
-                    onError("Erro ao cadastrar cliente: ${response.message()}")
+                    // Captura a mensagem de erro do corpo da resposta, se disponível
+                    val errorBody = response.errorBody()?.string()
+                    onError("Erro ao cadastrar cliente: ${errorBody ?: response.message()}")
                 }
+            } catch (e: IOException) {
+                // Erro de rede ou de conversão
+                onError("Erro de rede: ${e.message}")
+            } catch (e: HttpException) {
+                // Erro HTTP
+                onError("Erro HTTP: ${e.message}")
             } catch (e: Exception) {
-                onError(e.message ?: "Erro desconhecido")
+                // Outros erros
+                onError("Erro desconhecido: ${e.message}")
             }
         }
     }

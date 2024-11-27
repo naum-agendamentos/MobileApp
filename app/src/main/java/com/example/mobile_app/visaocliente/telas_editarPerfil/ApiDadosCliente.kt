@@ -19,6 +19,7 @@ interface ApiDadosCliente {
 
     @DELETE("clientes/{id}")
     suspend fun deleteDadosCliente(@Path("id") id: Long): Response<Void>
+
     @POST("/clientes")
     suspend fun cadastrarCliente(@Body cliente: Cliente): Response<Void>
 }

@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
-    private const val BASE_URL_APIREST = "http://100.26.96.235:8080/"
+    private const val BASE_URL_APIREST = "http://44.199.104.79/"
 
     private val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzMyNTEzNTIyLCJleHAiOjE3MzYxMTM1MjJ9.SgwxMQ3M2ZNcVebvm9KojrzJFfiSxn7lyCBwqIsTzloQQcK6PrIxoF_8vN9NO1ZaGIxrkzmbRHQ5EeMDdmPSUw"
 
@@ -46,6 +46,9 @@ object RetrofitService {
     val apiDadosPorId: DadosPorId = retrofit.create(DadosPorId::class.java)
 
     val apiDadosCliente : ApiDadosCliente = retrofit.create(ApiDadosCliente::class.java)
+
+
+
 
     // Método para atualizar o token no interceptor
     fun updateToken(newToken: String) {

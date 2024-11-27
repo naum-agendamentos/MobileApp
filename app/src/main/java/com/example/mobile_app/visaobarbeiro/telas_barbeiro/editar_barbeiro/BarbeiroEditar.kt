@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -105,7 +106,8 @@ fun BarbeiroEdit(viewModel: BarbeirosViewModel = viewModel(), navController: Nav
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    TitleBar()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    TitleBar(navController = navController)
 
                     ImagePicker(onImagePicked = { uri ->
                         selectedImageUri = uri
@@ -279,7 +281,7 @@ fun BarbeiroEdit(viewModel: BarbeirosViewModel = viewModel(), navController: Nav
 }
 
 @Composable
-fun TitleBar() {
+fun TitleBar(navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(bottom = 16.dp)
@@ -299,7 +301,10 @@ fun TitleBar() {
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = Color.White
-                )
+                ),
+                modifier = Modifier.clickable {
+                    navController.navigate("tela_barbeiros")
+                }
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -309,7 +314,11 @@ fun TitleBar() {
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp,
                 color = Color.White
-            )
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(align = Alignment.CenterVertically)
+                .padding(horizontal = 30.dp) // Adiciona algum espaço nas laterais se necessário
         )
     }
 }
@@ -359,7 +368,7 @@ fun Editar(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { navController.popBackStack() }, // Ação de cancelar
+                onClick = { navController.navigate("tela_barbeiros") }, // Ação de cancelar
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 modifier = Modifier.weight(1f)
             ) {

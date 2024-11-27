@@ -248,6 +248,7 @@ fun MuralCriacao(navController: NavHostController, viewModel: MuralViewModel = v
                                 onClick = {
                                     viewModel.salvar()
                                     showToast = true // Sinaliza que o Toast deve ser exibido
+                                    navController.navigate("muralListagem")
                                 },
                                 Modifier
                                     .width(140.dp)
