@@ -38,6 +38,7 @@ import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendament
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
 import com.example.mobile_app.visaocliente.pages.agendamento.AvaliacaoScreen
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_cliente.AgendamentoCliente
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicosViewModelCliente
 
 
@@ -189,6 +190,18 @@ fun MyApp(context: Context) {
                 Log.e("NavGraph", "ID do agendamento é nulo.")
             }
         }
+
+        composable("buscar-agendamento-cliente/{clienteId}") { backStackEntry ->
+            val clienteId = backStackEntry.arguments?.getString("clienteId")?.toLongOrNull()
+            Log.d("NavGraph", "ID do cliente recebido: $clienteId") // Verificando o ID recebido
+            if (clienteId != null) {
+                AgendamentoCliente(navController = navController, clienteId = clienteId)
+            } else {
+                // Lidar com o caso de ID nulo
+                Log.e("NavGraph", "ID do cliente é nulo.")
+            }
+        }
+
 
         composable("tela_escolhaServico"){
             ServicoEscolha(servicosViewModel, navController)

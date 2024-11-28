@@ -40,6 +40,7 @@ object RetrofitService {
     val apiServicos: ApiServicos = retrofit.create(ApiServicos::class.java) // barbeiro
     val apiServico: ApiServico = retrofit.create(ApiServico::class.java) // cliente
     val apiAgendamentos: ApiAgendamentos = retrofit.create(ApiAgendamentos::class.java)
+    val apiAgendamentosCliente: ApiAgendamentos = retrofit.create(ApiAgendamentos::class.java)
     val apiAgendamentoCliente: ApiAgendamentoCliente = retrofit.create(ApiAgendamentoCliente::class.java)
     val getApiAviso: ApiMural = retrofit.create(ApiMural::class.java)
     val apiAvaliacao: ApiAvaliacao = retrofit.create(ApiAvaliacao::class.java)

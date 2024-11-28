@@ -2,6 +2,7 @@ package com.example.mobile_app.login
 
 import LoginViewModel
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -161,14 +162,19 @@ fun logar(email: String?, senha: String?, navController: NavHostController) {
     val loginViewModel = LoginViewModel()
     GlobalScope.launch(Dispatchers.Main) {
         val session = loginViewModel.logar(novaSession)
-        if (session != null && session.tipo == "CLIENTE") {
-            navController.navigate("editarPerfil")
-        }
-        else if(session != null && session.tipo == "BARBEIRO"){
-            navController.navigate("tela_inicial")
+        if (session != null) {
+            UserLoginSession.idCliente = UserLoginSession.idCliente // Exemplo de atribuição
+            Log.d("Login", "idCliente recebido: ${UserLoginSession.idCliente}")
+
+            if (session.tipo == "CLIENTE") {
+                navController.navigate("editarPerfil")
+            } else if (session.tipo == "BARBEIRO") {
+                navController.navigate("tela_inicial")
+            }
         }
     }
 }
+
 //
 //@Preview(showSystemUi = true)
 //@Composable

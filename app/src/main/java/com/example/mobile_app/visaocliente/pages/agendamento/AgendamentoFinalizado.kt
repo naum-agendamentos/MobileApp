@@ -31,6 +31,7 @@ import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahor
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaocliente.componentes.IconRowClient
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -88,7 +89,7 @@ fun EscolherData(navController: NavController) {
                     .border(2.dp, Color.Gray, RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.TopStart
             ) {
-                SchedulingScreenn()
+                SchedulingScreenn(navController)
             }
 
             Text(
@@ -108,7 +109,7 @@ fun EscolherData(navController: NavController) {
 }
 
 @Composable
-fun SchedulingScreenn() {
+fun SchedulingScreenn(navController: NavController) {
     var selectedBarbeiroId by remember { mutableStateOf<Long?>(null) }
     var selectedDate by remember { mutableStateOf(LocalDate.now().dayOfMonth) }
     var selectedMonth by remember { mutableStateOf(LocalDate.now().monthValue) }
@@ -237,34 +238,38 @@ fun SchedulingScreenn() {
 
             Button(
                 onClick = {
-                    selectedBarbeiroId?.let { barbeiroId ->
-                        val dataSelecionada = LocalDate.of(LocalDate.now().year, selectedMonth, selectedDate)
-                        val horaSelecionada = LocalDateTime.of(dataSelecionada, selectedTime ?: LocalTime.now())
+                    val clienteId = UserLoginSession.idCliente  // Defina o clienteId antes de chamar a navegação
 
-                        val cliente1 = DadosCliente(id = 6, nome = "João", email = "joao@example.com", senha = "1234", telefone = "99999999")
-                        val cliente2 = cliente1.copy(nome = "Maria")
+                    // Verifique se o clienteId é válido
+                    if (clienteId != null) {
+                        selectedBarbeiroId?.let { barbeiroId ->
+                            val dataSelecionada = LocalDate.of(LocalDate.now().year, selectedMonth, selectedDate)
+                            val horaSelecionada = LocalDateTime.of(dataSelecionada, selectedTime ?: LocalTime.now())
 
-                        Log.d("Cliente", "Cliente alterado: ${cliente2.nome}")
-                        Log.d("Agendamento", "Dados do Agendamento: barbeiroId=$barbeiroId, clienteId=${cliente2.id}, servicoIds=[], inicio=$horaSelecionada")
+                            Log.d("Agendamento", "Dados do Agendamento: barbeiroId=$barbeiroId, clienteId=$clienteId, servicoIds=[], inicio=$horaSelecionada")
 
-
-                        if (cliente2.id != null) {
+                            // Chame a função para salvar o agendamento
                             viewModel.salvarAgendamento(
                                 barbeiroId = barbeiroId,
-                                clienteId = cliente2.id!!,
+                                clienteId = clienteId,
                                 servicoIds = listOf(1),  // Adicione pelo menos um ID válido de serviço
                                 inicio = horaSelecionada
                             )
 
-                        } else {
-                            Log.e("Agendamento", "Erro: clienteId não pode ser nulo!")
-                        }
-                    } ?: Log.e("Agendamento", "Por favor, selecione um barbeiro.")
+                            // Navegue para a tela de busca de agendamento
+                            navController.navigate("buscar-agendamento-cliente/$clienteId")
+                        } ?: Log.e("Agendamento", "Por favor, selecione um barbeiro.")
+                    } else {
+                        Log.e("Agendamento", "Erro: clienteId não pode ser nulo!")
+                        // Você pode mostrar uma mensagem para o usuário informando o erro
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB))
             ) {
+                Log.d("Agendamento", "idCliente no clique: ${UserLoginSession.idCliente}")
                 Text(text = "CONCLUIR", color = Color.White)
             }
+
         }
     }
 
