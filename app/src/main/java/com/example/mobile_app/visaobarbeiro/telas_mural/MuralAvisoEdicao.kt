@@ -234,7 +234,7 @@ fun MuralEdicao(
                                     ).show()
 
                                     // Voltar para a tela anterior após salvar
-                                    navController.popBackStack()
+                                    navController.navigate("muralListagem")
                                 },
                                 modifier = Modifier
                                     .width(140.dp)

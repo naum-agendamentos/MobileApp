@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,10 +39,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 
 import com.example.mobile_app.R
+import com.example.mobile_app.visaobarbeiro.api.RetrofitService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -49,6 +52,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Login(navController: NavHostController) {
+    val loginViewModel: LoginViewModel = viewModel()
 
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
@@ -115,15 +119,6 @@ fun Login(navController: NavHostController) {
 
                         ),
                 )
-                Box(modifier = Modifier.fillMaxWidth(0.8f)) {
-                    Text(
-                        text = "Esqueceu a senha?",
-                        modifier = Modifier.align(Alignment.CenterEnd),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0007AB)
-                    )
-                }
             }
         }
         Column(modifier = Modifier
@@ -131,7 +126,7 @@ fun Login(navController: NavHostController) {
             .height(100.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
-                onClick = { logar(email, senha, navController) },
+                onClick = { logar(email, senha, navController, loginViewModel) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB)),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
@@ -145,32 +140,54 @@ fun Login(navController: NavHostController) {
                 )
             }
         }
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .height(70.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Ainda não tem conta?", fontSize = 16.sp,
-                fontWeight = FontWeight.Bold)
-            Text(text = "Crie uma aqui", color = Color(0xFF0007AB), fontWeight = FontWeight.Bold)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Ainda não tem conta?",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Crie uma aqui",
+                color = Color(0xFF0007AB),
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.clickable {
+                    navController.navigate("cadastrar_cliente")
+                }
+            )
         }
     }
 }
 
 
-fun logar(email: String?, senha: String?, navController: NavHostController) {
+fun logar(email: String?, senha: String?, navController: NavHostController, loginViewModel: LoginViewModel) {
     val novaSession = NovaSession(email = email, senha = senha)
-    val loginViewModel = LoginViewModel()
-    GlobalScope.launch(Dispatchers.Main) {
+
+    // Use viewModelScope ao invés de GlobalScope
+    loginViewModel.viewModelScope.launch(Dispatchers.Main) {
         val session = loginViewModel.logar(novaSession)
         if (session != null) {
-            UserLoginSession.idCliente = UserLoginSession.idCliente // Exemplo de atribuição
+            UserLoginSession.idCliente = session.userId // Corrigido para usar a sessão correta
             Log.d("Login", "idCliente recebido: ${UserLoginSession.idCliente}")
+
+            // Atualizar o token no RetrofitService
+            session.token?.let {
+                RetrofitService.updateToken(it)
+            }
 
             if (session.tipo == "CLIENTE") {
                 navController.navigate("editarPerfil")
+                Log.d("Login", "Navegando para editarPerfil")
             } else if (session.tipo == "BARBEIRO") {
                 navController.navigate("tela_inicial")
+                Log.d("Login", "Navegando para tela_inicial")
             }
+        } else {
+            Log.e("Login", "Falha no login")
         }
     }
 }

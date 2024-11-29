@@ -331,7 +331,7 @@ fun Cadastrado(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { /* Ação de cancelar */ },
+                onClick = { navController.navigate("tela_barbeiros") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 modifier = Modifier.weight(1f)
             ) {

@@ -37,10 +37,11 @@ import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.Bloqu
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicoEscolha
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
+import com.example.mobile_app.visaocliente.cadastro_cliente.Cadastro
 import com.example.mobile_app.visaocliente.pages.agendamento.AvaliacaoScreen
 import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_cliente.AgendamentoCliente
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicosViewModelCliente
-
+import com.example.mobile_app.visaocliente.telas_avaliacao.Avaliacao
 
 
 class MainActivity : ComponentActivity() {
@@ -241,7 +242,7 @@ fun MyApp(context: Context) {
         }
 
         composable("tela_avaliacao") {
-            AvaliacaoScreen(navController = navController)
+            Avaliacao(navController = navController)
         }
 
         composable("mural-avisos-cliente"){
@@ -254,6 +255,10 @@ fun MyApp(context: Context) {
 
         composable("cliente-excluido"){
             Login(navController = navController)
+        }
+
+        composable("cadastrar_cliente") {
+            Cadastro(navController = navController)
         }
     }
 }
