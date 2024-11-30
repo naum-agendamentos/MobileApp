@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_app.visaobarbeiro.TelaInicial
 import androidx.navigation.compose.rememberNavController
+import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralEdicao
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralCriacao
 import com.example.mobile_app.visaobarbeiro.telas_mural.MuralListagem
@@ -93,8 +94,8 @@ fun MyApp(context: Context) {
                 id = id,
                 titulo = titulo,
                 descricao = descricao,
-                barbeiroId = 1,
-                url = "https://www.youtube.com",
+                barbeiroId = UserLoginSession.idBarbeiro!!,
+                url = "https://res-console.cloudinary.com/dmgfyyioo/media_explorer_thumbnails/ab186f6871c48c32e4450ae6947f67e1/detailed",
                 navController = navController
             )
         }

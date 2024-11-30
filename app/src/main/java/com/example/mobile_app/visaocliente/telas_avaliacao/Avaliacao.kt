@@ -1,6 +1,5 @@
 package com.example.mobile_app.visaocliente.telas_avaliacao
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,17 +46,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.R
 import com.example.mobile_app.ui.theme.mobile_appTheme
 import com.example.mobile_app.visaobarbeiro.NavCliente
-import com.example.mobile_app.visaobarbeiro.componentes.IconRow
-import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
-import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.componente.SemanaEntity
 import com.example.mobile_app.visaocliente.componentes.IconRowClient
-import kotlinx.coroutines.launch
 
 @Composable
 fun Avaliacao(navController: NavController) {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
     var estrelasSelecionadas by remember { mutableStateOf(5) }
     val viewModel: AvaliacaoViewModel = viewModel()
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -91,21 +88,25 @@ fun Avaliacao(navController: NavController) {
             }
         }
 
-        Column( // Alinha este Box ao centro do Box pai
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .width(350.dp)
-                    .height(550.dp)
-                    .background(Color(0x30000000), shape = RoundedCornerShape(15.dp))
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .width(350.dp)
+                .height(550.dp)
+                .background(Color(0x30000000), shape = RoundedCornerShape(15.dp))
         ) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(280.dp)) {
-                Image(painter = painterResource(id = R.drawable.barbearialogin),
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(280.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.barbearialogin),
                     contentDescription = "Logo TM",
                     Modifier
                         .size(240.dp)
-                        .align(Alignment.Center))
+                        .align(Alignment.Center)
+                )
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -120,8 +121,7 @@ fun Avaliacao(navController: NavController) {
                         modifier = Modifier
                             .size(48.dp)
                             .clickable {
-                                estrelasSelecionadas =
-                                    i // Atualiza a quantidade de estrelas selecionadas
+                                estrelasSelecionadas = i // Atualiza a quantidade de estrelas selecionadas
                             }
                     )
                 }
@@ -154,7 +154,13 @@ fun Avaliacao(navController: NavController) {
 
                 Button(
                     onClick = {
-                        viewModel.postAvaliacao(estrelasSelecionadas)
+                        viewModel.postAvaliacao(estrelasSelecionadas,
+                            onSuccess = {
+                                Toast.makeText(context, "Avaliação cadastrada com sucesso!", Toast.LENGTH_SHORT).show()
+                            },
+                            onError = { errorMessage ->
+                                Toast.makeText(context, "Erro ao cadastrar avaliação: $errorMessage", Toast.LENGTH_SHORT).show()
+                            })
                     },
                     modifier = Modifier
                         .width(160.dp)

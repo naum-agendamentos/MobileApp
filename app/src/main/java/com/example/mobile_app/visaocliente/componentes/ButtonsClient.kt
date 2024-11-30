@@ -37,7 +37,7 @@ fun IconRowClient(navController: NavController, activeIcon: Int) {
                     R.drawable.pngalertauser to "mural-avisos-cliente",
                     R.drawable.pnglocalizacao to "editarPerfil",
                     R.drawable.pngcalenduser to "tela_escolhaServico",
-                    R.drawable.pngestrela to "Avaliacao",
+                    R.drawable.pngestrela to "tela_avaliacao",
                     R.drawable.pnguser to "editarPerfil",
                 )
 
