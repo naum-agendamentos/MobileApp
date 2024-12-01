@@ -357,5 +357,3 @@ fun Calendar(selectedDate: Int, selectedMonth: Int, onDateSelected: (Int) -> Uni
         }
     }
 }
-
-

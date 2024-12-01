@@ -29,6 +29,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_app.R
 import androidx.compose.foundation.lazy.items
 import androidx.navigation.NavHostController
+import com.example.mobile_app.visaocliente.componentes.Header
+import com.example.mobile_app.visaocliente.componentes.IconRowClient
 
 @Composable
 fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navController: NavHostController) {
@@ -46,14 +48,7 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
             modifier = Modifier.fillMaxSize()
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.logobarbeiro),
-            contentDescription = "Login image",
-            modifier = Modifier
-                .size(60.dp)
-                .padding(start = 5.dp)
-                .padding(top = 10.dp)
-        )
+        Header()
 
         Box(
             modifier = Modifier
@@ -116,28 +111,19 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
                             onClick = { navController.navigate("agendamento")},
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue), // Define a cor de fundo do botão
                             modifier = Modifier
-                                .padding(start = 16.dp, bottom = 32.dp) // Ajusta o espaçamento para baixo e para a esquerda
+                                .padding(
+                                    start = 16.dp,
+                                    bottom = 32.dp
+                                ) // Ajusta o espaçamento para baixo e para a esquerda
                                 .align(Alignment.BottomEnd) // Posiciona o botão no canto inferior esquerdo
                         ) {
                             Text(text = "Próximo", color = Color.White) // Texto dentro do botão
                         }
                     }
             }
-
-            Text(
-                text = "10H00",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    color = Color.Black
-                ),
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-            )
         }
     }
-    //IconRow()
+    IconRowClient(navController = navController, activeIcon = R.drawable.pngcalenduser)
 }
 
 @Composable
@@ -188,6 +174,7 @@ fun ServicoItem2(
             }
         }
     }
+
 }
 
 //@Preview

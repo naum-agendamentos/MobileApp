@@ -212,6 +212,3 @@ class AgendamentoViewModel : ViewModel() {
         dataSelecionada = dataHora
     }
 }
-
-
-

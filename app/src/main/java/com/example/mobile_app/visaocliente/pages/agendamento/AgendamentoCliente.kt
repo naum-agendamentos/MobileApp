@@ -25,6 +25,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.draw.shadow
 import com.example.mobile_app.visaobarbeiro.componentes.IconRow
 import com.example.mobile_app.visaocliente.componentes.Header
@@ -81,15 +83,46 @@ fun AgendamentoCliente(
                 .fillMaxSize()
                 .padding(top = 170.dp)
         ) {
-            androidx.compose.material3.Text(
-                text = "MEUS AGENDAMENTOS",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                    color = Color.Black
-                ),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 0.dp, start = 74.dp, end = 35.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Título "MEUS AGENDAMENTOS"
+                androidx.compose.material3.Text(
+                    text = "MEUS AGENDAMENTOS",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+
+                // Botão "+" para adicionar
+                androidx.compose.material3.Button(
+                    onClick = { navController.navigate("tela_escolhaServico") },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(Color.Transparent),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(30.dp)
+                        .border(3.dp, Color.Black, CircleShape)
+                ) {
+                    androidx.compose.material3.Text(
+                        text = "+",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            color = Color.Black
+                        )
+                    )
+                }
+            }
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
