@@ -15,6 +15,9 @@ interface ApiBarbeiros {
     @GET("barbeiros")
     suspend fun get(): Response<List<VerBarbeiro>>
 
+    @GET("barbeiros/listar?idBarbearia=1")
+    suspend fun getBarbeirosParaClientes(): Response<List<VerBarbeiro>>
+
     @GET("barbeiros/{id}")
     suspend fun getBarbeiroPorId(@Path("id") barbeiroId: Long): Response<List<VerBarbeiro>>
 
@@ -26,4 +29,6 @@ interface ApiBarbeiros {
 
     @PUT("barbeiros/semana/{id}")
     suspend fun putBarbeiros(@Path("id") id: Long, @Body novaSemana: SemanaEntity): Response<SemanaEntity>
+
+
 }

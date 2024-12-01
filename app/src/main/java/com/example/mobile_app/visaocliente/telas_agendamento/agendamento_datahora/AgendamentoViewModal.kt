@@ -171,9 +171,11 @@ class AgendamentoViewModel : ViewModel() {
     fun fetchBarbeiros() {
         viewModelScope.launch {
             try {
-                val resposta = apiBarbeiro.get()
-                Log.i("api", "Resposta da API: ${resposta.body()}")
+                val resposta = apiBarbeiro.getBarbeirosParaClientes()
+                Log.i("api", "Resposta da API Barbeiro: ${resposta.body()}")
+                Log.i("api", "Resposta da API Barbeiro: ${resposta.code()}")
                 if (resposta.isSuccessful) {
+                    Log.i("Sucesso na busca barbeiro","Sucesso na busca barbeiro")
                     resposta.body()?.let {
                         _barbeiros.clear()
                         _barbeiros.addAll(it)
