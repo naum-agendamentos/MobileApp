@@ -1,4 +1,4 @@
-package com.example.mobile_app.visaobarbeiro
+package com.example.mobile_app.visaocliente
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,12 +19,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mobile_app.R
+import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
+import com.example.mobile_app.visaocliente.componentes.Header
 
 @Composable
-fun TelaInicial(navController: NavController) {
+fun TelaInicialCliente(navController: NavController) {
 
-    val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
+    val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -36,7 +39,7 @@ fun TelaInicial(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        Header()
 
         Box(
             modifier = Modifier.fillMaxSize()
@@ -46,7 +49,7 @@ fun TelaInicial(navController: NavController) {
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    color = Color.White
+                    color = Color.Black
                 ),
                 modifier = Modifier
                     .align(Alignment.TopCenter)
@@ -67,12 +70,10 @@ fun TelaInicial(navController: NavController) {
 
                     // Definindo os botões e suas rotas
                     val buttons = listOf(
-                        R.drawable.pngcalendario to Pair("AGENDAMENTOS", "telas_barbeiros_agendamento"),
-                        R.drawable.pngbarbeiros to Pair("BARBEIROS", "tela_barbeiros"),
-                        R.drawable.pngtesoura to Pair("SERVIÇOS", "tela_servicos"),
-                        R.drawable.pngrelogio to Pair("HORÁRIO", "menu-barbeiro-bloqueio"),
-                        R.drawable.pngalerta to Pair("MURAL", "muralListagem"),
-                        R.drawable.pnggrafico to Pair("MEUS DADOS", "tela_grafico")
+                        R.drawable.pngmuralclienteinicial to Pair("MURAL", "mural-avisos-cliente"),
+                        R.drawable.pngagendamentoclienteinicial to Pair("AGENDAMENTOS", "buscar-agendamento-cliente/${UserLoginSession.idCliente}"),
+                        R.drawable.pngavaliarclienteinicial to Pair("AVALIAR", "tela_avaliacao"),
+                        R.drawable.pnguserclienteinicial to Pair("PERFIL", "editarPerfil"),
                     )
 
                     buttons.chunked(2).forEach { rowButtons ->
@@ -87,7 +88,7 @@ fun TelaInicial(navController: NavController) {
                                         .width(159.dp)
                                         .height(133.dp)
                                         .offset(y = 20.dp)
-                                        .background(Color(0xFF3D3D3D), shape = RoundedCornerShape(15.dp))
+                                        .background(Color(0xFF292929), shape = RoundedCornerShape(15.dp))
                                         .clickable { navController.navigate(route) } // Navegação
                                 ) {
                                     Image(

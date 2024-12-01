@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mobile_app.R
+import com.example.mobile_app.login.UserLoginSession
 
 @Composable
 fun IconRowClient(navController: NavController, activeIcon: Int) {
@@ -35,8 +36,7 @@ fun IconRowClient(navController: NavController, activeIcon: Int) {
             ) {
                 val icons = listOf(
                     R.drawable.pngalertauser to "mural-avisos-cliente",
-                    R.drawable.pnglocalizacao to "editarPerfil",
-                    R.drawable.pngcalenduser to "tela_escolhaServico",
+                    R.drawable.pngcalenduser to "buscar-agendamento-cliente/${UserLoginSession.idCliente}",
                     R.drawable.pngestrela to "tela_avaliacao",
                     R.drawable.pnguser to "editarPerfil",
                 )

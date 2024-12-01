@@ -93,7 +93,7 @@ fun Avaliacao(navController: NavController) {
                 .align(Alignment.Center)
                 .width(350.dp)
                 .height(550.dp)
-                .background(Color(0x30000000), shape = RoundedCornerShape(15.dp))
+                .background(Color(0x0FFFFFFF), shape = RoundedCornerShape(15.dp))
         ) {
             Box(
                 modifier = Modifier

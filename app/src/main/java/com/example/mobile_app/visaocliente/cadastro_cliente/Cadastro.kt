@@ -240,7 +240,8 @@ fun Cadastro(
                 .height(56.dp)
                 .background(Color(0xFFFF9800), shape = RoundedCornerShape(12.dp)) // Gradiente ou cor sólida
                 .shadow(8.dp, shape = RoundedCornerShape(12.dp)), // Adicionando sombra para dar profundidade
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB))
         ) {
             Text(text = "Cadastrar", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }

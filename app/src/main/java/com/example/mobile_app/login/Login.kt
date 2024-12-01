@@ -180,7 +180,7 @@ fun logar(email: String?, senha: String?, navController: NavHostController, logi
             }
 
             if (session.tipo == "CLIENTE") {
-                navController.navigate("editarPerfil")
+                navController.navigate("tela_inicial_cliente")
                 Log.d("Login", "Navegando para editarPerfil")
             } else if (session.tipo == "BARBEIRO") {
                 navController.navigate("tela_inicial")
