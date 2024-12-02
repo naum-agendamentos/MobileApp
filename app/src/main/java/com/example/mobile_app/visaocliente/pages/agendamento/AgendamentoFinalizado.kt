@@ -38,7 +38,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaocliente.componentes.IconRowClient
-import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.Agendamento
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.MonthDay
@@ -95,27 +94,16 @@ fun EscolherData(navController: NavController, servicosIds: List<Long>) {
                     .border(2.dp, Color.Gray, RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.TopStart
             ) {
-                SchedulingScreenn(navController,servicosIds)
+                SchedulingScreenn(navController, servicosIds)
             }
 
-            Text(
-                text = "10H00",
-                style = androidx.compose.ui.text.TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    color = Color.Black
-                ),
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-            )
         }
         IconRowClient(navController = navController, activeIcon = R.drawable.pngcalenduser)
     }
 }
 
 @Composable
-fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
+fun SchedulingScreenn(navController: NavController, servicosIds: List<Long>) {
     var selectedBarbeiroId by remember { mutableStateOf<Long?>(null) }
     var selectedDate by remember { mutableStateOf(LocalDate.now().dayOfMonth) }
     var selectedMonth by remember { mutableStateOf(LocalDate.now().monthValue) }
@@ -127,9 +115,8 @@ fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
     val visibleTimeSlots = 2
     val viewModel: AgendamentoViewModel = viewModel()
     val barbeiros = remember { viewModel.barbeiros }
-    val agendamentosDoBarbeiro = remember { viewModel.agendamentosPorData }
 
-
+    val agendamentoViewModel: AgendamentoViewModel = viewModel()
 
     LaunchedEffect(Unit) {
         viewModel.fetchBarbeiros()
@@ -140,23 +127,17 @@ fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+        LazyRow(modifier = Modifier.fillMaxWidth()) {
             items(barbeiros) { barbeiro ->
                 barbeiro.foto?.let { imageUrl ->
                     BarberProfiles(
                         imageUrl = imageUrl,
-                        isSelected = barbeiro.id == selectedBarbeiroId,
-                        isnull = null == selectedBarbeiroId,
-                        onClick = {
-                            selectedBarbeiroId = barbeiro.id
-                            viewModel.fetchAgendamentosBarbeiro(barbeiro.id)
-                        }
+                        isSelected = selectedBarbeiroId == barbeiro.id,
+                        onClick = { selectedBarbeiroId = barbeiro.id }
                     )
                 }
             }
         }
-
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -212,42 +193,15 @@ fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
                 times.drop(currentTimeIndex).take(visibleTimeSlots).forEach { timeText ->
                     val formatter = DateTimeFormatter.ofPattern("H:mm")
                     val time = LocalTime.parse(timeText, formatter)
-                    var dateKey: String? = null
-                    if(selectedBarbeiroId != null){
-                        dateKey = "%02d/%02d".format(selectedDate, selectedMonth)
-                        val formattedTimeText = timeText.padStart(5, '0')
-                        Log.i("Teste de dia proibed: " ,
-                            " horarios é proibido: ${dateKey} ${agendamentosDoBarbeiro.get(dateKey)} horário: ${formattedTimeText}  " +
-                                    "Contem: ${agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText)}")
-                        Button(
-                            enabled = agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText) == false,
-                            onClick = {
-                                if (agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText) == false) {
-                                    selectedTime = time
-                                }
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedTime == time) Color.Blue else Color.Gray
-                            )
-                        ) {
-                            Text(text = if (agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText) == true) "Reservado" else timeText )
-                        }
 
-
-                    } else {
-                                    Button(
-                                    onClick = { selectedTime = time },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedTime == time) Color.Blue else Color.Gray
-                            )
-                        ) {
-                            Text(text = timeText)
-                        }
+                    Button(
+                        onClick = { selectedTime = time },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedTime == time) Color.Blue else Color.Gray
+                        )
+                    ) {
+                        Text(text = timeText)
                     }
-
-
-
-
                 }
             }
 
@@ -290,7 +244,7 @@ fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
                             viewModel.salvarAgendamento(
                                 barbeiroId = barbeiroId,
                                 clienteId = clienteId,
-                                servicoIds = servicosIds,  // Adicione pelo menos um ID válido de serviço
+                                servicoIds = servicosIds, // Adicione pelo menos um ID válido de serviço
                                 inicio = horaSelecionada
                             )
 
@@ -307,19 +261,16 @@ fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
                 Log.d("Agendamento", "idCliente no clique: ${UserLoginSession.idCliente}")
                 Text(text = "CONCLUIR", color = Color.White)
             }
-
         }
     }
-
 }
 
 @Composable
-fun BarberProfiles(imageUrl: String,isSelected: Boolean,isnull:Boolean, onClick: () -> Unit) {
+fun BarberProfiles(imageUrl: String, isSelected: Boolean, onClick: () -> Unit) {
 
     val borderColor = if (isSelected) Color.Blue else Color.Gray // Define a cor da borda com base na seleção
     val imageColor = when {
         isSelected -> Color.Transparent // Nenhum filtro se selecionado
-        isnull -> Color.Transparent // Cor diferenciada se for nulo
         else -> Color.Gray // Cor padrão para não selecionados
     }
     Image(
@@ -329,10 +280,11 @@ fun BarberProfiles(imageUrl: String,isSelected: Boolean,isnull:Boolean, onClick:
             .size(100.dp)
             .clip(CircleShape)
             .clickable { onClick() } // Chama a função onClick ao clicar
-            .border(BorderStroke(4.dp,borderColor),
-            CircleShape
+            .border(
+                BorderStroke(4.dp,borderColor),
+                CircleShape
 
-        ),
+            ),
         colorFilter = ColorFilter.tint(imageColor, blendMode = BlendMode.Darken)
 
     )

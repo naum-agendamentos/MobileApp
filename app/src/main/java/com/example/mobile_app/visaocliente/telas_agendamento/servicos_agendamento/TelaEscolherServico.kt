@@ -100,28 +100,22 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
                             Spacer(modifier = Modifier.padding(5.dp))
                         }
                     }
-
-
-                    // Adicionando os itens de serviço
-
-
-                    Box(
-                        modifier = Modifier.fillMaxSize() // Preenche toda a tela
-                    ) {
-                        Button(
-                            onClick = { navController.navigate("agendamento/${viewModel.servicosSelecionados.joinToString(",")}")
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue), // Define a cor de fundo do botão
-                            modifier = Modifier
-                                .padding(
-                                    start = 16.dp,
-                                    bottom = 32.dp
-                                ) // Ajusta o espaçamento para baixo e para a esquerda
-                                .align(Alignment.BottomEnd) // Posiciona o botão no canto inferior esquerdo
-                        ) {
-                            Text(text = "Próximo", color = Color.White) // Texto dentro do botão
-                        }
-                    }
+            }
+            Box(
+                modifier = Modifier.fillMaxSize() // Preenche toda a tela
+            ) {
+                Button(
+                    onClick = { navController.navigate("agendamento/${viewModel.servicosSelecionados.joinToString(",")}")
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue), // Define a cor de fundo do botão
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.BottomCenter)
+                        .offset(y = (-150).dp) // Adiciona o deslocamento vertical
+                        .width(160.dp)
+                ) {
+                    Text(text = "Próximo", color = Color.White) // Texto dentro do botão
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
-    private const val BASE_URL_APIREST = "http://100.26.96.235:8080/"
+    private const val BASE_URL_APIREST = "http://3.233.162.17/"
 
     private val initialToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndWlsaGVybWVAZ21haWwuY29tIiwiaWF0IjoxNzMyNTEzNTIyLCJleHAiOjE3MzYxMTM1MjJ9.SgwxMQ3M2ZNcVebvm9KojrzJFfiSxn7lyCBwqIsTzloQQcK6PrIxoF_8vN9NO1ZaGIxrkzmbRHQ5EeMDdmPSUw"
 
