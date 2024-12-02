@@ -72,7 +72,7 @@ fun TelaInicial(navController: NavController) {
                         R.drawable.pngtesoura to Pair("SERVIÇOS", "tela_servicos"),
                         R.drawable.pngrelogio to Pair("HORÁRIO", "menu-barbeiro-bloqueio"),
                         R.drawable.pngalerta to Pair("MURAL", "muralListagem"),
-                        R.drawable.pnggrafico to Pair("MEUS DADOS", "tela_grafico")
+                        R.drawable.pnggrafico to Pair("MEUS DADOS", "dashboard")
                     )
 
                     buttons.chunked(2).forEach { rowButtons ->
