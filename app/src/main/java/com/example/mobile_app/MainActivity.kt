@@ -38,6 +38,7 @@ import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.Bloqu
 import com.example.mobile_app.visaocliente.telas_agendamento.servicos_agendamento.ServicoEscolha
 import com.example.mobile_app.visaobarbeiro.telas_barbeiro.bloqueio_de_dia.BarbeiroBloqueioDiaHora
 import com.example.mobile_app.visaobarbeiro.telas_agendamento.agendamento_barbeiro.AgendamentoBarbeiro
+import com.example.mobile_app.visaobarbeiro.telas_dashboard.Dashboard
 import com.example.mobile_app.visaocliente.TelaInicialCliente
 import com.example.mobile_app.visaocliente.cadastro_cliente.Cadastro
 import com.example.mobile_app.visaocliente.pages.agendamento.AvaliacaoScreen
@@ -269,6 +270,10 @@ fun MyApp(context: Context) {
 
         composable("cadastrar_cliente") {
             Cadastro(navController = navController)
+        }
+
+        composable("dashboard"){
+            Dashboard(navController = navController)
         }
     }
 }
