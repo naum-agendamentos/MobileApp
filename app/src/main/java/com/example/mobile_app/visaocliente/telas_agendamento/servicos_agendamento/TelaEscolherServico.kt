@@ -89,6 +89,7 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
 
 
                         items(servicos) { servico ->
+
                             Log.d("TelaServicos", "ID do serviço: ${servico.id}")
                             ServicoItem2(
 
@@ -108,7 +109,8 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
                         modifier = Modifier.fillMaxSize() // Preenche toda a tela
                     ) {
                         Button(
-                            onClick = { navController.navigate("agendamento")},
+                            onClick = { navController.navigate("agendamento/${viewModel.servicosSelecionados.joinToString(",")}")
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue), // Define a cor de fundo do botão
                             modifier = Modifier
                                 .padding(
@@ -161,7 +163,11 @@ fun ServicoItem2(
                 .border(2.dp, Color.Black, shape = RoundedCornerShape(4.dp))
                 .clickable {
                     checked = !checked
-                    viewModel.addServicos(servico)
+                    if (checked){
+                        viewModel.addServicos(servico)
+                    } else {
+                        viewModel.removeServicos(servico)
+                    }
                 },
             contentAlignment = Alignment.Center
         ) {

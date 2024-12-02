@@ -35,7 +35,7 @@ interface ApiAgendamentoCliente {
     @GET("/agendamentos/barbeiro/{barbeiroId}")
     suspend fun listarAgendamentosPorBarbeiro(
         @Path("barbeiroId") barbeiroId: Long
-    ): Response<List<Agendamento>>
+    ): Response<List<AgendamentoListagemDto>>
 
     @GET("/agendamentos/barbeiroBloq/{barbeiroId}")
     suspend fun listarAgendamentosPorBarbeiroBloq(

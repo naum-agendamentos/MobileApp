@@ -150,8 +150,12 @@ fun MyApp(context: Context) {
         }
 
         //Agendamento Cliente
-        composable("agendamento") {
-            EscolherData(navController = navController)
+        composable(
+            "agendamento/{servicosIds}",
+            arguments = listOf(navArgument("servicosIds") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val servicosIds = backStackEntry.arguments?.getString("servicosIds")?.split(",")?.map { it.toLong() }
+            EscolherData(navController = navController, servicosIds = servicosIds ?: emptyList())
         }
 
         composable("tela_inicial") {

@@ -1,4 +1,5 @@
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -6,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -13,7 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +38,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.login.UserLoginSession
 import com.example.mobile_app.visaocliente.componentes.IconRowClient
+import com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora.Agendamento
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.MonthDay
@@ -40,7 +46,7 @@ import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun EscolherData(navController: NavController) {
+fun EscolherData(navController: NavController, servicosIds: List<Long>) {
     val backgroundImage = painterResource(id = R.drawable.fundo_cliente)
 
     Box(
@@ -89,7 +95,7 @@ fun EscolherData(navController: NavController) {
                     .border(2.dp, Color.Gray, RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.TopStart
             ) {
-                SchedulingScreenn(navController)
+                SchedulingScreenn(navController,servicosIds)
             }
 
             Text(
@@ -109,7 +115,7 @@ fun EscolherData(navController: NavController) {
 }
 
 @Composable
-fun SchedulingScreenn(navController: NavController) {
+fun SchedulingScreenn(navController: NavController, servicosIds:List<Long>) {
     var selectedBarbeiroId by remember { mutableStateOf<Long?>(null) }
     var selectedDate by remember { mutableStateOf(LocalDate.now().dayOfMonth) }
     var selectedMonth by remember { mutableStateOf(LocalDate.now().monthValue) }
@@ -121,8 +127,8 @@ fun SchedulingScreenn(navController: NavController) {
     val visibleTimeSlots = 2
     val viewModel: AgendamentoViewModel = viewModel()
     val barbeiros = remember { viewModel.barbeiros }
+    val agendamentosDoBarbeiro = remember { viewModel.agendamentosPorData }
 
-    val agendamentoViewModel: AgendamentoViewModel = viewModel()
 
 
     LaunchedEffect(Unit) {
@@ -134,12 +140,17 @@ fun SchedulingScreenn(navController: NavController) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        LazyRow(modifier = Modifier.fillMaxWidth()) {
+        LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
             items(barbeiros) { barbeiro ->
                 barbeiro.foto?.let { imageUrl ->
                     BarberProfiles(
                         imageUrl = imageUrl,
-                        onClick = { selectedBarbeiroId = barbeiro.id }
+                        isSelected = barbeiro.id == selectedBarbeiroId,
+                        isnull = null == selectedBarbeiroId,
+                        onClick = {
+                            selectedBarbeiroId = barbeiro.id
+                            viewModel.fetchAgendamentosBarbeiro(barbeiro.id)
+                        }
                     )
                 }
             }
@@ -201,15 +212,42 @@ fun SchedulingScreenn(navController: NavController) {
                 times.drop(currentTimeIndex).take(visibleTimeSlots).forEach { timeText ->
                     val formatter = DateTimeFormatter.ofPattern("H:mm")
                     val time = LocalTime.parse(timeText, formatter)
+                    var dateKey: String? = null
+                    if(selectedBarbeiroId != null){
+                        dateKey = "%02d/%02d".format(selectedDate, selectedMonth)
+                        val formattedTimeText = timeText.padStart(5, '0')
+                        Log.i("Teste de dia proibed: " ,
+                            " horarios é proibido: ${dateKey} ${agendamentosDoBarbeiro.get(dateKey)} horário: ${formattedTimeText}  " +
+                                    "Contem: ${agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText)}")
+                        Button(
+                            enabled = agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText) == false,
+                            onClick = {
+                                if (agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText) == false) {
+                                    selectedTime = time
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedTime == time) Color.Blue else Color.Gray
+                            )
+                        ) {
+                            Text(text = if (agendamentosDoBarbeiro.get(dateKey)?.contains(formattedTimeText) == true) "Reservado" else timeText )
+                        }
 
-                    Button(
-                        onClick = { selectedTime = time },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedTime == time) Color.Blue else Color.Gray
-                        )
-                    ) {
-                        Text(text = timeText)
+
+                    } else {
+                                    Button(
+                                    onClick = { selectedTime = time },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedTime == time) Color.Blue else Color.Gray
+                            )
+                        ) {
+                            Text(text = timeText)
+                        }
                     }
+
+
+
+
                 }
             }
 
@@ -252,7 +290,7 @@ fun SchedulingScreenn(navController: NavController) {
                             viewModel.salvarAgendamento(
                                 barbeiroId = barbeiroId,
                                 clienteId = clienteId,
-                                servicoIds = listOf(1),  // Adicione pelo menos um ID válido de serviço
+                                servicoIds = servicosIds,  // Adicione pelo menos um ID válido de serviço
                                 inicio = horaSelecionada
                             )
 
@@ -276,13 +314,27 @@ fun SchedulingScreenn(navController: NavController) {
 }
 
 @Composable
-fun BarberProfiles(imageUrl: String, onClick: () -> Unit) {
+fun BarberProfiles(imageUrl: String,isSelected: Boolean,isnull:Boolean, onClick: () -> Unit) {
+
+    val borderColor = if (isSelected) Color.Blue else Color.Gray // Define a cor da borda com base na seleção
+    val imageColor = when {
+        isSelected -> Color.Transparent // Nenhum filtro se selecionado
+        isnull -> Color.Transparent // Cor diferenciada se for nulo
+        else -> Color.Gray // Cor padrão para não selecionados
+    }
     Image(
         painter = rememberImagePainter(data = imageUrl),
         contentDescription = "Foto do Barbeiro",
         modifier = Modifier
             .size(100.dp)
+            .clip(CircleShape)
             .clickable { onClick() } // Chama a função onClick ao clicar
+            .border(BorderStroke(4.dp,borderColor),
+            CircleShape
+
+        ),
+        colorFilter = ColorFilter.tint(imageColor, blendMode = BlendMode.Darken)
+
     )
 }
 

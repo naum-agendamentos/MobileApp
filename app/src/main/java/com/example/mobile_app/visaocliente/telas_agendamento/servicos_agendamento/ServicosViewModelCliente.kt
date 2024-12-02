@@ -13,7 +13,7 @@ class ServicosViewModelCliente : ViewModel() {
 
     private val _servico = mutableStateListOf<Servico>()
     val servicos: List<Servico> get() = _servico
-    val servicosSelecionados = mutableListOf<Servico>()
+    val servicosSelecionados = mutableListOf<Long>()
 
     var isLoading = mutableStateOf(true)
         private set
@@ -60,7 +60,12 @@ class ServicosViewModelCliente : ViewModel() {
     }
 
     fun addServicos(servico : Servico){
-        servicosSelecionados.add(servico)
+        servico.id?.let { servicosSelecionados.add(it) }
+        Log.i("Add servico: " , "ServicosIds: ${servicosSelecionados}")
+    }
+    fun removeServicos(servico : Servico){
+        servico.id?.let { servicosSelecionados.remove(it) }
+        Log.i("Remove servico: " , "ServicosIds: ${servicosSelecionados}")
     }
 
 

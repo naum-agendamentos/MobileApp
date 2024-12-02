@@ -1,9 +1,12 @@
 package com.example.mobile_app.visaocliente.telas_agendamento.agendamento_datahora
 
+import AgendamentoListagemDto
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -109,7 +112,7 @@ class AgendamentoViewModel : ViewModel() {
 
 
 
-    fun salvarAgendamento(barbeiroId: Long, clienteId: Long, servicoIds: List<Long>, inicio: LocalDateTime) {
+    fun salvarAgendamento(barbeiroId: Long, clienteId: Long, servicoIds: List<Long>, inicio: LocalDateTime,) {
         viewModelScope.launch {
             try {
                 val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
@@ -189,7 +192,55 @@ class AgendamentoViewModel : ViewModel() {
             }
         }
     }
+    private val _agendamentosPorData = mutableStateMapOf<String, List<String>>()
+    val agendamentosPorData: Map<String, List<String>> get() = _agendamentosPorData
 
+    fun fetchAgendamentosBarbeiro(idBarbeiro: Long) {
+        viewModelScope.launch {
+            try {
+                val resposta = apiAgendamento.listarAgendamentosPorBarbeiro(idBarbeiro)
+                Log.i("api", "Resposta da API agendamentos por Barbeiro: ${resposta.body()}")
+                Log.i("api", "Resposta da API agendamentos por Barbeiro: ${resposta.code()}")
+
+                if (resposta.isSuccessful) {
+                    resposta.body()?.let { agendamentos ->
+                        _agendamentosPorData.clear()
+
+                        val formatter = DateTimeFormatter.ofPattern("dd/MM")
+                        val agendamentosAgrupados = agendamentos.groupBy(
+                            { agendamento ->
+                                // Converte a dataHoraAgendamento para LocalDateTime e formata
+                                val dataHora = LocalDateTime.parse(agendamento.dataHoraAgendamento)
+                                dataHora.format(formatter)
+                            },
+                            { agendamento ->
+                                // Extrai apenas o horário no formato desejado
+                                val dataHora = LocalDateTime.parse(agendamento.dataHoraAgendamento)
+                                dataHora.toLocalTime().toString() // Retorna o horário
+                            }
+                        )
+
+                        _agendamentosPorData.putAll(agendamentosAgrupados)
+                        Log.i("api agendamento por barbeiro ", "MAP data hora: ${_agendamentosPorData}")
+                    }
+                } else {
+                    // Tratar erros da resposta da API
+                }
+            } catch (exception: Exception) {
+                Log.e("api", "Erro ao buscar agendamentos: ${exception.message}")
+            }
+        }
+    }
+
+//    fun fetchAgendamentosBarbeiro(dataHoraSelecionado: String) {
+//        viewModelScope.launch {
+//            try {
+//                _agendamentosPorData.containsKey(dataHoraSelecionado)
+//            } catch (exception: Exception) {
+//                Log.e("api", "Erro ao buscar agendamentos: ${exception.message}")
+//            }
+//        }
+//    }
     private fun isNovo() = agendamentoAtual.id == null
 
     fun setAgendamentoParaEdicao(agendamento: Agendamento) {
