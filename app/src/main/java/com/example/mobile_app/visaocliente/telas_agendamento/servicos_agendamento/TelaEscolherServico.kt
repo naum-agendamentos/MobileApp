@@ -106,6 +106,7 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
             ) {
                 Button(
                     onClick = { navController.navigate("agendamento/${viewModel.servicosSelecionados.joinToString(",")}")
+                        viewModel.servicosSelecionados.clear()
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Blue), // Define a cor de fundo do botão
                     modifier = Modifier
@@ -176,6 +177,7 @@ fun ServicoItem2(
     }
 
 }
+
 
 //@Preview
 //@Composable

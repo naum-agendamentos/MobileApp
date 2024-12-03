@@ -222,7 +222,7 @@ fun SchedulingScreenn(navController: NavController, servicosIds: List<Long>) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                onClick = {},
+                onClick = {navController.popBackStack()},
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0007AB))
             ) {
                 Text(text = "ANTERIOR", color = Color.White)
