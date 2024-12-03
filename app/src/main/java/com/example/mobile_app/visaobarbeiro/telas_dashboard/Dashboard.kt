@@ -149,9 +149,22 @@ fun Dashboard(viewModel: DashboardViewModel = viewModel(), navController: NavHos
     }
 
     val porcentagemText = when {
-        porcAgendOntHj.value != null && porcAgendOntHj.value!! > 0 -> "+${porcAgendOntHj.value}%"
-        porcAgendOntHj.value != null && porcAgendOntHj.value!! < 0 -> "${porcAgendOntHj.value}%"
-        else -> "0%"
+        porcAgendOntHj.value != null && porcAgendOntHj.value!! > 0 -> "+${String.format("%.2f", porcAgendOntHj.value)}%"
+        porcAgendOntHj.value != null && porcAgendOntHj.value!! < 0 -> "${String.format("%.2f", porcAgendOntHj.value)}%"
+        else -> "0.00%"
+    }
+
+
+    val lucroTotalFormat = if (lucroTotal.value != null) {
+        String.format("%.2f", lucroTotal.value)
+    } else {
+        "0.00"
+    }
+
+    val mediaAvaliacaoFormat = if (mediaAvaliacao.value != null) {
+        String.format("%.2f", mediaAvaliacao.value)
+    } else {
+        "0.00"
     }
 
     Box(
@@ -214,7 +227,7 @@ fun Dashboard(viewModel: DashboardViewModel = viewModel(), navController: NavHos
                             )
 
                             Text(
-                                text = "R$${lucroTotal.value}",
+                                text = "R$$lucroTotalFormat",
                                 style = TextStyle(
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 22.sp,
@@ -249,7 +262,7 @@ fun Dashboard(viewModel: DashboardViewModel = viewModel(), navController: NavHos
                                     )
                                 )
                                 Text(
-                                    text = "${mediaAvaliacao.value}",
+                                    text = "$mediaAvaliacaoFormat",
                                     style = TextStyle(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 18.sp,
