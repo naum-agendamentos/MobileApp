@@ -50,7 +50,7 @@ fun MuralListagem(navController: NavHostController, viewModel: MuralViewModel = 
 
         Column(modifier = Modifier.fillMaxSize()) {
             Row {
-                navBarb()
+                navBarb(navController = navController)
             }
 
             Row(

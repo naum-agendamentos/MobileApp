@@ -50,7 +50,7 @@ fun AgendamentoBarbeiro(
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
 
-    navBarb()
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -62,7 +62,7 @@ fun AgendamentoBarbeiro(
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Column(
             modifier = Modifier

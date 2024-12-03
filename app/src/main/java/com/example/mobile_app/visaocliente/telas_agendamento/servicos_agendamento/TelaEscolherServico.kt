@@ -48,7 +48,7 @@ fun ServicoEscolha(viewModel: ServicosViewModelCliente = viewModel(), navControl
             modifier = Modifier.fillMaxSize()
         )
 
-        Header()
+        Header(navController = navController)
 
         Box(
             modifier = Modifier

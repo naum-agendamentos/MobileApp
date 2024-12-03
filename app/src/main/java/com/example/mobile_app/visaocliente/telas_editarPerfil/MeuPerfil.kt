@@ -25,7 +25,7 @@ import com.example.mobile_app.visaocliente.telas_editarPerfil.componentes_editar
 @Composable
 fun MeuPerfil(navController: NavController) {
 
-    FundoTela {
+    FundoTela(navController = navController) {
         Surface(
             shape = RoundedCornerShape(12.dp),
             color = Color.White.copy(alpha = 0.5f),

@@ -67,7 +67,7 @@ fun MuralEdicao(
 
         Column(modifier = Modifier.fillMaxSize()) {
             Row {
-                navBarb()
+                navBarb(navController = navController)
             }
 
             Spacer(modifier = Modifier.height(30.dp))

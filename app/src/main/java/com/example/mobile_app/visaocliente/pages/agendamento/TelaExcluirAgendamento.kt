@@ -20,12 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.mobile_app.visaocliente.componentes.FundoTela
 import com.example.mobile_app.visaocliente.telas_editarPerfil.componentes_editarPerfil.ExcluirContaDecisao2
 
 @Composable
-fun Exclusao() {
-    FundoTela {
+fun Exclusao(navController: NavController) {
+    FundoTela(navController = navController) {
         Surface(
             shape = RoundedCornerShape(12.dp),
             color = Color.White.copy(alpha = 0.5f),
@@ -82,8 +83,8 @@ fun Exclusao() {
 
 
 
-@Preview(showSystemUi = true)
-@Composable
-fun tela(){
-    Exclusao()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun tela(){
+//    Exclusao()
+//}

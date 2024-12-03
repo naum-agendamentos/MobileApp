@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.mobile_app.R
 import com.example.mobile_app.ui.theme.mobile_appTheme
 import com.example.mobile_app.visaobarbeiro.componentes.navBarb
@@ -50,7 +51,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @Composable
-fun telaBloqueioDeHora() {
+fun telaBloqueioDeHora(navController: NavController) {
     val backgroundImage = painterResource(id = R.drawable.fundo_barbeiro)
     val horarios = gerarHorarios("08:00", "20:00")
     val diasDaSemana = listOf("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado")
@@ -68,7 +69,7 @@ fun telaBloqueioDeHora() {
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-        navBarb()
+        navBarb(navController = navController)
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -199,10 +200,10 @@ fun gerarHorarios(inicio: String, fim: String): List<String> {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun BloqueioHoraPreview() {
-    mobile_appTheme {
-        telaBloqueioDeHora()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun BloqueioHoraPreview() {
+//    mobile_appTheme {
+//        telaBloqueioDeHora()
+//    }
+//}

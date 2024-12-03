@@ -66,7 +66,7 @@ fun BarbeiroBloqueioDiaHora(viewModel: BarbeirosViewModel = viewModel(), navCont
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Row(
             modifier = Modifier

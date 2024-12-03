@@ -88,7 +88,7 @@ fun BarbeiroEdit(viewModel: BarbeirosViewModel = viewModel(), navController: Nav
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Box(
             modifier = Modifier.fillMaxSize()

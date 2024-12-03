@@ -46,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mobile_app.R
 import com.example.mobile_app.ui.theme.mobile_appTheme
 import com.example.mobile_app.visaobarbeiro.NavCliente
+import com.example.mobile_app.visaocliente.componentes.Header
 import com.example.mobile_app.visaocliente.componentes.IconRowClient
 
 @Composable
@@ -65,7 +66,7 @@ fun Avaliacao(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
-        NavCliente()
+        Header(navController = navController)
 
         Row(
             modifier = Modifier

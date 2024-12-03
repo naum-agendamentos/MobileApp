@@ -39,7 +39,7 @@ fun TelaInicialCliente(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
-        Header()
+        Header(navController = navController)
 
         Box(
             modifier = Modifier.fillMaxSize()

@@ -36,7 +36,7 @@ fun TelaInicial(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Box(
             modifier = Modifier.fillMaxSize()
@@ -72,7 +72,7 @@ fun TelaInicial(navController: NavController) {
                         R.drawable.pngtesoura to Pair("SERVIÇOS", "tela_servicos"),
                         R.drawable.pngrelogio to Pair("HORÁRIO", "menu-barbeiro-bloqueio"),
                         R.drawable.pngalerta to Pair("MURAL", "muralListagem"),
-                        R.drawable.pnggrafico to Pair("MEUS DADOS", "dashboard")
+                        R.drawable.pnggrafico to Pair("DASHBOARD", "dashboard")
                     )
 
                     buttons.chunked(2).forEach { rowButtons ->

@@ -18,7 +18,7 @@ import com.example.mobile_app.visaocliente.componentes.IconRowClient
 
 @Composable
 fun MuralAvisos(navController: NavController) {
-    FundoTela {
+    FundoTela(navController = navController) {
         Surface(
             shape = RoundedCornerShape(12.dp),
             color = Color.White.copy(alpha = 0.5f),

@@ -65,7 +65,7 @@ fun Servicos(viewModel: ServicosViewModel = viewModel(), navController: NavContr
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
 
         Row(

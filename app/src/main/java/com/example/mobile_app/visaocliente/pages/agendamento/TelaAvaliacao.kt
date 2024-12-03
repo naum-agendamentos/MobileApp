@@ -50,7 +50,7 @@ fun AvaliacaoScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Header()
+        Header(navController = navController)
 
         Column(
             modifier = Modifier

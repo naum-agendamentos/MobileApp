@@ -91,7 +91,7 @@ fun telaBloqueioDeDia(navController: NavController, semanaJson: String?, id: Str
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-        navBarb()
+        navBarb(navController = navController)
 
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(

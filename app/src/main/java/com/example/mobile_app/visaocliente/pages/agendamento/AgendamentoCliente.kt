@@ -76,7 +76,7 @@ fun AgendamentoCliente(
             modifier = Modifier.fillMaxSize()
         )
 
-        Header()
+        Header(navController = navController)
 
         Column(
             modifier = Modifier

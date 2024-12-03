@@ -177,7 +177,7 @@ fun Dashboard(viewModel: DashboardViewModel = viewModel(), navController: NavHos
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         LazyColumn(
             modifier = Modifier.fillMaxSize()

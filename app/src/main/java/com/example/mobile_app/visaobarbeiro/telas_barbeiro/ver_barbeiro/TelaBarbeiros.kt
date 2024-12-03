@@ -62,7 +62,7 @@ fun TelaBarbeiros(viewModel: BarbeirosViewModel = viewModel(), navController: Na
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Row(
             modifier = Modifier

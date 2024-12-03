@@ -61,7 +61,7 @@ fun TelaBarbeirosAgendamento(viewModel: BarbeirosViewModel = viewModel(), navCon
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Row(
             modifier = Modifier

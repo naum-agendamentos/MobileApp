@@ -48,7 +48,7 @@ fun BloqueioDiaHoraMenu(navController: NavController, semanaJson: String?, id: S
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-        navBarb()
+        navBarb(navController = navController)
         Box(
             modifier = Modifier
                 .fillMaxSize()

@@ -61,7 +61,7 @@ fun CadastroServico(viewModel: ServicosViewModel = viewModel(), navController: N
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Box(
             modifier = Modifier

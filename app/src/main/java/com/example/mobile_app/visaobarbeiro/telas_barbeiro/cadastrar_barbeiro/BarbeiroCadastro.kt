@@ -76,7 +76,7 @@ fun BarbeiroCad(viewModel: BarbeirosViewModel = viewModel(), navController: NavC
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Box(
             modifier = Modifier

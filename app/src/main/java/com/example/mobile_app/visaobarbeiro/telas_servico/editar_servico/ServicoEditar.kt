@@ -83,7 +83,7 @@ fun EditServico(viewModel: ServicosViewModel = viewModel(), navController: NavCo
             modifier = Modifier.fillMaxSize()
         )
 
-        navBarb()
+        navBarb(navController = navController)
 
         Box(
             modifier = Modifier

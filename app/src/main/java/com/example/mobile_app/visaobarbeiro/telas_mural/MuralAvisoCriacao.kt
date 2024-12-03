@@ -63,7 +63,7 @@ fun MuralCriacao(navController: NavHostController, viewModel: MuralViewModel = v
 
         Column(modifier = Modifier.fillMaxSize()) {
             Row {
-                navBarb()
+                navBarb(navController = navController)
             }
 
             Spacer(modifier = Modifier.height(30.dp))
