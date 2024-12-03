@@ -122,7 +122,8 @@ fun MuralCriacao(navController: NavHostController, viewModel: MuralViewModel = v
                                 .fillMaxWidth()
                                 .border(0.dp, Color.Transparent, RoundedCornerShape(0.dp))
                                 .padding(bottom = 4.dp),
-                            onValueChange = { viewModel.itemAtual = viewModel.itemAtual.copy(titulo = it) }
+                            onValueChange = { viewModel.itemAtual = viewModel.itemAtual.copy(titulo = it) },
+                            textStyle = TextStyle(color = Color.White)
                         )
 
                         Text(
@@ -142,11 +143,12 @@ fun MuralCriacao(navController: NavHostController, viewModel: MuralViewModel = v
                                 .height(100.dp)
                                 .border(0.dp, Color.Transparent, RoundedCornerShape(0.dp))
                                 .padding(bottom = 4.dp),
-                            onValueChange = { viewModel.itemAtual = viewModel.itemAtual.copy(descricao = it) }
+                            onValueChange = { viewModel.itemAtual = viewModel.itemAtual.copy(descricao = it) },
+                            textStyle = TextStyle(color = Color.White)
                         )
 
                         viewModel.itemAtual = viewModel.itemAtual.copy(barbeiroId  = 1)
-                        viewModel.itemAtual = viewModel.itemAtual.copy(url = "https://www.youtube.com/")
+                        viewModel.itemAtual = viewModel.itemAtual.copy(url = "https://res.cloudinary.com/dmgfyyioo/image/upload/v1733235909/fov2swolywe9vjey3trt.png")
 
                         Text(
                             text = stringResource(R.string.urgencia_label),

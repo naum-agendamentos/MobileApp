@@ -121,6 +121,7 @@ fun MuralEdicao(
                         OutlinedTextField(
                             value = titulo,
                             onValueChange = { titulo = it },
+                            textStyle = TextStyle(color = Color.White),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .border(0.dp, Color.Transparent, RoundedCornerShape(0.dp))
@@ -137,6 +138,7 @@ fun MuralEdicao(
                         OutlinedTextField(
                             value = descricao,
                             onValueChange = { descricao = it },
+                            textStyle = TextStyle(color = Color.White),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(100.dp)

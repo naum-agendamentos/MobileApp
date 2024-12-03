@@ -97,7 +97,7 @@ fun MyApp(context: Context) {
                 titulo = titulo,
                 descricao = descricao,
                 barbeiroId = UserLoginSession.idBarbeiro!!,
-                url = "https://res-console.cloudinary.com/dmgfyyioo/media_explorer_thumbnails/ab186f6871c48c32e4450ae6947f67e1/detailed",
+                url = "https://res.cloudinary.com/dmgfyyioo/image/upload/v1733235909/fov2swolywe9vjey3trt.png",
                 navController = navController
             )
         }
